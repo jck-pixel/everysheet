@@ -8,6 +8,8 @@ const client = new OpenAI({
 function cleanFormula(formula: string) {
   const trimmed = String(formula || "").trim();
   if (!trimmed) return "";
+11. 若結果是數值、百分比、金額、日期差，請盡量保持為可計算的數值，不要用 TEXT() 轉成文字，除非使用者明確要求輸出成文字格式。
+12. 若使用者要求百分比顯示小數兩位，優先回傳可計算的數值公式，例如 =IF(A1=0,0,ROUND((A1-B1)/A1,4))，並在 howToUse 提醒使用者將儲存格格式設為百分比、小數兩位。
   return trimmed.startsWith("=") ? trimmed : `=${trimmed}`;
 }
 
