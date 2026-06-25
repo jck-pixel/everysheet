@@ -150,7 +150,9 @@ A欄投入數量、B欄不良數量，計算良率
         </div>
 
         <div className="mode-box">
-          <div className="mode-title">輸出模式</div>
+          <div className="mode-title">
+  結果呈現方式
+</div>
 
           <label className={`mode-option ${outputMode === "general" ? "active" : ""}`}>
             <input
@@ -161,8 +163,10 @@ A欄投入數量、B欄不良數量，計算良率
               onChange={(e) => setOutputMode(e.target.value)}
             />
             <div>
-              <strong>一般使用</strong>
-              <span>直接顯示使用者想看的結果，例如 90.13%。適合大多數人。</span>
+              <strong>😊 一般使用（推薦）</strong>
+<span>
+直接得到想要的結果，不用再調整格式。
+</span>
             </div>
           </label>
 
@@ -175,8 +179,10 @@ A欄投入數量、B欄不良數量，計算良率
               onChange={(e) => setOutputMode(e.target.value)}
             />
             <div>
-              <strong>專業 Excel</strong>
-              <span>盡量保留數值，方便後續平均、排序、圖表、樞紐分析。</span>
+              <strong>📊 專業 Excel</strong>
+<span>
+保留可計算數值，適合進一步分析與報表。
+</span>
             </div>
           </label>
         </div>
