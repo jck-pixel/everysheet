@@ -3,6 +3,10 @@
 import { useState } from "react";
 
 type Result = {
+  status?: "ready" | "needs_info";
+  confidence?: "high" | "medium" | "low";
+  missingInfo?: string[];
+  questions?: string[];
   formula: string;
   explanation: string;
   howToUse: string;
@@ -28,6 +32,8 @@ export default function Home() {
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [followUp, setFollowUp] = useState("");
+const [originalRequest, setOriginalRequest] = useState("");
 
   async function generateFormula() {
     setError("");
@@ -40,6 +46,7 @@ export default function Home() {
     }
 
     setLoading(true);
+    setOriginalRequest(request);
 
     try {
       const res = await fetch("/api/generate", {
@@ -62,7 +69,44 @@ export default function Home() {
     }
   }
 
-  async function copyFormula() {
+  async function copyFormula()
+  async function continueWithMoreInfo() {
+  if (!followUp.trim()) {
+    setError("請先補充缺少的資訊。");
+    return;
+  }
+
+  const combinedRequest = `${originalRequest}
+
+補充資訊：
+${followUp}`;
+
+  setRequest(combinedRequest);
+  setFollowUp("");
+  setResult(null);
+  setCopied(false);
+  setLoading(true);
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ request: combinedRequest, tool, outputMode, mode }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data?.error || "產生失敗，請稍後再試。");
+    }
+
+    setResult(data);
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
+  } finally {
+    setLoading(false);
+  }
+}{
     if (!result?.formula) return;
     await navigator.clipboard.writeText(result.formula);
     setCopied(true);
@@ -201,14 +245,55 @@ A欄投入數量、B欄不良數量，計算良率
       {result && (
         <section className="result-card">
           <div className="result-header">
+            {result.status === "needs_info" && (
+  <div className="mini-box">
+    <h3>還需要補充資訊</h3>
+
+    {result.missingInfo && result.missingInfo.length > 0 && (
+      <>
+        <p>缺少：</p>
+        <ul>
+          {result.missingInfo.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    {result.questions && result.questions.length > 0 && (
+      <>
+        <p>請補充：</p>
+        <ul>
+          {result.questions.map((q) => (
+            <li key={q}>{q}</li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <textarea
+      value={followUp}
+      onChange={(e) => setFollowUp(e.target.value)}
+      placeholder="例如：底薪在B欄，加班在C欄，每小時200元，津貼在D欄，全勤3000元"
+    />
+
+    <button onClick={continueWithMoreInfo} disabled={loading}>
+      {loading ? "處理中..." : "補充後繼續產生公式"}
+    </button>
+  </div>
+)}
             <h2>產生結果</h2>
             <button className="copy-btn" onClick={copyFormula}>
               {copied ? "已複製" : "複製公式"}
             </button>
           </div>
 
-          <h3>公式</h3>
-          <pre className="formula-box">{result.formula}</pre>
+          {result.status !== "needs_info" && (
+  <>
+    <h3>公式</h3>
+    <pre className="formula-box">{result.formula}</pre>
+  </>
+)}
 
           <div className="result-grid">
             <div className="mini-box">
