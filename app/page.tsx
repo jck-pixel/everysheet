@@ -74,7 +74,7 @@ export default function Home() {
       <section className="hero">
 <div className="badge">Excel AI Copilot</div>
 
-<h1>你的 AI Excel 工作夥伴</h1>
+<h1>你的 EverySheet 工作夥伴</h1>
 
 <p className="subtitle">
   建立公式、修正公式、解釋公式、優化公式，
@@ -246,7 +246,7 @@ A欄投入數量、B欄不良數量，計算良率
         </div>
       </section>
 
-      <footer>AI Excel Assistant © 2026</footer>
+      <footer>EverySheet © 2026</footer>
     </main>
   );
 }
