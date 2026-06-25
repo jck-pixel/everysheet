@@ -8,14 +8,12 @@ const client = new OpenAI({
 function cleanFormula(formula: string) {
   const trimmed = String(formula || "").trim();
   if (!trimmed) return "";
-11. 若結果是數值、百分比、金額、日期差，請盡量保持為可計算的數值，不要用 TEXT() 轉成文字，除非使用者明確要求輸出成文字格式。
-12. 若使用者要求百分比顯示小數兩位，優先回傳可計算的數值公式，例如 =IF(A1=0,0,ROUND((A1-B1)/A1,4))，並在 howToUse 提醒使用者將儲存格格式設為百分比、小數兩位。
   return trimmed.startsWith("=") ? trimmed : `=${trimmed}`;
 }
 
 export async function POST(req: Request) {
   try {
-    const { request, tool } = await req.json();
+    const { request, tool, outputMode } = await req.json();
 
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ error: "尚未設定 OPENAI_API_KEY。" }, { status: 500 });
@@ -26,6 +24,17 @@ export async function POST(req: Request) {
     }
 
     const selectedTool = tool || "Excel";
+    const selectedOutputMode = outputMode || "general";
+
+    const modeInstruction =
+      selectedOutputMode === "professional"
+        ? `目前使用者選擇「專業 Excel」模式。
+請盡量保持結果為可計算的數值，不要用 TEXT() 把數字轉成文字。
+例如百分比請回傳 =IF(A1=0,0,(A1-B1)/A1)，並在 howToUse 提醒使用者將儲存格格式設為百分比、小數兩位。`
+        : `目前使用者選擇「一般使用」模式。
+請優先讓使用者貼上公式後就能直接看到想要的顯示結果。
+如果使用者要求百分比、小數兩位、金額格式，可以使用 TEXT() 讓結果直接顯示成使用者期待的樣子。
+但 warning 要提醒：若後續還要平均、排序、圖表或樞紐分析，建議改用專業 Excel 模式。`;
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
@@ -56,11 +65,18 @@ JSON 格式如下：
 7. 如果需要金額計算但使用者沒有提供時薪，可以在 warning 提醒：若要計算實際金額，需再乘以時薪。
 8. 公式請符合使用者選擇的工具：Excel 或 Google Sheets。
 9. 不要編造不存在的函數。
-10. 若有地區分隔符號差異，提醒逗號可能需要改成分號。`,
+10. 若有地區分隔符號差異，提醒逗號可能需要改成分號。
+11. 常用產業定義：
+- 良率 = (投入數量 - 不良數量) / 投入數量
+- 不良率 = 不良數量 / 投入數量
+- 達成率 = 實際完成數量 / 目標數量
+- 加班時數 = 總工時 - 8
+12. 若使用者提到「良率」，不要回傳不良率公式。
+13. ${modeInstruction}`,
         },
         {
           role: "user",
-          content: `工具：${selectedTool}\n使用者需求：${request}`,
+          content: `工具：${selectedTool}\n輸出模式：${selectedOutputMode}\n使用者需求：${request}`,
         },
       ],
       response_format: { type: "json_object" },
