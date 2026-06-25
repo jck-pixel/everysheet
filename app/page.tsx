@@ -72,7 +72,7 @@ export default function Home() {
   return (
     <main>
       <section className="hero">
-<div className="badge">Excel AI Copilot</div>
+<div className="badge">EverySheet</div>
 
 <h1>你的 EverySheet 工作夥伴</h1>
 
