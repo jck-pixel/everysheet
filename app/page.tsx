@@ -15,12 +15,12 @@ type Result = {
 };
 
 const examples = [
-  "超過 8 小時算加班費",
-  "A欄大於100顯示OK，否則顯示NG",
-  "依照姓名查找對應薪資",
-  "計算兩個日期相差幾天",
-  "統計B欄中出現NG的數量",
-  "A欄是投入數量，B欄是不良數量，我想算良率百分比，保留兩位小數，如果投入數量是0就顯示0%",
+  { label: "📊 良率公式", text: "A欄是投入數量，B欄是不良數量，我想算良率百分比，投入為0時顯示0%" },
+  { label: "💰 加班費", text: "超過 8 小時算加班時數，超過的時數乘以 1.33" },
+  { label: "🔍 VLOOKUP", text: "依照姓名查找對應薪資" },
+  { label: "📅 日期差", text: "計算兩個日期相差幾天" },
+  { label: "📝 IF 判斷", text: "A欄大於100顯示OK，否則顯示NG" },
+  { label: "✅ 統計 NG", text: "統計B欄中出現NG的數量" },
 ];
 
 export default function Home() {
@@ -250,13 +250,15 @@ A欄投入數量、B欄不良數量，計算良率
           </label>
         </div>
 
-        <div className="examples">
-          {examples.map((item) => (
-            <button className="example-btn" key={item} onClick={() => setRequest(item)}>
-              {item}
-            </button>
-          ))}
-        </div>
+        <div className="example-title">熱門需求</div>
+
+<div className="examples">
+  {examples.map((item) => (
+    <button className="example-btn" key={item.label} onClick={() => setRequest(item.text)}>
+      {item.label}
+    </button>
+  ))}
+</div>
 
         {error && <div className="error">{error}</div>}
       </section>
