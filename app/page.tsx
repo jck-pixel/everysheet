@@ -266,6 +266,17 @@ A欄投入數量、B欄不良數量，計算良率
   ))}
 </div>
 
+{loading && (
+  <div className="loading-box">
+    <div className="loading-title">正在處理你的需求...</div>
+    <div className="loading-steps">
+      <span>理解需求</span>
+      <span>建立公式</span>
+      <span>整理說明</span>
+    </div>
+  </div>
+)}
+        
         {error && <div className="error">{error}</div>}
       </section>
 
