@@ -120,19 +120,18 @@ async function copyFormula() {
     <main>
       <section className="hero">
   <div className="badge">
-    Excel / Google Sheets Copilot
-  </div>
+  Excel Formula Assistant
+</div>
 
   <h1>
-    用中文描述 Excel 需求
-    <br />
-    30 秒產生公式
-  </h1>
+  用中文描述需求
+  <br />
+  快速完成公式
+</h1>
 
   <p className="subtitle">
     建立公式｜修正錯誤｜解釋公式｜最佳化公式
     <br />
-    不用記函數，不用查教學，EverySheet 幫你完成。
   </p>
 
   <div className="hero-rating">
