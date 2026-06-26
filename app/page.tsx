@@ -214,7 +214,7 @@ A欄投入數量、B欄不良數量，計算良率
 
         <div className="mode-box">
           <div className="mode-title">
-  結果呈現方式
+  選擇結果格式
 </div>
 
           <label className={`mode-option ${outputMode === "general" ? "active" : ""}`}>
@@ -226,7 +226,7 @@ A欄投入數量、B欄不良數量，計算良率
               onChange={(e) => setOutputMode(e.target.value)}
             />
             <div>
-              <strong>😊 一般使用（推薦）</strong>
+              <strong>一般使用</strong>
 <span>
 直接得到想要的結果，不用再調整格式。
 </span>
@@ -242,7 +242,7 @@ A欄投入數量、B欄不良數量，計算良率
               onChange={(e) => setOutputMode(e.target.value)}
             />
             <div>
-              <strong>📊 專業 Excel</strong>
+              <strong>專業 Excel</strong>
 <span>
 保留可計算數值，適合進一步分析與報表。
 </span>
