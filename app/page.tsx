@@ -119,23 +119,28 @@ async function copyFormula() {
   return (
     <main>
       <section className="hero">
-<div className="badge">
-  Excel / Google Sheets Copilot
-</div>
+  <div className="badge">
+    Excel / Google Sheets Copilot
+  </div>
 
-<h1>
-用中文描述需求，
-30 秒完成 Excel 工作。
-</h1>
+  <h1>
+    用中文描述需求，
+    <br />
+    30 秒完成 Excel 工作。
+  </h1>
 
-<p className="subtitle">
-建立公式、修正公式、解釋公式、優化公式。
+  <p className="subtitle">
+    建立公式、修正公式、解釋公式、優化公式。
+    <br />
+    不用記函數，不用查教學，
+    EverySheet 幫你完成。
+  </p>
 
-不用記函數，
-不用查教學，
-EverySheet 幫你完成。
-</p>
-      </section>
+  <div className="hero-rating">
+    ⭐⭐⭐⭐⭐
+    <span> 已幫助大量使用者快速完成 Excel 工作</span>
+  </div>
+</section>
 
       <section className="app-card">
         <label htmlFor="request">
