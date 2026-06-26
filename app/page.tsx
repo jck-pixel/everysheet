@@ -33,7 +33,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [followUp, setFollowUp] = useState("");
-const [originalRequest, setOriginalRequest] = useState("");
+  const [originalRequest, setOriginalRequest] = useState("");
 
   async function generateFormula() {
     setError("");
@@ -119,18 +119,28 @@ async function copyFormula() {
   return (
     <main>
       <section className="hero">
-<div className="badge">EverySheet</div>
+<div className="badge">
+  Excel / Google Sheets Copilot
+</div>
 
-<h1>你的 EverySheet 工作夥伴</h1>
+<h1>
+用中文描述需求，
+30 秒完成 Excel 工作。
+</h1>
 
 <p className="subtitle">
-  建立公式、修正公式、解釋公式、優化公式，
-  用自然語言就能完成 Excel 工作。
+建立公式、修正公式、解釋公式、優化公式。
+
+不用記函數，
+不用查教學，
+EverySheet 幫你完成。
 </p>
       </section>
 
       <section className="app-card">
-        <label htmlFor="request">你想完成什麼？</label>
+        <label htmlFor="request">
+  請描述你的 Excel 需求
+</label>
         <textarea
           id="request"
           value={request}
@@ -146,35 +156,39 @@ A欄投入數量、B欄不良數量，計算良率
 解釋這段 IF 公式
 
 幫我把這個公式改成 XLOOKUP`}
-        />
+                />
+
+        <p className="input-hint">
+          💡 不用擔心描述不完整，EverySheet 會自動詢問缺少的資訊。
+        </p>
 
         <div className="mode-tabs">
   <button
     className={mode === "generate" ? "active" : ""}
     onClick={() => setMode("generate")}
   >
-    建立公式
+    ✨ 建立公式
   </button>
 
   <button
     className={mode === "fix" ? "active" : ""}
     onClick={() => setMode("fix")}
   >
-    修正公式
+    🛠 修正公式
   </button>
 
   <button
     className={mode === "explain" ? "active" : ""}
     onClick={() => setMode("explain")}
   >
-    解釋公式
+    📖 解釋公式
   </button>
 
   <button
     className={mode === "optimize" ? "active" : ""}
     onClick={() => setMode("optimize")}
   >
-    優化公式
+    ⚡ 優化公式
   </button>
 </div>
         
