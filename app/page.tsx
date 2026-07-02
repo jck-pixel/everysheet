@@ -311,7 +311,55 @@ A欄投入數量、B欄不良數量，計算良率
             <>
               <h3>公式</h3>
               <pre className="formula-box">{result.formula}</pre>
+{result.placementGuide && (
+  <div className="placement-box">
+    <div className="placement-header">
+      <h3>📋 Excel 示意圖</h3>
+      {result.placementGuide.formulaCell && (
+        <div className="placement-location">
+          公式貼在 <strong>{result.placementGuide.formulaCell}</strong>
+        </div>
+      )}
+    </div>
 
+    <div className="placement-table-wrap">
+      <table className="placement-table">
+        <thead>
+          <tr>
+            {result.placementGuide.columns?.map((col) => (
+              <th key={col}>{col}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {result.placementGuide.headers?.map((header) => (
+              <td key={header}>{header}</td>
+            ))}
+          </tr>
+          <tr>
+            {result.placementGuide.sampleRow?.map((cell) => (
+              <td key={cell} className={cell.includes("公式") ? "formula-target" : ""}>
+                {cell}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    {result.placementGuide.steps && result.placementGuide.steps.length > 0 && (
+      <div className="placement-steps">
+        {result.placementGuide.steps.map((step, index) => (
+          <div className="placement-step" key={step}>
+            <span>{index + 1}</span>
+            <p>{step}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
               <div className="result-grid">
                 <div className="mini-box">
                   <h3>中文解釋</h3>
