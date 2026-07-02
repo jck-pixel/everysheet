@@ -164,3 +164,8 @@ ${request}`,
   example: parsed.example || "",
   warning: parsed.warning || "",
 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "產生公式時發生錯誤，請稍後再試。" }, { status: 500 });
+  }
+}
