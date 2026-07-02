@@ -395,3 +395,91 @@ footer {
   font-size: 14px;
   color: var(--text);
 }
+
+/* =========================
+   Placement Guide
+========================= */
+
+.placement-box {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: #f8fafc;
+}
+
+.placement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+
+.placement-header h3 {
+  margin: 0;
+}
+
+.placement-location {
+  background: #eef4ff;
+  color: var(--primary-dark);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.placement-table-wrap {
+  overflow-x: auto;
+}
+
+.placement-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.placement-table th,
+.placement-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: center;
+}
+
+.placement-table th {
+  background: #eef4ff;
+  font-weight: 800;
+}
+
+.formula-target {
+  background: #fff8e1;
+  color: #b45309;
+  font-weight: 800;
+}
+
+.placement-steps {
+  display: grid;
+  gap: 12px;
+}
+
+.placement-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.placement-step span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.placement-step p {
+  margin: 2px 0 0;
+}
