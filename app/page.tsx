@@ -331,8 +331,10 @@ A欄投入數量、B欄不良數量，計算良率
   <>
     <h3>公式</h3>
     <pre className="formula-box">{result.formula}</pre>
+  </>
+)}
 
-          <div className="result-grid">
+<div className="result-grid">
             <div className="mini-box">
               <h3>中文解釋</h3>
               <p>{result.explanation}</p>
