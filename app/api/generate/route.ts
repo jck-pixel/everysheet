@@ -115,6 +115,7 @@ JSON 格式如下：
 6. headers 放欄位用途，例如 ["投入數量","不良數量","良率"]。
 7. sampleRow 最後一格要標示「公式放這裡」。
 8. needs_info 時 placementGuide 可以是 null。
+9. 如果是 SUM、AVERAGE、MAX、MIN、COUNT 等彙總公式，且使用者指定的是同一欄的一段範圍，例如 A2:A100，公式位置不要固定建議 B2。請建議貼在範圍下方，例如 A101 或 A102，或說明「可貼在想顯示結果的位置」。placementGuide.formulaCell 可填「A101 或 A102」。
 
 公式放置示意規則：
 1. status = "ready" 時，必須提供 placementGuide。
