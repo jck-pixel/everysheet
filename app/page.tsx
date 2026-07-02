@@ -116,7 +116,6 @@ ${followUp}`;
   } finally {
     setLoading(false);
   }
-}
 
 async function copyFormula() {
   if (!result?.formula) return;
