@@ -7,7 +7,18 @@ type Result = {
   confidence?: "high" | "medium" | "low";
   missingInfo?: string[];
   questions?: string[];
+
   formula: string;
+
+  placementGuide?: {
+    title?: string;
+    putFormulaIn?: string;
+    columns?: string[];
+    headers?: string[];
+    sampleRow?: string[];
+    steps?: string[];
+  } | null;
+
   explanation: string;
   howToUse: string;
   example: string;
@@ -330,6 +341,50 @@ A欄投入數量、B欄不良數量，計算良率
   <>
     <h3>公式</h3>
     <pre className="formula-box">{result.formula}</pre>
+
+    {result.placementGuide && (
+      <div className="placement-box">
+        <h3>📍 公式放置示意</h3>
+
+        {result.placementGuide.putFormulaIn && (
+          <p>
+            建議貼在：<strong>{result.placementGuide.putFormulaIn}</strong>
+          </p>
+        )}
+
+        <div className="placement-table-wrap">
+          <table className="placement-table">
+            <thead>
+              <tr>
+                {result.placementGuide.columns?.map((col) => (
+                  <th key={col}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {result.placementGuide.headers?.map((header) => (
+                  <td key={header}>{header}</td>
+                ))}
+              </tr>
+              <tr>
+                {result.placementGuide.sampleRow?.map((cell) => (
+                  <td key={cell}>{cell}</td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {result.placementGuide.steps && result.placementGuide.steps.length > 0 && (
+          <ol>
+            {result.placementGuide.steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        )}
+      </div>
+    )}
   </>
 )}
 
