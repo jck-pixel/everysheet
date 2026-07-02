@@ -82,11 +82,10 @@ JSON 格式如下：
 "questions": ["需要追問使用者的問題1", "需要追問使用者的問題2"],
 "formula": "公式本體或修正後公式；status 是 ready 時必須以 = 開頭；status 是 needs_info 時可以是空字串",
 "placementGuide": {
-  "title": "公式放置示意",
-  "putFormulaIn": "建議公式貼在哪個儲存格，例如 C2、F2",
-  "columns": ["A欄", "B欄", "C欄"],
-  "headers": ["投入數量", "不良數量", "良率（公式放這裡）"],
-  "sampleRow": ["100", "5", "貼上公式"],
+  "formulaCell": "公式建議貼上的儲存格，例如 C2 或 F2",
+  "columns": ["A", "B", "C"],
+  "headers": ["投入數量", "不良數量", "良率"],
+  "sampleRow": ["100", "5", "公式放這裡"],
   "steps": ["A欄放投入數量", "B欄放不良數量", "C2貼上公式後往下拖曳"]
 },
 "explanation": "用白話中文解釋原因、邏輯或用途",
@@ -106,6 +105,16 @@ JSON 格式如下：
 8. 如果使用者只說「幫我算獎金」「幫我算薪資」「幫我算抽成」這類模糊需求，必須追問，不要產公式。
 9. formula 一定不要編造不存在的函數。
 10. 若有地區分隔符號差異，warning 提醒逗號可能需要改成分號。
+
+公式放置示意規則：
+1. status = "ready" 時，必須回傳 placementGuide。
+2. placementGuide.formulaCell 必須明確，例如 C2、F2。
+3. 良率、不良率、達成率、日期差、IF判斷，通常公式放在資料右側下一欄。
+4. VLOOKUP、XLOOKUP 查找類公式，請建立查詢區，例如 E2 是查詢值，F2 是公式位置。
+5. columns 只放欄位字母，例如 ["A","B","C"]。
+6. headers 放欄位用途，例如 ["投入數量","不良數量","良率"]。
+7. sampleRow 最後一格要標示「公式放這裡」。
+8. needs_info 時 placementGuide 可以是 null。
 
 公式放置示意規則：
 1. status = "ready" 時，必須提供 placementGuide。
