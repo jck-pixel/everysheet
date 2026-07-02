@@ -86,11 +86,12 @@ async function generateFormula() {
     setLoading(false);
   }
 }
-  
-    if (!followUp.trim()) {
-      setError("請先補充缺少的資訊。");
-      return;
-    }
+
+async function continueWithMoreInfo() {
+  if (!followUp.trim()) {
+    setError("請先補充缺少的資訊。");
+    return;
+  }
 
     const combinedRequest = `${originalRequest}
 
