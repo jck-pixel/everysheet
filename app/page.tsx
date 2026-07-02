@@ -396,6 +396,9 @@ A欄投入數量、B欄不良數量，計算良率
     </div>
   )}
 </div>
+    )}
+  </>
+)}
 
           <div className="result-grid">
             <div className="mini-box">
