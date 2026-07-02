@@ -344,49 +344,57 @@ A欄投入數量、B欄不良數量，計算良率
 
     {result.placementGuide && (
       <div className="placement-box">
-        <h3>📍 公式放置示意</h3>
+  <div className="placement-header">
+    <h3>📋 Excel 示意圖</h3>
 
-        {result.placementGuide.putFormulaIn && (
-          <p>
-            建議貼在：<strong>{result.placementGuide.putFormulaIn}</strong>
-          </p>
-        )}
-
-        <div className="placement-table-wrap">
-          <table className="placement-table">
-            <thead>
-              <tr>
-                {result.placementGuide.columns?.map((col) => (
-                  <th key={col}>{col}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {result.placementGuide.headers?.map((header) => (
-                  <td key={header}>{header}</td>
-                ))}
-              </tr>
-              <tr>
-                {result.placementGuide.sampleRow?.map((cell) => (
-                  <td key={cell}>{cell}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {result.placementGuide.steps && result.placementGuide.steps.length > 0 && (
-          <ol>
-            {result.placementGuide.steps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-        )}
+    {result.placementGuide.putFormulaIn && (
+      <div className="placement-location">
+        公式貼在 <strong>{result.placementGuide.putFormulaIn}</strong>
       </div>
     )}
-  </>
-)}
+  </div>
+
+  <div className="placement-table-wrap">
+    <table className="placement-table">
+      <thead>
+        <tr>
+          {result.placementGuide.columns?.map((col) => (
+            <th key={col}>{col}</th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          {result.placementGuide.headers?.map((header) => (
+            <td key={header} className={header.includes("公式") ? "formula-target" : ""}>
+              {header}
+            </td>
+          ))}
+        </tr>
+
+        <tr>
+          {result.placementGuide.sampleRow?.map((cell) => (
+            <td key={cell} className={cell.includes("公式") || cell.includes("貼") ? "formula-target" : ""}>
+              {cell}
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {result.placementGuide.steps && result.placementGuide.steps.length > 0 && (
+    <div className="placement-steps">
+      {result.placementGuide.steps.map((step, index) => (
+        <div className="placement-step" key={step}>
+          <span>{index + 1}</span>
+          <p>{step}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
 
           <div className="result-grid">
             <div className="mini-box">
