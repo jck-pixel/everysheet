@@ -124,7 +124,7 @@ async function copyFormula() {
 
   setCopied(true);
   setTimeout(() => setCopied(false), 1600);
-}
+
 
   return (
     <main>
