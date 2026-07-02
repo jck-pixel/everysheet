@@ -42,41 +42,51 @@ export default function Home() {
   const [followUp, setFollowUp] = useState("");
   const [originalRequest, setOriginalRequest] = useState("");
 
-  async function generateFormula() {
-    setError("");
-    setResult(null);
-    setCopied(false);
+async function generateFormula() {
+  setError("");
+  setResult(null);
+  setCopied(false);
 
-    if (!request.trim()) {
-      setError("請先輸入你的 Excel 需求。");
-      return;
-    }
-
-    setLoading(true);
-    setOriginalRequest(request);
-
-    try {
-      const res = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ request, tool, outputMode, mode }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data?.error || "產生失敗，請稍後再試。");
-      }
-
-      setResult(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
-    } finally {
-      setLoading(false);
-    }
+  if (!request.trim()) {
+    setError("請先輸入你的 Excel 需求。");
+    return;
   }
 
-  async function continueWithMoreInfo() {
+  setLoading(true);
+  setOriginalRequest(request);
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ request, tool, outputMode, mode }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data?.error || "產生失敗，請稍後再試。");
+    }
+
+    setResult(data);
+  } catch (err) {
+    if (err instanceof Error && err.name === "AbortError") {
+      setError("處理時間過久，請重新試一次或把需求寫得更明確。");
+    } else {
+      setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
+    }
+  } finally {
+    clearTimeout(timeoutId);
+    setLoading(false);
+  }
+}
+  
     if (!followUp.trim()) {
       setError("請先補充缺少的資訊。");
       return;
