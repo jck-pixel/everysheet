@@ -8,6 +8,13 @@ type Result = {
   missingInfo?: string[];
   questions?: string[];
   formula: string;
+  placementGuide?: {
+    formulaCell?: string;
+    columns?: string[];
+    headers?: string[];
+    sampleRow?: string[];
+    steps?: string[];
+  } | null;
   explanation: string;
   howToUse: string;
   example: string;
