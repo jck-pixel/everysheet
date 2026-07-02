@@ -113,9 +113,10 @@ ${followUp}`;
     setResult(data);
   } catch (err) {
     setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
-  } finally {
+    } finally {
     setLoading(false);
   }
+}
 
 async function copyFormula() {
   if (!result?.formula) return;
@@ -124,9 +125,10 @@ async function copyFormula() {
 
   setCopied(true);
   setTimeout(() => setCopied(false), 1600);
+}
 
-
-  return (
+return (
+  
     <main>
       <section className="hero">
   <div className="badge">
