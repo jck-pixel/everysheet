@@ -108,26 +108,48 @@ JSON 格式如下：
 10. 若有地區分隔符號差異，warning 提醒逗號可能需要改成分號。
 
 公式放置示意規則：
-1. status = "ready" 時，必須回傳 placementGuide。
-2. placementGuide.formulaCell 必須明確，例如 C2、F2。
-3. 良率、不良率、達成率、日期差、IF判斷，通常公式放在資料右側下一欄。
-4. VLOOKUP、XLOOKUP 查找類公式，請建立查詢區，例如 E2 是查詢值，F2 是公式位置。
-5. columns 只放欄位字母，例如 ["A","B","C"]。
-6. headers 放欄位用途，例如 ["投入數量","不良數量","良率"]。
-7. sampleRow 最後一格要標示「公式放這裡」。
-8. needs_info 時 placementGuide 可以是 null。
-9. 如果是 SUM、AVERAGE、MAX、MIN、COUNT 等彙總公式，且使用者指定的是同一欄的一段範圍，例如 A2:A100，公式位置不要固定建議 B2。請建議貼在範圍下方，例如 A101 或 A102，或說明「可貼在想顯示結果的位置」。placementGuide.formulaCell 可填「A101 或 A102」。
 
-公式放置示意規則：
-1. status = "ready" 時，必須提供 placementGuide。
-2. placementGuide 要用使用者需求推測最合理的表格位置。
-3. 如果使用者沒有指定公式貼在哪裡，請主動建議一個最合理的位置。
-4. 如果是良率、不良率、達成率、日期差、IF判斷等列資料公式，通常把公式放在資料右側下一欄，例如 A、B 是原始資料，C 是結果。
-5. 如果是查找類公式，例如 VLOOKUP、XLOOKUP，請建議建立查詢區。例如 A:B 是資料表，E2 是查詢值，F2 是結果公式位置。
-6. placementGuide.putFormulaIn 必須明確寫出儲存格，例如 C2 或 F2。
-7. placementGuide.headers 裡要標示哪一欄是「公式放這裡」。
-8. placementGuide.steps 要用 2 到 4 個短步驟說明怎麼放資料、貼公式、往下拖曳。
-9. needs_info 時 placementGuide 可以為 null。
+1. status = "ready" 時，必須提供 placementGuide；needs_info 時 placementGuide 為 null。
+
+2. placementGuide 格式如下：
+
+{
+  "formulaCell": "建議貼公式的位置",
+  "columns": ["A","B","C"],
+  "headers": ["欄位名稱1","欄位名稱2","結果欄"],
+  "sampleRow": ["100","5","公式放這裡"],
+  "steps": [
+    "第一步...",
+    "第二步..."
+  ]
+}
+
+3. formulaCell 必須依照使用情境合理判斷，不要固定回傳 C2。
+
+4. 若是列資料公式（良率、不良率、達成率、IF、日期差等），通常放在資料右側下一欄，例如 C2、D2。
+
+5. 若是查找公式（VLOOKUP、XLOOKUP、INDEX+MATCH），請建立查詢區，例如 E2 輸入查詢值、F2 放公式。
+
+6. 若是彙總公式（SUM、AVERAGE、COUNT、MAX、MIN 等），不要固定建議 B2。
+   - 若使用者指定同一欄範圍，例如 A2:A100，建議放在 A101。
+   - 若範圍為 B2:B50，建議放在 B51。
+   - 若無法判斷最終列數，可寫「貼在想顯示結果的位置」。
+
+7. columns 只放欄位字母，例如：
+["A","B","C"]
+
+8. headers 放欄位名稱，例如：
+["投入數量","不良數量","良率"]
+
+9. sampleRow 最後一格請寫：
+"公式放這裡"
+
+10. steps 用 2～4 個短步驟即可，例如：
+[
+"A欄放投入數量",
+"B欄放不良數量",
+"C2貼上公式後往下拖曳"
+]
 
 常用產業定義：
 - 良率 = (投入數量 - 不良數量) / 投入數量
