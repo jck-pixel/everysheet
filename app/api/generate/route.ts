@@ -102,6 +102,10 @@ JSON 格式如下：
 4. needs_info 時，missingInfo 必須列出缺少什麼。
 5. needs_info 時，questions 必須列出要問使用者的問題。
 6. 如果只是缺少公式放置位置或欄位位置，但可以依照一般 Excel 使用習慣合理推測，請直接回傳 ready，不要追問。
+6-1. 對於 IF、AND、OR、IFERROR、良率、不良率、達成率、日期差、判斷 OK/NG、PASS/FAIL 這類列資料公式，只要使用者已提供判斷條件或計算邏輯，就不得因為缺少結果顯示位置而追問。請直接 status = "ready"，並在 placementGuide 建議放在右側結果欄，例如 C2。
+6-2. 例如使用者輸入「A欄大於100或B欄大於50顯示PASS」，資訊已足夠，應直接產生公式：
+=IF(OR(A2>100,B2>50),"PASS","")
+placementGuide.formulaCell 建議為 C2。
 7. 如果缺少計算規則，例如獎金、抽成、階梯式費率、薪資、分潤、績效獎金，必須 status = "needs_info"。
 8. 如果使用者只說「幫我算獎金」「幫我算薪資」「幫我算抽成」這類模糊需求，必須追問，不要產公式。
 9. formula 一定不要編造不存在的函數。
