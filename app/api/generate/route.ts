@@ -117,7 +117,14 @@ JSON 格式如下：
 "howToUse": "明確告訴使用者如何使用、貼在哪裡、需要改哪些儲存格",
 "example": "提供簡短範例",
 "warning": "提醒使用者注意欄位、版本、分隔符號或可能錯誤",
-"professionalTips": ["專業建議1", "專業建議2"]
+"professionalTips": [
+  "專業建議1",
+  "專業建議2"
+],
+"modernFormula": {
+  "title": "Microsoft 365 最佳寫法",
+  "formula": "",
+  "reason": ""
 }
 
 判斷規則：
@@ -185,6 +192,9 @@ placementGuide.formulaCell 建議為 C2。
 - 若有更佳公式，也可以在 explanation 中一起說明。
 - professionalTips 必須提供 2～4 個專業建議。
 - 如果沒有特別替代公式，也要提供至少一項最佳實務。
+若 Microsoft 365 有更現代、更容易維護的公式（例如 LET、XLOOKUP、FILTER、TAKE、DROP、TEXTSPLIT 等），請放在 modernFormula。
+
+如果目前公式已經是最佳寫法，modernFormula.formula 請回傳空字串，不要硬寫 LET。
 
 公式放置示意規則：
 
@@ -284,6 +294,15 @@ ${request}`,
   professionalTips: Array.isArray(parsed.professionalTips)
     ? parsed.professionalTips
     : [],
+
+  modernFormula:
+  parsed.modernFormula && typeof parsed.modernFormula === "object"
+    ? {
+        title: parsed.modernFormula.title || "Microsoft 365 最佳寫法",
+        formula: parsed.modernFormula.formula || "",
+        reason: parsed.modernFormula.reason || "",
+      }
+    : null,
 });
   } catch (error) {
     console.error(error);
