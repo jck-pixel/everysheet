@@ -109,7 +109,8 @@ JSON 格式如下：
 "explanation": "用白話中文解釋原因、邏輯或用途",
 "howToUse": "明確告訴使用者如何使用、貼在哪裡、需要改哪些儲存格",
 "example": "提供簡短範例",
-"warning": "提醒使用者注意欄位、版本、分隔符號或可能錯誤"
+"warning": "提醒使用者注意欄位、版本、分隔符號或可能錯誤",
+"professionalTips": ["專業建議1", "專業建議2"]
 }
 
 判斷規則：
@@ -175,7 +176,8 @@ placementGuide.formulaCell 建議為 C2。
 - howToUse 要包含適用情境。
 - warning 要提醒版本相容性、效能、可能替代函數。
 - 若有更佳公式，也可以在 explanation 中一起說明。
-
+- professionalTips 必須提供 2～4 個專業建議。
+- 如果沒有特別替代公式，也要提供至少一項最佳實務。
 
 公式放置示意規則：
 
@@ -272,6 +274,9 @@ ${request}`,
   howToUse: parsed.howToUse || "",
   example: parsed.example || "",
   warning: parsed.warning || "",
+  professionalTips: Array.isArray(parsed.professionalTips)
+    ? parsed.professionalTips
+    : [],
 });
   } catch (error) {
     console.error(error);
