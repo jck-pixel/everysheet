@@ -59,25 +59,32 @@ export async function POST(req: Request) {
   selectedOutputMode === "professional"
     ? `目前使用者選擇「專業 Excel」輸出。
 
-請讓專業模式明顯不同於一般模式：
+請讓專業模式的回答明顯不同於一般模式。
 
-1. formula 優先保留可計算數值，不要用 TEXT() 把數字轉成文字。
-2. explanation 要說明公式邏輯、使用的函數、為什麼這樣寫。
-3. howToUse 要包含適用情境、公式放置位置、如何往下套用。
-4. warning 要提醒版本相容性、效能、欄位範圍、分隔符號差異。
-5. 如果有更佳寫法或替代寫法，請在 explanation 或 warning 裡簡短說明。
-6. 專業模式可以使用較進階的函數，例如 XLOOKUP、LET、FILTER，但要提醒版本限制。
-7. placementGuide 仍要清楚，讓使用者知道公式貼在哪裡。`
+除了提供正確公式外，請額外提供：
+
+1. 公式邏輯（為什麼這樣寫）。
+2. 適用情境（什麼情況適合使用）。
+3. 若有更佳寫法（例如 XLOOKUP、LET、FILTER、Excel Table 結構化參照），請一併說明，但不要刻意改公式。
+4. 若有版本限制（例如 Microsoft 365 才支援），請提醒。
+5. 若有容易犯錯的地方（例如絕對參照、資料格式、大小寫），請提醒。
+6. warning 應偏向專業使用者會注意的事項，而不是一般提醒。
+
+重要：
+不要為了區分模式而故意產生不同公式。
+若目前公式已經是最佳解，可以保持相同公式，但 explanation、howToUse、warning 必須比一般模式更完整、更深入。`
     : `目前使用者選擇「一般使用」輸出。
 
-請讓一般模式簡單、直接、容易懂：
+請以第一次使用 Excel 的人也能理解的方式回答。
 
-1. formula 優先讓使用者貼上後直接得到想看的結果。
-2. explanation 不要講太多函數原理，控制在 80 字內。
-3. howToUse 要像教新手一樣，一步一步說明公式貼在哪裡。
-4. warning 只提醒真正重要的事情，不要寫太多技術細節。
-5. 若使用者要求百分比、小數、金額格式，可以使用 TEXT() 讓結果直接顯示成想要的樣子。
-6. placementGuide 要簡單清楚，重點是「資料放哪裡、公式貼哪裡」。`;
+請遵守：
+
+1. explanation 控制在 80 字以內。
+2. 不解釋函數原理。
+3. howToUse 一步一步說明即可。
+4. warning 只提醒真正重要的事情。
+5. 不提供替代公式或最佳實務。
+6. 目標是讓使用者最快完成工作。`;
 
     const modeInstruction = getModeInstruction(selectedMode);
 
