@@ -56,11 +56,28 @@ export async function POST(req: Request) {
     const selectedMode = mode || "generate";
 
     const outputInstruction =
-      selectedOutputMode === "professional"
-        ? `目前使用者選擇「專業 Excel」輸出。
-請盡量保持結果為可計算的數值，不要用 TEXT() 把數字轉成文字。`
-        : `目前使用者選擇「一般使用」輸出。
-請優先讓使用者貼上公式後就能直接看到想要的顯示結果。`;
+  selectedOutputMode === "professional"
+    ? `目前使用者選擇「專業 Excel」輸出。
+
+請讓專業模式明顯不同於一般模式：
+
+1. formula 優先保留可計算數值，不要用 TEXT() 把數字轉成文字。
+2. explanation 要說明公式邏輯、使用的函數、為什麼這樣寫。
+3. howToUse 要包含適用情境、公式放置位置、如何往下套用。
+4. warning 要提醒版本相容性、效能、欄位範圍、分隔符號差異。
+5. 如果有更佳寫法或替代寫法，請在 explanation 或 warning 裡簡短說明。
+6. 專業模式可以使用較進階的函數，例如 XLOOKUP、LET、FILTER，但要提醒版本限制。
+7. placementGuide 仍要清楚，讓使用者知道公式貼在哪裡。`
+    : `目前使用者選擇「一般使用」輸出。
+
+請讓一般模式簡單、直接、容易懂：
+
+1. formula 優先讓使用者貼上後直接得到想看的結果。
+2. explanation 不要講太多函數原理，控制在 80 字內。
+3. howToUse 要像教新手一樣，一步一步說明公式貼在哪裡。
+4. warning 只提醒真正重要的事情，不要寫太多技術細節。
+5. 若使用者要求百分比、小數、金額格式，可以使用 TEXT() 讓結果直接顯示成想要的樣子。
+6. placementGuide 要簡單清楚，重點是「資料放哪裡、公式貼哪裡」。`;
 
     const modeInstruction = getModeInstruction(selectedMode);
 
@@ -111,7 +128,6 @@ placementGuide.formulaCell 建議為 C2。
 9. formula 一定不要編造不存在的函數。
 10. 若有地區分隔符號差異，warning 提醒逗號可能需要改成分號。
 11. 對於常見且資訊已足夠的公式，不得因為日期格式、公式放置位置或其他可合理假設的細節而回傳 needs_info。
-
 包括但不限於：
 - SUM
 - AVERAGE
@@ -140,6 +156,25 @@ placementGuide.formulaCell 建議為 C2。
 - SUM、MAX、COUNT 等彙總公式可建議貼在該欄資料最後一列下方或想顯示結果的位置。
 
 若需要日期格式等特殊條件，請在 warning 提醒，而不是回傳 needs_info。
+
+【回答模式】
+
+如果 outputMode = "general"：
+
+- 用一般上班族看得懂的方式回答。
+- 不要講太多函數原理。
+- 步驟越少越好。
+- howToUse 要一步一步告訴使用者貼在哪裡。
+- explanation 不超過 80 字。
+- warning 只提醒真正重要的事項。
+
+如果 outputMode = "professional"：
+
+- 使用較完整的 Excel 專業說明。
+- explanation 要說明公式邏輯。
+- howToUse 要包含適用情境。
+- warning 要提醒版本相容性、效能、可能替代函數。
+- 若有更佳公式，也可以在 explanation 中一起說明。
 
 
 公式放置示意規則：
