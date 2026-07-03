@@ -19,6 +19,7 @@ type Result = {
   howToUse: string;
   example: string;
   warning?: string;
+  professionalTips?: string[];
 };
 
 const examples = [
