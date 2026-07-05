@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 type Result = {
   status?: "ready" | "needs_info";
@@ -47,6 +47,7 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [followUp, setFollowUp] = useState("");
   const [originalRequest, setOriginalRequest] = useState("");
+  const resultRef = useRef<HTMLDivElement>(null);
 
 async function generateFormula() {
   setError("");
@@ -81,6 +82,13 @@ async function generateFormula() {
     }
 
     setResult(data);
+
+setTimeout(() => {
+  resultRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}, 100);
   } catch (err) {
     if (err instanceof Error && err.name === "AbortError") {
       setError("處理時間過久，請重新試一次或把需求寫得更明確。");
@@ -124,6 +132,13 @@ ${followUp}`;
       }
 
       setResult(data);
+
+setTimeout(() => {
+  resultRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}, 100);
     } catch (err) {
       setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
     } finally {
@@ -153,6 +168,13 @@ async function runExample(exampleText: string) {
     }
 
     setResult(data);
+
+setTimeout(() => {
+  resultRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}, 100);
   } catch (err) {
     setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
   } finally {
