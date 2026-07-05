@@ -238,7 +238,7 @@ A欄投入數量、B欄不良數量，計算良率
 
           <button onClick={generateFormula} disabled={loading}>
             {loading
-              ? "AI 處理中..."
+              ? "處理中..."
               : mode === "generate"
               ? "建立公式"
               : mode === "fix"
