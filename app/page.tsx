@@ -131,6 +131,35 @@ ${followUp}`;
     }
   }
 
+async function runExample(exampleText: string) {
+  setRequest(exampleText);
+  setError("");
+  setResult(null);
+  setCopied(false);
+  setLoading(true);
+  setOriginalRequest(exampleText);
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ request: exampleText, tool, outputMode, mode }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data?.error || "產生失敗，請稍後再試。");
+    }
+
+    setResult(data);
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "產生失敗，請稍後再試。");
+  } finally {
+    setLoading(false);
+  }
+}
+  
   async function copyFormula() {
     if (!result?.formula) return;
 
@@ -255,12 +284,17 @@ A欄投入數量、B欄不良數量，計算良率
         <div className="example-title">🔥 熱門需求（點一下即可開始）</div>
 
         <div className="examples">
-          {examples.map((item) => (
-            <button className="example-btn" key={item.label} onClick={() => setRequest(item.text)}>
-              {item.label}
-            </button>
-          ))}
-        </div>
+  {examples.map((item) => (
+    <button
+      className="example-btn"
+      key={item.label}
+      onClick={() => runExample(item.text)}
+      disabled={loading}
+    >
+      {item.label}
+    </button>
+  ))}
+</div>
 
         {loading && (
           <div className="loading-box">
