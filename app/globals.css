@@ -483,3 +483,18 @@ footer {
 .placement-step p {
   margin: 2px 0 0;
 }
+
+.feedback-link {
+  margin-top: 12px;
+}
+
+.feedback-link a {
+  display: inline-block;
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.feedback-link a:hover {
+  text-decoration: underline;
+}
