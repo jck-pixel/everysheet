@@ -20,6 +20,11 @@ type Result = {
   example: string;
   warning?: string;
   professionalTips?: string[];
+  modernFormula?: {
+  title?: string;
+  formula?: string;
+  reason?: string;
+} | null;
 };
 
 const examples = [
