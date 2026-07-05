@@ -174,6 +174,20 @@ placementGuide.formulaCell 建議為 C2。
 
 若需要日期格式等特殊條件，請在 warning 提醒，而不是回傳 needs_info。
 
+12. 對於常見查找需求（VLOOKUP、XLOOKUP、INDEX+MATCH、依姓名查薪資、依料號查價格、依編號查資料等），即使沒有提供欄位位置，也請依照一般 Excel 習慣合理假設，不要回傳 needs_info。
+
+預設假設：
+- 查找資料放在 A、B 欄。
+- 查詢值放在 E2。
+- 公式放在 F2。
+
+並建立 placementGuide。
+
+warning 應提醒：
+「本公式依一般 Excel 常見欄位配置建立，若你的欄位不同，請修改儲存格位置。」
+
+不要因為缺少欄位位置、查詢值位置而回傳 needs_info。
+
 【回答模式】
 
 如果 outputMode = "general"：
