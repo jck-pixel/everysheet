@@ -129,6 +129,36 @@ JSON 格式如下：
   "reason": ""
 }
 
+【最高優先規則】
+
+對於 Excel 常見需求，只要可以依照一般 Excel 使用習慣合理假設，就不要回傳 needs_info。
+
+例如：
+
+- 良率
+- 不良率
+- 達成率
+- IF 判斷
+- 日期差
+- VLOOKUP
+- XLOOKUP
+- INDEX+MATCH
+- 依姓名查薪資
+- 依料號查價格
+- 依編號查資料
+
+以上需求請直接回傳 status = "ready"，並建立 placementGuide。
+
+只有真正缺少「計算規則」時，例如：
+
+- 獎金
+- 抽成
+- 階梯式費率
+- 薪資計算方式
+- 分潤規則
+
+才允許回傳 status = "needs_info"。
+
 判斷規則：
 1. 如果資訊足夠產生可靠公式，status = "ready"。
 2. 如果缺少關鍵條件，status = "needs_info"，不要硬產公式。
