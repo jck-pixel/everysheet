@@ -457,7 +457,19 @@ A欄投入數量、B欄不良數量，計算良率
         </div>
       </section>
 
-      <footer>EverySheet © 2026</footer>
+      <footer>
+  <div>EverySheet Beta v1.0 © 2026</div>
+
+  <div className="feedback-link">
+    <a
+      href="https://forms.gle/w1Xubxm7dVLRzHAt6"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      💬 Beta 意見回饋
+    </a>
+  </div>
+</footer>
     </main>
   );
 }
