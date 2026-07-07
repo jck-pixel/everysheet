@@ -462,6 +462,7 @@ A欄投入數量、B欄不良數量，計算良率
         </section>
       )}
 
+      {!result && (
       <section className="info-grid">
         <div className="info-card">
           <h3>適合誰？</h3>
@@ -478,6 +479,7 @@ A欄投入數量、B欄不良數量，計算良率
           <p>用中文描述需求，複製公式，貼到 Excel 或 Google Sheets。</p>
         </div>
       </section>
+      )}
 
       <footer>
   <div>EverySheet Beta v1.0 © 2026</div>
