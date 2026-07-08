@@ -208,9 +208,7 @@ setTimeout(() => {
           支援 Excel 與 Google Sheets。
         </p>
 
-        <div className="hero-rating">
-          支援 Excel 365、Excel 2021、Google Sheets
-        </div>
+        
       </section>
 
       <section className="app-card">
