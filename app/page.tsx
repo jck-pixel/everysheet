@@ -431,6 +431,20 @@ A欄投入數量、B欄不良數量，計算良率
     )}
   </div>
 )}
+
+              {outputMode === "professional" &&
+  result.professionalTips &&
+  result.professionalTips.length > 0 && (
+    <div className="professional-tips">
+      <h3>⭐ 專業建議</h3>
+      <ul>
+        {result.professionalTips.map((tip) => (
+          <li key={tip}>{tip}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+              
               <div className="result-grid">
                 <div className="mini-box">
                   <h3>中文解釋</h3>
