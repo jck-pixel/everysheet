@@ -494,3 +494,26 @@ footer {
 .feedback-link a:hover {
   text-decoration: underline;
 }
+
+.professional-tips {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid #cfe0ff;
+  background: #eef4ff;
+}
+
+.professional-tips h3 {
+  margin-top: 0;
+  color: var(--primary-dark);
+}
+
+.professional-tips ul {
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.8;
+}
+
+.professional-tips li {
+  margin-bottom: 6px;
+}
