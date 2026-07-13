@@ -181,6 +181,19 @@ setTimeout(() => {
     setLoading(false);
   }
 }
+
+function normalizeFormula(value: string) {
+  const formulaMatch = value.match(/=[^\n\r]+/);
+  return (formulaMatch?.[0] || value)
+    .replace(/\s+/g, "")
+    .trim()
+    .toUpperCase();
+}
+
+const isUnchangedFix =
+  mode === "fix" &&
+  result?.formula &&
+  normalizeFormula(request) === normalizeFormula(result.formula);
   
   async function copyFormula() {
     if (!result?.formula) return;
@@ -379,10 +392,21 @@ A欄投入數量、B欄不良數量，計算良率
           )}
 
           {result.status !== "needs_info" && (
-            <>
-              <h3>公式</h3>
-              <pre className="formula-box">{result.formula}</pre>
-{result.placementGuide && (
+  <>
+    {isUnchangedFix ? (
+      <div className="formula-status-box">
+        <h3>✅ 目前公式沒有明顯錯誤</h3>
+        <p>這個公式目前可以正常使用，不需要修改。</p>
+      </div>
+    ) : (
+      <>
+        <h3>公式</h3>
+        <pre className="formula-box">{result.formula}</pre>
+      </>
+    )}
+
+    {result.placementGuide && (
+    
   <div className="placement-box">
     <div className="placement-header">
       <h3>📋 Excel 示意圖</h3>
