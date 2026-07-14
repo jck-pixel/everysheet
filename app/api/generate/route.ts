@@ -51,23 +51,7 @@ function getModeInstruction(mode: string) {
   return `目前模式：建立公式。
 你的任務是根據使用者的中文需求，建立可直接貼到 Excel 或 Google Sheets 使用的公式。
 
-如果需求資訊不足，不要硬產公式，請回傳 status = "needs_info"。
-
-如果使用者的描述看起來是在反映現有公式有問題，例如：
-- 公式下面全部都是0
-- 公式結果不對
-- 公式一直出錯
-- 拖曳後跑掉
-- 一直顯示 #N/A
-- 為什麼都是 FALSE
-- 公式沒有反應
-
-不要停止建立公式，也不要只因為這個原因回傳 needs_info。
-
-請正常建立可用公式，並在 explanation 第一個句子加入：
-「看起來您目前已經有公式了，如果是想修改現有公式，可以使用【修正公式】。」
-
-如果使用者明確要求建立新公式，就不要加入這句提示。`;
+如果需求資訊不足，不要硬產公式，請回傳 status = "needs_info"。`;
 }
 
 export async function POST(req: Request) {
