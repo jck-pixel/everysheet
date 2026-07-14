@@ -13,11 +13,26 @@ function cleanFormula(formula: string) {
 
 function getModeInstruction(mode: string) {
   if (mode === "fix") {
-    return `目前模式：修正公式。
+  return `目前模式：修正公式。
+
 若使用者沒有提供公式，請回傳 status = "needs_info"，並要求使用者貼上錯誤公式。
 
-你的任務不是重新發明公式，而是幫使用者找出公式錯誤並修正。`;
-  }
+你的任務是修正使用者提供的公式，而不是重新建立新公式。
+
+請先判斷公式本身是否有語法、函數、參數、括號、引用範圍等問題。
+
+如果公式本身沒有明顯錯誤：
+- 直接回傳 status = "ready"
+- 保留原公式
+- explanation 說明公式本身沒有問題
+- 不要因為可能存在儲存格格式、資料內容、隱藏字元、空白字元或其他外部因素而回傳 needs_info。
+
+只有在：
+- 缺少公式
+- 或公式內容不足以判斷
+
+才回傳 status = "needs_info"。`;
+}
 
   if (mode === "explain") {
     return `目前模式：解釋公式。
