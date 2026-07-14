@@ -49,7 +49,10 @@ export default function Home() {
   const [originalRequest, setOriginalRequest] = useState("");
   const resultRef = useRef<HTMLDivElement>(null);
 
-async function generateFormula() {
+async function generateFormula(selectedMode?: string) {
+  const runMode = selectedMode || mode;
+
+  setMode(runMode);
   setError("");
   setResult(null);
   setCopied(false);
@@ -69,7 +72,12 @@ async function generateFormula() {
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ request, tool, outputMode, mode }),
+      body: JSON.stringify({
+        request,
+        tool,
+        outputMode,
+        mode: runMode,
+      }),
       signal: controller.signal,
     });
 
@@ -83,12 +91,12 @@ async function generateFormula() {
 
     setResult(data);
 
-setTimeout(() => {
-  resultRef.current?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-}, 100);
+    setTimeout(() => {
+      resultRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
   } catch (err) {
     if (err instanceof Error && err.name === "AbortError") {
       setError("處理時間過久，請重新試一次或把需求寫得更明確。");
@@ -249,38 +257,49 @@ A欄投入數量、B欄不良數量，計算良率
         </p>
 
         <div className="mode-tabs">
-          <button className={mode === "generate" ? "active" : ""} onClick={() => setMode("generate")}>
-            ✨ 建立公式
-          </button>
-          <button className={mode === "fix" ? "active" : ""} onClick={() => setMode("fix")}>
-            🛠 修正公式
-          </button>
-          <button className={mode === "explain" ? "active" : ""} onClick={() => setMode("explain")}>
-            📖 解釋公式
-          </button>
-          <button className={mode === "optimize" ? "active" : ""} onClick={() => setMode("optimize")}>
-            ⚡ 優化公式
-          </button>
-        </div>
+  <button
+    className={mode === "generate" ? "active" : ""}
+    onClick={() => generateFormula("generate")}
+    disabled={loading}
+  >
+    ✨ 建立公式
+  </button>
+
+  <button
+    className={mode === "fix" ? "active" : ""}
+    onClick={() => generateFormula("fix")}
+    disabled={loading}
+  >
+    🛠 修正公式
+  </button>
+
+  <button
+    className={mode === "explain" ? "active" : ""}
+    onClick={() => generateFormula("explain")}
+    disabled={loading}
+  >
+    📖 解釋公式
+  </button>
+
+  <button
+    className={mode === "optimize" ? "active" : ""}
+    onClick={() => generateFormula("optimize")}
+    disabled={loading}
+  >
+    ⚡ 優化公式
+  </button>
+</div>
 
         <div className="controls">
-          <select value={tool} onChange={(e) => setTool(e.target.value)} aria-label="選擇工具">
-            <option>Excel</option>
-            <option>Google Sheets</option>
-          </select>
-
-          <button onClick={generateFormula} disabled={loading}>
-            {loading
-              ? "處理中..."
-              : mode === "generate"
-              ? "建立公式"
-              : mode === "fix"
-              ? "修正公式"
-              : mode === "explain"
-              ? "解釋公式"
-              : "優化公式"}
-          </button>
-        </div>
+  <select
+    value={tool}
+    onChange={(e) => setTool(e.target.value)}
+    aria-label="選擇工具"
+  >
+    <option>Excel</option>
+    <option>Google Sheets</option>
+  </select>
+</div>
 
         <div className="mode-box">
           <div className="mode-title">選擇結果格式</div>
