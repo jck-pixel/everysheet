@@ -18,6 +18,10 @@ export const metadata: Metadata = {
     "SUMIFS",
     "EverySheet",
   ],
+
+  verification: {
+    google: "aEZNlmfvaZqCUdw9wbV24asyVdjUbBEh09_GH74dRbs",
+  },
 };
 
 export default function RootLayout({
