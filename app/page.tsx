@@ -541,7 +541,7 @@ A欄投入數量、B欄不良數量，計算良率
 
   <div className="feedback-link">
     <a
-      href="https://forms.gle/w1Xubxm7dVLRzHAt6"
+      href="https://forms.gle/WtRV77Npc7hfYRpi6"
       target="_blank"
       rel="noopener noreferrer"
     >
