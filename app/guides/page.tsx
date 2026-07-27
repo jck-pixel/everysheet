@@ -44,18 +44,26 @@ const popularGuides = [
   {
     name: "IF 函數",
     description: "依照條件顯示不同結果",
+    href: "/guides/excel-if-function",
+    available: true,
   },
   {
     name: "VLOOKUP",
     description: "從資料表中查找指定資料",
+    href: "",
+    available: false,
   },
   {
     name: "XLOOKUP",
     description: "Microsoft 365 的現代查找函數",
+    href: "",
+    available: false,
   },
   {
     name: "SUMIFS",
     description: "依照多個條件加總資料",
+    href: "",
+    available: false,
   },
 ];
 
@@ -94,18 +102,33 @@ export default function GuidesPage() {
           </p>
         </div>
 
-        <div style={styles.popularGrid}>
-          {popularGuides.map((guide) => (
-            <article key={guide.name} style={styles.popularCard}>
-              <div style={styles.cardTop}>
-                <span style={styles.functionName}>{guide.name}</span>
-                <span style={styles.comingSoon}>即將推出</span>
-              </div>
-
-              <p style={styles.cardDescription}>{guide.description}</p>
-            </article>
-          ))}
+       <div style={styles.popularGrid}>
+  {popularGuides.map((guide) =>
+    guide.available ? (
+      <Link
+        key={guide.name}
+        href={guide.href}
+        style={styles.popularCardLink}
+      >
+        <div style={styles.cardTop}>
+          <span style={styles.functionName}>{guide.name}</span>
+          <span style={styles.availableBadge}>開始學習 →</span>
         </div>
+
+        <p style={styles.cardDescription}>{guide.description}</p>
+      </Link>
+    ) : (
+      <article key={guide.name} style={styles.popularCard}>
+        <div style={styles.cardTop}>
+          <span style={styles.functionName}>{guide.name}</span>
+          <span style={styles.comingSoon}>即將推出</span>
+        </div>
+
+        <p style={styles.cardDescription}>{guide.description}</p>
+      </article>
+    )
+  )}
+</div>
 
         <div style={styles.sectionHeader}>
           <div>
@@ -280,6 +303,28 @@ const styles: Record<string, React.CSSProperties> = {
     background: "#ffffff",
     boxShadow: "0 12px 35px rgba(15, 27, 52, 0.06)",
   },
+
+  popularCardLink: {
+  display: "block",
+  padding: "22px",
+  border: "1px solid #a9c4ff",
+  borderRadius: "20px",
+  background: "#ffffff",
+  boxShadow: "0 12px 35px rgba(37, 99, 235, 0.12)",
+  color: "#0f1b34",
+  textDecoration: "none",
+  cursor: "pointer",
+},
+
+availableBadge: {
+  padding: "6px 10px",
+  borderRadius: "999px",
+  background: "#2563eb",
+  color: "#ffffff",
+  fontSize: "12px",
+  fontWeight: 800,
+  whiteSpace: "nowrap",
+},
 
   cardTop: {
     display: "flex",
