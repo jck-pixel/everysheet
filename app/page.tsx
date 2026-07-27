@@ -229,6 +229,11 @@ const isUnchangedFix =
           支援 Excel 與 Google Sheets。
         </p>
 
+        <div className="hero-links">
+  <Link href="/guides" className="guides-link">
+    📚 前往 Excel 教學中心
+  </Link>
+</div>
         
       </section>
 
