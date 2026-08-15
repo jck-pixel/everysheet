@@ -20,12 +20,15 @@ body {
   background:
     radial-gradient(circle at top, #dfeaff 0%, #f6f7fb 36%, #ffffff 100%);
   color: var(--text);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
 }
 
 main {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 56px 20px 72px;
+  padding: calc(56px + env(safe-area-inset-top)) 20px calc(72px + env(safe-area-inset-bottom));
 }
 
 .hero {
@@ -322,7 +325,7 @@ footer {
 
 @media (max-width: 760px) {
   main {
-    padding: 34px 14px 56px;
+    padding: calc(22px + env(safe-area-inset-top)) 12px calc(36px + env(safe-area-inset-bottom));
   }
 
   .example-title {
@@ -334,7 +337,8 @@ footer {
 }
 
   h1 {
-    font-size: 42px;
+    font-size: 34px;
+    letter-spacing: -1px;
   }
 
   .subtitle {
@@ -343,8 +347,25 @@ footer {
 
   .app-card,
   .result-card {
-    padding: 20px;
-    border-radius: 24px;
+    padding: 18px 14px;
+    border-radius: 22px;
+  }
+
+  textarea,
+  select,
+  button {
+    font-size: 16px;
+  }
+
+  textarea {
+    min-height: 132px;
+  }
+
+  button,
+  select,
+  .guides-link {
+    min-height: 48px;
+    touch-action: manipulation;
   }
 
   .controls,
@@ -355,6 +376,7 @@ footer {
 
   .mode-tabs button {
     flex: 1 1 calc(50% - 8px);
+    padding-inline: 8px;
   }
 
   .result-header {

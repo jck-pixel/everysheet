@@ -50,6 +50,23 @@ OPENAI_API_KEY=你的 OpenAI API Key
 - 複製公式
 - 手機版版面
 
+## Android App
+
+Android App 使用 Capacitor 封裝正式 EverySheet 網站，套件名稱為
+`com.orivio.everysheet`。
+
+```bash
+npm install
+npm run android:sync
+npm run android:apk
+```
+
+測試 APK 會產生在：
+
+```text
+android/app/build/outputs/apk/debug/app-debug.apk
+```
+
 ## 下一版建議
 
 - 每日免費 5 次限制

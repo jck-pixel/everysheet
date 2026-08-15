@@ -1,10 +1,6 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 function cleanFormula(formula: string) {
   const trimmed = String(formula || "").trim();
   if (!trimmed) return "";
@@ -61,6 +57,10 @@ export async function POST(req: Request) {
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ error: "尚未設定 OPENAI_API_KEY。" }, { status: 500 });
     }
+
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     if (!request || typeof request !== "string") {
       return NextResponse.json({ error: "請輸入需求。" }, { status: 400 });
