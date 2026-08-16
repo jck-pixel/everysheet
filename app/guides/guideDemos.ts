@@ -6,10 +6,10 @@ const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): 
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
   match: localized(
-    {title:"完整例子：尋找員工所在位置",instruction:"A2:A5 是員工姓名，在 D2 尋找王小美的位置。",headers:["A 姓名"],rows:[["陳小明"],["王小美"],["林小華"],["張小安"]],cell:"D2",formula:'=MATCH("王小美",A2:A5,0)',result:"2"},
-    {title:"Worked example: Find an employee position",instruction:"A2:A5 contains names. Find Amy Wang's position in D2.",headers:["A Name"],rows:[["Alex Chen"],["Amy Wang"],["Sam Lin"],["Ann Chang"]],cell:"D2",formula:'=MATCH("Amy Wang",A2:A5,0)',result:"2"},
-    {title:"実例：社員の位置を検索",instruction:"A2:A5 は氏名一覧です。D2 で花子の位置を検索します。",headers:["A 氏名"],rows:[["太郎"],["花子"],["次郎"],["安子"]],cell:"D2",formula:'=MATCH("花子",A2:A5,0)',result:"2"},
-    {title:"完整示例：查找员工所在位置",instruction:"A2:A5 是员工姓名，在 D2 查找王小美的位置。",headers:["A 姓名"],rows:[["陈小明"],["王小美"],["林小华"],["张小安"]],cell:"D2",formula:'=MATCH("王小美",A2:A5,0)',result:"2"}),
+    {title:"完整例子：找出商品位於清單第幾筆",instruction:"A2:A6 是商品清單，在 D2 尋找「蘋果」的相對位置。",headers:["A 商品"],rows:[["香蕉"],["橘子"],["蘋果"],["葡萄"],["西瓜"]],cell:"D2",formula:'=MATCH("蘋果",A2:A6,0)',result:"3"},
+    {title:"Worked example: Find a product's position",instruction:"A2:A6 contains products. Find the relative position of Apples in D2.",headers:["A Product"],rows:[["Bananas"],["Oranges"],["Apples"],["Grapes"],["Watermelon"]],cell:"D2",formula:'=MATCH("Apples",A2:A6,0)',result:"3"},
+    {title:"実例：商品がリストの何番目か検索",instruction:"A2:A6 は商品一覧です。D2 で「リンゴ」の相対位置を検索します。",headers:["A 商品"],rows:[["バナナ"],["オレンジ"],["リンゴ"],["ブドウ"],["スイカ"]],cell:"D2",formula:'=MATCH("リンゴ",A2:A6,0)',result:"3"},
+    {title:"完整示例：查找商品位于列表第几条",instruction:"A2:A6 是商品列表，在 D2 查找“苹果”的相对位置。",headers:["A 商品"],rows:[["香蕉"],["橙子"],["苹果"],["葡萄"],["西瓜"]],cell:"D2",formula:'=MATCH("苹果",A2:A6,0)',result:"3"}),
   index: localized(
     {title:"完整例子：取得清單第 3 筆薪資",instruction:"B2:B5 是薪資清單，在 D2 取得第 3 筆。",headers:["A 姓名","B 薪資"],rows:[["小明","35,000"],["小美","38,000"],["小華","42,000"],["小安","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
     {title:"Worked example: Return the third salary",instruction:"B2:B5 is the salary list. Return its third item in D2.",headers:["A Name","B Salary"],rows:[["Alex","35,000"],["Amy","38,000"],["Sam","42,000"],["Ann","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
