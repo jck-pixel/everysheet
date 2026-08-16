@@ -185,7 +185,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "INDEX" || item === "MATCH" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIF" || item === "SUMIFS" || item === "COUNTIF" || item === "COUNTIFS" || item === "AVERAGEIF" || item === "DATEDIF" || item === "TODAY" || item === "NETWORKDAYS" || item === "EDATE" || item === "LEFT" || item === "RIGHT" || item === "MID" || item === "TEXT" ? (
+                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "INDEX" || item === "MATCH" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIF" || item === "SUMIFS" || item === "COUNTIF" || item === "COUNTIFS" || item === "AVERAGEIF" || item === "DATEDIF" || item === "TODAY" || item === "NETWORKDAYS" || item === "EDATE" || item === "LEFT" || item === "RIGHT" || item === "MID" || item === "TEXT" || item === "TRIM" ? (
                     <Link
                       key={item}
                       href={item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR"
@@ -216,7 +216,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
                                 ? `/guides/excel-countifs-function?lang=${language}`
                                 : item === "AVERAGEIF"
                                   ? `/guides/excel-averageif-function?lang=${language}`
-                                  : item === "DATEDIF" ? `/guides/excel-datedif-function?lang=${language}` : item === "TODAY" ? `/guides/excel-today-function?lang=${language}` : item === "NETWORKDAYS" ? `/guides/excel-networkdays-function?lang=${language}` : item === "EDATE" ? `/guides/excel-edate-function?lang=${language}` : item === "LEFT" ? `/guides/excel-left-function?lang=${language}` : item === "RIGHT" ? `/guides/excel-right-function?lang=${language}` : item === "MID" ? `/guides/excel-mid-function?lang=${language}` : `/guides/excel-text-function?lang=${language}`}
+                                  : item === "DATEDIF" ? `/guides/excel-datedif-function?lang=${language}` : item === "TODAY" ? `/guides/excel-today-function?lang=${language}` : item === "NETWORKDAYS" ? `/guides/excel-networkdays-function?lang=${language}` : item === "EDATE" ? `/guides/excel-edate-function?lang=${language}` : item === "LEFT" ? `/guides/excel-left-function?lang=${language}` : item === "RIGHT" ? `/guides/excel-right-function?lang=${language}` : item === "MID" ? `/guides/excel-mid-function?lang=${language}` : item === "TEXT" ? `/guides/excel-text-function?lang=${language}` : `/guides/excel-trim-function?lang=${language}`}
                       style={styles.tag}
                       className="guides-tag guides-tag-link"
                     >

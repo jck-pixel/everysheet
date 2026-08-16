@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text" | "trim";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  trim: localized(
+    {title:"完整例子：清除員工姓名空格",instruction:"A 欄姓名含多餘空格，在 B2 清理後再向下複製。",headers:["A 原始姓名","B 清理結果"],rows:[["  王  小明  ","王 小明"],["  李小美 ","李小美"]],cell:"B2",formula:"=TRIM(A2)",result:"王 小明"},
+    {title:"Worked example: Clean employee names",instruction:"A contains names with extra spaces. Clean them in B2 and copy down.",headers:["A Original name","B Clean result"],rows:[["  Alex  Chen  ","Alex Chen"],["  Amy Wang ","Amy Wang"]],cell:"B2",formula:"=TRIM(A2)",result:"Alex Chen"},
+    {title:"実例：社員名の空白を削除",instruction:"A列の氏名には余分な空白があります。B2 で整理して下へコピーします。",headers:["A 元の氏名","B 整理結果"],rows:[["  山田  太郎  ","山田 太郎"],["  鈴木花子 ","鈴木花子"]],cell:"B2",formula:"=TRIM(A2)",result:"山田 太郎"},
+    {title:"完整示例：清除员工姓名空格",instruction:"A 列姓名包含多余空格，在 B2 清理后向下复制。",headers:["A 原始姓名","B 清理结果"],rows:[["  王  小明  ","王 小明"],["  李小美 ","李小美"]],cell:"B2",formula:"=TRIM(A2)",result:"王 小明"}),
   text: localized(
     {title:"完整例子：統一合約日期格式",instruction:"A 欄是合約日期，在 B2 統一顯示為年/月/日。",headers:["A 合約日期","B 顯示文字"],rows:[["2026-08-16","2026/08/16"],["2026-09-05","2026/09/05"]],cell:"B2",formula:'=TEXT(A2,"yyyy/mm/dd")',result:"2026/08/16"},
     {title:"Worked example: Standardize contract dates",instruction:"A contains contract dates. Display each as year/month/day in B2.",headers:["A Contract date","B Display text"],rows:[["2026-08-16","2026/08/16"],["2026-09-05","2026/09/05"]],cell:"B2",formula:'=TEXT(A2,"yyyy/mm/dd")',result:"2026/08/16"},
