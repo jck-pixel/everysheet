@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "and" | "or" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  or: localized(
+    {title:"完整例子：任一科及格",instruction:"B、C 欄是兩科分數，在 D2 顯示是否符合資格。",headers:["A 姓名","B 國文","C 英文","D 結果"],rows:[["小明","55","72","符合"],["小美","50","58","不符合"]],cell:"D2",formula:'=IF(OR(B2>=60,C2>=60),"符合","不符合")',result:"符合"},
+    {title:"Worked example: Pass either subject",instruction:"B and C contain subject scores. Display eligibility in D2.",headers:["A Name","B Subject 1","C Subject 2","D Result"],rows:[["Alex","55","72","Eligible"],["Amy","50","58","Not eligible"]],cell:"D2",formula:'=IF(OR(B2>=60,C2>=60),"Eligible","Not eligible")',result:"Eligible"},
+    {title:"実例：どちらかの科目に合格",instruction:"B、C列は科目点数です。D2 に資格結果を表示します。",headers:["A 氏名","B 国語","C 英語","D 結果"],rows:[["太郎","55","72","該当"],["花子","50","58","非該当"]],cell:"D2",formula:'=IF(OR(B2>=60,C2>=60),"該当","非該当")',result:"該当"},
+    {title:"完整示例：任一科及格",instruction:"B、C 列是两科分数，在 D2 显示是否符合资格。",headers:["A 姓名","B 语文","C 英语","D 结果"],rows:[["小明","55","72","符合"],["小美","50","58","不符合"]],cell:"D2",formula:'=IF(OR(B2>=60,C2>=60),"符合","不符合")',result:"符合"}),
   and: localized(
     {title:"完整例子：分數與出席率都達標",instruction:"B 欄是分數、C 欄是出席率，在 D2 顯示判斷結果。",headers:["A 姓名","B 分數","C 出席率","D 結果"],rows:[["小明","75","90%","通過"],["小美","85","70%","未通過"]],cell:"D2",formula:'=IF(AND(B2>=60,C2>=80%),"通過","未通過")',result:"通過"},
     {title:"Worked example: Score and attendance",instruction:"B is score and C is attendance. Display the result in D2.",headers:["A Name","B Score","C Attendance","D Result"],rows:[["Alex","75","90%","Pass"],["Amy","85","70%","Fail"]],cell:"D2",formula:'=IF(AND(B2>=60,C2>=80%),"Pass","Fail")',result:"Pass"},

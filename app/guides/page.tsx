@@ -185,17 +185,19 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIFS" || item === "COUNTIFS" || item === "DATEDIF" ? (
+                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIFS" || item === "COUNTIFS" || item === "DATEDIF" ? (
                     <Link
                       key={item}
-                      href={item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND"
+                      href={item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR"
                         ? item === "IF"
                           ? `/guides/excel-if-function?lang=${language}`
                           : item === "IFS"
                             ? `/guides/excel-ifs-function?lang=${language}`
                             : item === "IFERROR"
                               ? `/guides/excel-iferror-function?lang=${language}`
-                              : `/guides/excel-and-function?lang=${language}`
+                              : item === "AND"
+                                ? `/guides/excel-and-function?lang=${language}`
+                                : `/guides/excel-or-function?lang=${language}`
                         : item === "VLOOKUP"
                           ? `/guides/excel-vlookup-function?lang=${language}`
                           : item === "XLOOKUP"
