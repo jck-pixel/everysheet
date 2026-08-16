@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  left: localized(
+    {title:"完整例子：擷取員工部門代碼",instruction:"A 欄是員工編號，在 B2 擷取左側2個字元。",headers:["A 員工編號","B 部門代碼"],rows:[["HR-2026-001","HR"],["IT-2026-002","IT"]],cell:"B2",formula:"=LEFT(A2,2)",result:"HR"},
+    {title:"Worked example: Extract department code",instruction:"A contains employee IDs. Extract the first two characters in B2.",headers:["A Employee ID","B Department"],rows:[["HR-2026-001","HR"],["IT-2026-002","IT"]],cell:"B2",formula:"=LEFT(A2,2)",result:"HR"},
+    {title:"実例：社員の部署コードを抽出",instruction:"A列は社員番号です。B2 で左2文字を抽出します。",headers:["A 社員番号","B 部署コード"],rows:[["HR-2026-001","HR"],["IT-2026-002","IT"]],cell:"B2",formula:"=LEFT(A2,2)",result:"HR"},
+    {title:"完整示例：提取员工部门代码",instruction:"A 列是员工编号，在 B2 提取左侧2个字符。",headers:["A 员工编号","B 部门代码"],rows:[["HR-2026-001","HR"],["IT-2026-002","IT"]],cell:"B2",formula:"=LEFT(A2,2)",result:"HR"}),
   edate: localized(
     {title:"完整例子：計算一年後合約到期日",instruction:"A2 是開始日、B2 是合約月數，在 C2 計算到期日。",headers:["A 開始日","B 月數","C 到期日"],rows:[["2026/08/16","12","2027/08/16"]],cell:"C2",formula:"=EDATE(A2,B2)",result:"2027/08/16"},
     {title:"Worked example: One-year contract expiry",instruction:"A2 is the start and B2 is the term in months.",headers:["A Start","B Months","C Expiry"],rows:[["2026/08/16","12","2027/08/16"]],cell:"C2",formula:"=EDATE(A2,B2)",result:"2027/08/16"},
