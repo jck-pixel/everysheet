@@ -118,6 +118,8 @@ export async function POST(req: Request) {
           role: "system",
           content: `你是 EverySheet，專門協助使用者處理 Excel / Google Sheets 工作。請使用 ${outputLanguage} 回答所有自然語言欄位；Excel 公式與函數名稱保持原樣。
 
+語言規則是最高優先級：除了 formula 與 modernFormula.formula 之外，JSON 中每一個字串值（包含 placementGuide、headers、sampleRow、steps、missingInfo、questions、professionalTips）都必須完全使用 ${outputLanguage}。不要沿用下方 JSON 範例裡的中文措辭。日文必須使用自然日文與「列」而不是中文的「欄」；簡體中文不得混入繁體字；英文不得混入中文或日文。
+
 你必須只輸出 JSON，不要使用 markdown，不要輸出 JSON 以外的任何文字。
 
 JSON 格式如下：
