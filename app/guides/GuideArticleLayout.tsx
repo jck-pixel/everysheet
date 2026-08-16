@@ -11,7 +11,7 @@ type Content = {
   ctaTitle: string; ctaText: string; ctaButton: string; back: string;
 };
 
-export default function GuideArticleLayout({ language, path, content: c, demo }: { language: AppLanguage; path: string; content: Content; demo?: GuideDemo }) {
+export default function GuideArticleLayout({ language, path, content: c, demo, exampleDemos }: { language: AppLanguage; path: string; content: Content; demo?: GuideDemo; exampleDemos?: GuideDemo[] }) {
   return <main style={s.page} className="if-guide-page">
     <header style={s.header}><div style={s.nav} className="if-guide-nav">
       <Link href={`/?lang=${language}`} style={s.brand}>EverySheet</Link><GuideLanguageSelect language={language} path={path} />
@@ -22,7 +22,9 @@ export default function GuideArticleLayout({ language, path, content: c, demo }:
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.introTitle}</h2><p style={s.paragraph}>{c.intro}</p><div style={s.tagList}>{c.tags.map(tag => <span key={tag} style={s.tag}>{tag}</span>)}</div></section>
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.syntaxTitle}</h2><div style={s.formula}>{c.syntaxFormula}</div><div style={s.grid}>{c.syntaxItems.map(([title, detail]) => <div key={title} style={s.gridItem}><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
       {demo && <GuideExampleTable demo={demo} language={language} />}
-      {c.examples.map(example => <section key={example.title} style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{example.title}</h2><p style={s.paragraph}>{example.description}</p><div style={s.formula}>{example.formula}</div></section>)}
+      {c.examples.map((example, index) => exampleDemos?.[index]
+        ? <GuideExampleTable key={example.title} demo={exampleDemos[index]} language={language} />
+        : <section key={example.title} style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{example.title}</h2><p style={s.paragraph}>{example.description}</p><div style={s.formula}>{example.formula}</div></section>)}
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.tipsTitle}</h2><div style={s.grid}>{c.tips.map(([title, detail]) => <div key={title} style={s.gridItem}><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.errorsTitle}</h2><div style={s.errorList}>{c.errors.map(([title, detail]) => <div key={title} style={s.errorItem}><strong>{title}</strong><p style={s.errorText}>{detail}</p></div>)}</div></section>
       <section style={s.cta} className="if-guide-cta"><div><span style={s.ctaEyebrow}>EverySheet</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div><Link href={`/?lang=${language}`} style={s.ctaButton}>{c.ctaButton}</Link></section>
