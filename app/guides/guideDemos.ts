@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  networkdays: localized(
+    {title:"完整例子：計算專案工作天",instruction:"A2 是開始日、B2 是結束日，F2 是需排除的假日。",headers:["A 開始日","B 結束日","F 假日"],rows:[["2026/08/03","2026/08/14","2026/08/10"]],cell:"C2",formula:"=NETWORKDAYS(A2,B2,F2)",result:"9"},
+    {title:"Worked example: Project workdays",instruction:"A2 is the start, B2 the end, and F2 a holiday.",headers:["A Start","B End","F Holiday"],rows:[["2026/08/03","2026/08/14","2026/08/10"]],cell:"C2",formula:"=NETWORKDAYS(A2,B2,F2)",result:"9"},
+    {title:"実例：プロジェクト営業日",instruction:"A2 は開始日、B2 は終了日、F2 は休日です。",headers:["A 開始日","B 終了日","F 休日"],rows:[["2026/08/03","2026/08/14","2026/08/10"]],cell:"C2",formula:"=NETWORKDAYS(A2,B2,F2)",result:"9"},
+    {title:"完整示例：计算项目工作日",instruction:"A2 是开始日、B2 是结束日、F2 是假日。",headers:["A 开始日","B 结束日","F 假日"],rows:[["2026/08/03","2026/08/14","2026/08/10"]],cell:"C2",formula:"=NETWORKDAYS(A2,B2,F2)",result:"9"}),
   today: localized(
     {title:"完整例子：計算合約剩餘天數",instruction:"B2 是到期日，在 C2 用今天日期計算剩餘天數。",headers:["A 合約","B 到期日","C 剩餘天數"],rows:[["網站維護","2026/09/15","30"]],cell:"C2",formula:"=B2-TODAY()",result:"30"},
     {title:"Worked example: Contract days remaining",instruction:"B2 is the due date. Calculate remaining days in C2.",headers:["A Contract","B Due date","C Days left"],rows:[["Website support","2026/09/15","30"]],cell:"C2",formula:"=B2-TODAY()",result:"30"},

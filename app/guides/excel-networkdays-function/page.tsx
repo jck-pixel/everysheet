@@ -1,0 +1,3 @@
+import type{Metadata}from"next";import{AppLanguage,languageOptions}from"../../i18n";import GuideArticleLayout from"../GuideArticleLayout";import{guideDemos}from"../guideDemos";import{networkdaysContent}from"./content";
+export const metadata:Metadata={title:"Excel NETWORKDAYS 函數教學｜計算工作天｜EverySheet",description:"學習 Excel NETWORKDAYS，排除週末與假日並計算工作天。"};
+export default function NetworkdaysPage({searchParams}:{searchParams?:{lang?:string}}){const r=searchParams?.lang as AppLanguage|undefined;const l=languageOptions.some(o=>o.value===r)?r as AppLanguage:"zh-TW";return <GuideArticleLayout language={l} path="/guides/excel-networkdays-function" content={networkdaysContent[l]} demo={guideDemos.networkdays[l]}/>;}

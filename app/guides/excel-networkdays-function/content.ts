@@ -1,0 +1,60 @@
+import { AppLanguage } from "../../i18n";
+import type { SumifsContent } from "../excel-sumifs-function/content";
+
+export const networkdaysContent: Record<AppLanguage, SumifsContent> = {
+  "zh-TW": {
+    guides: "Excel 教學中心", formulaTool: "公式產生器", badge: "日期與時間", title: "Excel NETWORKDAYS 函數教學",
+    subtitle: "計算兩個日期之間的工作天數，自動排除週六、週日及指定假日。",
+    introTitle: "NETWORKDAYS 是什麼？", intro: "NETWORKDAYS 會計算開始日到結束日之間的工作天數，包含開始日與結束日；也能指定假日清單，從結果中排除。",
+    tags: ["專案工作天", "合約工期", "排除國定假日", "剩餘工作天"],
+    syntaxTitle: "NETWORKDAYS 語法", syntaxFormula: "=NETWORKDAYS(開始日期, 結束日期, [假日])",
+    syntaxItems: [["開始日期", "例如 A2"], ["結束日期", "例如 B2"], ["假日", "例如 F2:F10"], ["預設週末", "週六與週日"]],
+    examples: [
+      { title: "範例一：計算工作天", description: "計算 A2 到 B2 之間的工作天數。", formula: "=NETWORKDAYS(A2,B2)" },
+      { title: "範例二：排除假日", description: "F2:F10 放需要排除的假日日期。", formula: "=NETWORKDAYS(A2,B2,F2:F10)" },
+      { title: "範例三：計算剩餘工作天", description: "從今天計算到 B2 到期日。", formula: "=NETWORKDAYS(TODAY(),B2,F2:F10)" },
+      { title: "範例四：自訂週末", description: "若休假日不是週六、週日，改用 NETWORKDAYS.INTL。", formula: "=NETWORKDAYS.INTL(A2,B2,1,F2:F10)" },
+    ],
+    tipsTitle: "實用技巧", tips: [["包含起訖日", "若日期是工作日，開始日和結束日都會計入。"], ["假日必須是真日期", "看起來像日期的文字可能無法正確排除。"], ["預設排除六日", "其他休假制度使用 NETWORKDAYS.INTL。"], ["結果可能為負", "開始日晚於結束日時會回傳負數。"]],
+    errorsTitle: "常見錯誤", errors: [["出現 #VALUE!", "確認開始日、結束日及假日清單都是 Excel 日期值。"], ["工作天多一天", "NETWORKDAYS 會包含符合條件的開始日與結束日。"], ["假日沒有排除", "檢查假日是否位於日期區間內，以及格式是否正確。"], ["週末制度不同", "請使用 NETWORKDAYS.INTL 指定週末類型。"]],
+    ctaTitle: "工作日與假日條件很複雜？", ctaText: "描述起訖日、休假日與假日清單，EverySheet 會建立工作天公式。", ctaButton: "建立工作天公式", back: "← 返回 Excel 教學中心",
+  },
+  en: {
+    guides: "Excel Guides", formulaTool: "Formula tool", badge: "Date & time", title: "Excel NETWORKDAYS Guide",
+    subtitle: "Count workdays between two dates while excluding Saturdays, Sundays, and selected holidays.",
+    introTitle: "What does NETWORKDAYS do?", intro: "NETWORKDAYS counts weekdays from the start date through the end date and can remove dates listed in a holiday range.",
+    tags: ["Project workdays", "Contract duration", "Exclude holidays", "Remaining workdays"],
+    syntaxTitle: "NETWORKDAYS syntax", syntaxFormula: "=NETWORKDAYS(start_date, end_date, [holidays])",
+    syntaxItems: [["Start date", "For example, A2"], ["End date", "For example, B2"], ["Holidays", "For example, F2:F10"], ["Default weekend", "Saturday and Sunday"]],
+    examples: [
+      { title: "Example 1: Count workdays", description: "Count workdays from A2 through B2.", formula: "=NETWORKDAYS(A2,B2)" },
+      { title: "Example 2: Exclude holidays", description: "F2:F10 contains holiday dates.", formula: "=NETWORKDAYS(A2,B2,F2:F10)" },
+      { title: "Example 3: Remaining workdays", description: "Count from today through the due date in B2.", formula: "=NETWORKDAYS(TODAY(),B2,F2:F10)" },
+      { title: "Example 4: Custom weekend", description: "Use NETWORKDAYS.INTL when weekends differ.", formula: "=NETWORKDAYS.INTL(A2,B2,1,F2:F10)" },
+    ],
+    tipsTitle: "Useful tips", tips: [["Dates are inclusive", "Valid workdays at both ends are counted."], ["Use real dates", "Text that looks like a date may not work."], ["Default is Sat/Sun", "Use NETWORKDAYS.INTL for other schedules."], ["Negative results", "A start date after the end date returns a negative count."]],
+    errorsTitle: "Common mistakes", errors: [["#VALUE! appears", "Check that every input is an Excel date."], ["One extra day", "The function includes eligible start and end dates."], ["Holiday not excluded", "Check its range and date format."], ["Different weekend", "Use NETWORKDAYS.INTL."]],
+    ctaTitle: "Is your work schedule complicated?", ctaText: "Describe the dates, weekends, and holidays and EverySheet will build the formula.", ctaButton: "Create a workday formula", back: "← Back to Excel Guides",
+  },
+  ja: {
+    guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "日付と時刻", title: "Excel NETWORKDAYS 関数ガイド",
+    subtitle: "2つの日付間の営業日数を計算し、土日と指定休日を除外します。",
+    introTitle: "NETWORKDAYS 関数とは？", intro: "開始日から終了日までの平日を数え、休日一覧の日付も除外できます。開始日と終了日も条件に合えば含まれます。",
+    tags: ["プロジェクト営業日", "契約期間", "祝日除外", "残り営業日"],
+    syntaxTitle: "NETWORKDAYS の構文", syntaxFormula: "=NETWORKDAYS(開始日, 終了日, [休日])",
+    syntaxItems: [["開始日", "例：A2"], ["終了日", "例：B2"], ["休日", "例：F2:F10"], ["既定の週末", "土曜日と日曜日"]],
+    examples: [{title:"例1：営業日数",description:"A2 から B2 の営業日数。",formula:"=NETWORKDAYS(A2,B2)"},{title:"例2：休日を除外",description:"F2:F10 は休日一覧。",formula:"=NETWORKDAYS(A2,B2,F2:F10)"},{title:"例3：残り営業日",description:"今日から期限まで。",formula:"=NETWORKDAYS(TODAY(),B2,F2:F10)"},{title:"例4：週末を変更",description:"NETWORKDAYS.INTL を使用。",formula:"=NETWORKDAYS.INTL(A2,B2,1,F2:F10)"}],
+    tipsTitle:"実用的なヒント",tips:[["開始・終了日を含む","営業日なら両方を数えます。"],["実際の日付値","文字列の日付に注意。"],["既定は土日","他の休日は INTL。"],["負の結果","開始日が後なら負数。"]],
+    errorsTitle:"よくある間違い",errors:[["#VALUE!","日付値を確認。"],["1日多い","開始・終了日を含みます。"],["休日が除外されない","範囲と形式を確認。"],["週末が違う","INTL を使用。"]],
+    ctaTitle:"営業日条件が複雑ですか？",ctaText:"日付、週末、休日を説明すると EverySheet が数式を作成します。",ctaButton:"営業日数式を作成",back:"← Excel 学習センターに戻る",
+  },
+  "zh-CN": {
+    guides:"Excel 教学中心",formulaTool:"公式生成器",badge:"日期与时间",title:"Excel NETWORKDAYS 函数教学",subtitle:"计算两个日期间的工作日数，自动排除周六、周日与指定假日。",
+    introTitle:"NETWORKDAYS 是什么？",intro:"计算开始日到结束日之间的工作日，并可排除假日列表；符合条件的起止日也会计入。",tags:["项目工作日","合同工期","排除假日","剩余工作日"],
+    syntaxTitle:"NETWORKDAYS 语法",syntaxFormula:"=NETWORKDAYS(开始日期, 结束日期, [假日])",syntaxItems:[["开始日期","例如 A2"],["结束日期","例如 B2"],["假日","例如 F2:F10"],["默认周末","周六与周日"]],
+    examples:[{title:"示例一：计算工作日",description:"计算 A2 到 B2。",formula:"=NETWORKDAYS(A2,B2)"},{title:"示例二：排除假日",description:"F2:F10 是假日列表。",formula:"=NETWORKDAYS(A2,B2,F2:F10)"},{title:"示例三：剩余工作日",description:"今天到 B2。",formula:"=NETWORKDAYS(TODAY(),B2,F2:F10)"},{title:"示例四：自定义周末",description:"使用 NETWORKDAYS.INTL。",formula:"=NETWORKDAYS.INTL(A2,B2,1,F2:F10)"}],
+    tipsTitle:"实用技巧",tips:[["包含起止日","符合条件时都会计入。"],["使用真正日期","文本日期可能无效。"],["默认排除周末","其他制度使用 INTL。"],["可能返回负数","开始日晚于结束日时。"]],
+    errorsTitle:"常见错误",errors:[["#VALUE!","检查日期值。"],["多一天","函数包含起止日。"],["假日未排除","检查范围与格式。"],["周末不同","使用 INTL。"]],
+    ctaTitle:"工作日与假日条件复杂？",ctaText:"描述起止日、周末与假日，EverySheet 会创建公式。",ctaButton:"生成工作日公式",back:"← 返回 Excel 教学中心",
+  },
+};
