@@ -82,8 +82,10 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
       ? `/guides/excel-if-function?lang=${language}`
       : index === 1
         ? `/guides/excel-vlookup-function?lang=${language}`
+        : index === 2
+          ? `/guides/excel-xlookup-function?lang=${language}`
         : "",
-    available: index <= 1,
+    available: index <= 2,
   }));
   const localizedCategories = g.categoryItems.map(([icon, title, description, items]) => ({
     icon,
@@ -181,12 +183,14 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" || item === "VLOOKUP" ? (
+                  item === "IF" || item === "VLOOKUP" || item === "XLOOKUP" ? (
                     <Link
                       key={item}
                       href={item === "IF"
                         ? `/guides/excel-if-function?lang=${language}`
-                        : `/guides/excel-vlookup-function?lang=${language}`}
+                        : item === "VLOOKUP"
+                          ? `/guides/excel-vlookup-function?lang=${language}`
+                          : `/guides/excel-xlookup-function?lang=${language}`}
                       style={styles.tag}
                       className="guides-tag guides-tag-link"
                     >
