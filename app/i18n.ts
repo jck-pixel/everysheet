@@ -105,3 +105,30 @@ export const outputLanguageNames: Record<AppLanguage, string> = {
   ja: "Japanese",
   "zh-CN": "Simplified Chinese",
 };
+
+export const guideUiText = {
+  "zh-TW": {
+    formulaTool: "公式產生器 →", popular: "🔥 熱門教學", popularDescription: "從最常用的 Excel 函數開始。",
+    start: "開始學習 →", soon: "即將推出", categories: "📚 依分類瀏覽", categoryDescription: "依照工作需求，快速找到適合的函數。",
+    popularItems: [["IF 函數", "依照條件顯示不同結果"], ["VLOOKUP", "從資料表中查找指定資料"], ["XLOOKUP", "Microsoft 365 的現代查找函數"], ["SUMIFS", "依照多個條件加總資料"]],
+    categoryItems: [["🔎", "查找函數", "依照編號、姓名或條件查詢資料。", ["VLOOKUP", "XLOOKUP", "INDEX", "MATCH"]], ["🧠", "邏輯函數", "依照條件顯示不同結果。", ["IF", "IFS", "IFERROR", "AND", "OR"]], ["📊", "統計函數", "加總、計數與多條件統計。", ["SUMIF", "SUMIFS", "COUNTIF", "COUNTIFS", "AVERAGEIF"]], ["📅", "日期與時間", "計算日期差、工作天與到期日。", ["DATEDIF", "TODAY", "NETWORKDAYS", "EDATE"]], ["✏️", "文字處理", "擷取、整理及合併文字內容。", ["LEFT", "RIGHT", "MID", "TEXT", "TRIM", "SUBSTITUTE"]]],
+  },
+  en: {
+    formulaTool: "Formula tool →", popular: "🔥 Popular guides", popularDescription: "Start with the most-used Excel functions.",
+    start: "Start →", soon: "Coming soon", categories: "📚 Browse by category", categoryDescription: "Find the right function for your task.",
+    popularItems: [["IF function", "Show different results based on a condition"], ["VLOOKUP", "Find matching data in a table"], ["XLOOKUP", "Modern lookup for Microsoft 365"], ["SUMIFS", "Sum values using multiple conditions"]],
+    categoryItems: [["🔎", "Lookup", "Find data by ID, name, or condition.", ["VLOOKUP", "XLOOKUP", "INDEX", "MATCH"]], ["🧠", "Logic", "Return different results by condition.", ["IF", "IFS", "IFERROR", "AND", "OR"]], ["📊", "Statistics", "Sum, count, and analyze with conditions.", ["SUMIF", "SUMIFS", "COUNTIF", "COUNTIFS", "AVERAGEIF"]], ["📅", "Date & time", "Calculate date differences and workdays.", ["DATEDIF", "TODAY", "NETWORKDAYS", "EDATE"]], ["✏️", "Text", "Extract, clean, and combine text.", ["LEFT", "RIGHT", "MID", "TEXT", "TRIM", "SUBSTITUTE"]]],
+  },
+  ja: {
+    formulaTool: "数式ツール →", popular: "🔥 人気のガイド", popularDescription: "よく使う Excel 関数から学びます。",
+    start: "学習する →", soon: "近日公開", categories: "📚 カテゴリから探す", categoryDescription: "作業内容に合う関数をすぐに見つけます。",
+    popularItems: [["IF 関数", "条件に応じて異なる結果を表示"], ["VLOOKUP", "表から指定したデータを検索"], ["XLOOKUP", "Microsoft 365 の新しい検索関数"], ["SUMIFS", "複数条件で数値を合計"]],
+    categoryItems: [["🔎", "検索関数", "番号、氏名、条件からデータを検索。", ["VLOOKUP", "XLOOKUP", "INDEX", "MATCH"]], ["🧠", "論理関数", "条件に応じて結果を切り替えます。", ["IF", "IFS", "IFERROR", "AND", "OR"]], ["📊", "集計関数", "合計、件数、複数条件の集計。", ["SUMIF", "SUMIFS", "COUNTIF", "COUNTIFS", "AVERAGEIF"]], ["📅", "日付と時刻", "日数差、営業日、期限を計算。", ["DATEDIF", "TODAY", "NETWORKDAYS", "EDATE"]], ["✏️", "文字列処理", "文字列の抽出、整理、結合。", ["LEFT", "RIGHT", "MID", "TEXT", "TRIM", "SUBSTITUTE"]]],
+  },
+  "zh-CN": {
+    formulaTool: "公式生成器 →", popular: "🔥 热门教学", popularDescription: "从最常用的 Excel 函数开始。",
+    start: "开始学习 →", soon: "即将推出", categories: "📚 按分类浏览", categoryDescription: "根据工作需求快速找到适合的函数。",
+    popularItems: [["IF 函数", "根据条件显示不同结果"], ["VLOOKUP", "从数据表中查找指定数据"], ["XLOOKUP", "Microsoft 365 的现代查找函数"], ["SUMIFS", "根据多个条件汇总数据"]],
+    categoryItems: [["🔎", "查找函数", "根据编号、姓名或条件查询数据。", ["VLOOKUP", "XLOOKUP", "INDEX", "MATCH"]], ["🧠", "逻辑函数", "根据条件显示不同结果。", ["IF", "IFS", "IFERROR", "AND", "OR"]], ["📊", "统计函数", "求和、计数与多条件统计。", ["SUMIF", "SUMIFS", "COUNTIF", "COUNTIFS", "AVERAGEIF"]], ["📅", "日期与时间", "计算日期差、工作日与到期日。", ["DATEDIF", "TODAY", "NETWORKDAYS", "EDATE"]], ["✏️", "文本处理", "提取、整理及合并文本内容。", ["LEFT", "RIGHT", "MID", "TEXT", "TRIM", "SUBSTITUTE"]]],
+  },
+} as const;

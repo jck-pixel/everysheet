@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AppLanguage, guideUiText, languageOptions } from "../i18n";
+import GuideLanguageSelect from "./GuideLanguageSelect";
 
 export const metadata: Metadata = {
   title: "Excel 教學中心｜函數教學與實務公式｜EverySheet",
@@ -67,13 +69,33 @@ const popularGuides = [
   },
 ];
 
-export default function GuidesPage() {
+export default function GuidesPage({ searchParams }: { searchParams?: { lang?: string } }) {
+  const requestedLanguage = searchParams?.lang as AppLanguage | undefined;
+  const language = languageOptions.some((option) => option.value === requestedLanguage)
+    ? requestedLanguage as AppLanguage
+    : "zh-TW";
+  const g = guideUiText[language];
+  const localizedPopularGuides = g.popularItems.map(([name, description], index) => ({
+    name,
+    description,
+    href: index === 0 ? `/guides/excel-if-function?lang=${language}` : "",
+    available: index === 0,
+  }));
+  const localizedCategories = g.categoryItems.map(([icon, title, description, items]) => ({
+    icon,
+    title,
+    description,
+    items,
+  }));
+
   return (
     <main style={styles.page} className="guides-page">
       <section style={styles.hero} className="guides-hero">
         <Link href="/" style={styles.brand} className="guides-brand">
           EverySheet
         </Link>
+
+        <GuideLanguageSelect language={language} />
 
         <div style={styles.badge} className="guides-badge">Excel Formula Guides</div>
 
@@ -85,8 +107,8 @@ export default function GuidesPage() {
           快速找到你需要的 Excel 與 Google Sheets 教學。
         </p>
 
-        <Link href="/" style={styles.primaryButton} className="guides-primary-button">
-          公式產生器 →
+        <Link href={`/?lang=${language}`} style={styles.primaryButton} className="guides-primary-button">
+          {g.formulaTool}
         </Link>
       </section>
 
@@ -94,16 +116,16 @@ export default function GuidesPage() {
         <div style={styles.sectionHeader} className="guides-section-header">
           <div>
             <span style={styles.eyebrow}>熱門內容</span>
-            <h2 style={styles.sectionTitle} className="guides-section-title">🔥 熱門教學</h2>
+            <h2 style={styles.sectionTitle} className="guides-section-title">{g.popular}</h2>
           </div>
 
           <p style={styles.sectionDescription} className="guides-section-description">
-            第一批教學文章將從最常用的 Excel 函數開始。
+            {g.popularDescription}
           </p>
         </div>
 
        <div style={styles.popularGrid} className="guides-popular-grid">
-  {popularGuides.map((guide) =>
+  {localizedPopularGuides.map((guide) =>
     guide.available ? (
       <Link
         key={guide.name}
@@ -113,19 +135,19 @@ export default function GuidesPage() {
       >
         <div style={styles.cardTop}>
           <span style={styles.functionName}>{guide.name}</span>
-          <span style={styles.availableBadge}>開始學習 →</span>
+          <span style={styles.availableBadge}>{g.start}</span>
         </div>
 
-        <p style={styles.cardDescription}>{guide.description}</p>
+        <p style={styles.cardDescription} className="guides-card-description">{guide.description}</p>
       </Link>
     ) : (
       <article key={guide.name} style={styles.popularCard} className="guides-popular-card">
         <div style={styles.cardTop}>
           <span style={styles.functionName}>{guide.name}</span>
-          <span style={styles.comingSoon}>即將推出</span>
+          <span style={styles.comingSoon}>{g.soon}</span>
         </div>
 
-        <p style={styles.cardDescription}>{guide.description}</p>
+        <p style={styles.cardDescription} className="guides-card-description">{guide.description}</p>
       </article>
     )
   )}
@@ -134,16 +156,16 @@ export default function GuidesPage() {
         <div style={styles.sectionHeader} className="guides-section-header">
           <div>
             <span style={styles.eyebrow}>公式分類</span>
-            <h2 style={styles.sectionTitle} className="guides-section-title">📚 依分類瀏覽</h2>
+            <h2 style={styles.sectionTitle} className="guides-section-title">{g.categories}</h2>
           </div>
 
           <p style={styles.sectionDescription} className="guides-section-description">
-            依照工作需求，快速找到適合的函數。
+            {g.categoryDescription}
           </p>
         </div>
 
         <div style={styles.categoryGrid} className="guides-category-grid">
-          {categories.map((category) => (
+          {localizedCategories.map((category) => (
             <article key={category.title} style={styles.categoryCard} className="guides-category-card">
               <div style={styles.categoryIcon} className="guides-category-icon">{category.icon}</div>
 
