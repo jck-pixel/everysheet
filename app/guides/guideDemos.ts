@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  match: localized(
+    {title:"完整例子：尋找員工所在位置",instruction:"A2:A5 是員工姓名，在 D2 尋找王小美的位置。",headers:["A 姓名"],rows:[["陳小明"],["王小美"],["林小華"],["張小安"]],cell:"D2",formula:'=MATCH("王小美",A2:A5,0)',result:"2"},
+    {title:"Worked example: Find an employee position",instruction:"A2:A5 contains names. Find Amy Wang's position in D2.",headers:["A Name"],rows:[["Alex Chen"],["Amy Wang"],["Sam Lin"],["Ann Chang"]],cell:"D2",formula:'=MATCH("Amy Wang",A2:A5,0)',result:"2"},
+    {title:"実例：社員の位置を検索",instruction:"A2:A5 は氏名一覧です。D2 で花子の位置を検索します。",headers:["A 氏名"],rows:[["太郎"],["花子"],["次郎"],["安子"]],cell:"D2",formula:'=MATCH("花子",A2:A5,0)',result:"2"},
+    {title:"完整示例：查找员工所在位置",instruction:"A2:A5 是员工姓名，在 D2 查找王小美的位置。",headers:["A 姓名"],rows:[["陈小明"],["王小美"],["林小华"],["张小安"]],cell:"D2",formula:'=MATCH("王小美",A2:A5,0)',result:"2"}),
   index: localized(
     {title:"完整例子：取得清單第 3 筆薪資",instruction:"B2:B5 是薪資清單，在 D2 取得第 3 筆。",headers:["A 姓名","B 薪資"],rows:[["小明","35,000"],["小美","38,000"],["小華","42,000"],["小安","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
     {title:"Worked example: Return the third salary",instruction:"B2:B5 is the salary list. Return its third item in D2.",headers:["A Name","B Salary"],rows:[["Alex","35,000"],["Amy","38,000"],["Sam","42,000"],["Ann","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
