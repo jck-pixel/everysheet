@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  edate: localized(
+    {title:"完整例子：計算一年後合約到期日",instruction:"A2 是開始日、B2 是合約月數，在 C2 計算到期日。",headers:["A 開始日","B 月數","C 到期日"],rows:[["2026/08/16","12","2027/08/16"]],cell:"C2",formula:"=EDATE(A2,B2)",result:"2027/08/16"},
+    {title:"Worked example: One-year contract expiry",instruction:"A2 is the start and B2 is the term in months.",headers:["A Start","B Months","C Expiry"],rows:[["2026/08/16","12","2027/08/16"]],cell:"C2",formula:"=EDATE(A2,B2)",result:"2027/08/16"},
+    {title:"実例：1年後の契約期限",instruction:"A2 は開始日、B2 は契約月数です。",headers:["A 開始日","B 月数","C 期限日"],rows:[["2026/08/16","12","2027/08/16"]],cell:"C2",formula:"=EDATE(A2,B2)",result:"2027/08/16"},
+    {title:"完整示例：计算一年后合同到期日",instruction:"A2 是开始日、B2 是合同月数。",headers:["A 开始日","B 月数","C 到期日"],rows:[["2026/08/16","12","2027/08/16"]],cell:"C2",formula:"=EDATE(A2,B2)",result:"2027/08/16"}),
   networkdays: localized(
     {title:"完整例子：計算專案工作天",instruction:"A2 是開始日、B2 是結束日，F2 是需排除的假日。",headers:["A 開始日","B 結束日","F 假日"],rows:[["2026/08/03","2026/08/14","2026/08/10"]],cell:"C2",formula:"=NETWORKDAYS(A2,B2,F2)",result:"9"},
     {title:"Worked example: Project workdays",instruction:"A2 is the start, B2 the end, and F2 a holiday.",headers:["A Start","B End","F Holiday"],rows:[["2026/08/03","2026/08/14","2026/08/10"]],cell:"C2",formula:"=NETWORKDAYS(A2,B2,F2)",result:"9"},
