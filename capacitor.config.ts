@@ -1,11 +1,15 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
+const serverUrl =
+  process.env.CAPACITOR_SERVER_URL ??
+  "https://ai-excel-assistant-rose.vercel.app";
+
 const config: CapacitorConfig = {
   appId: "com.orivio.everysheet",
   appName: "EverySheet",
   webDir: "public",
   server: {
-    url: "https://ai-excel-assistant-rose.vercel.app",
+    url: serverUrl,
     cleartext: false,
   },
   android: {
