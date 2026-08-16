@@ -366,9 +366,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
-    padding: 0 4px;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding: 0 2px;
     text-align: left;
   }
 
@@ -381,17 +381,18 @@ footer {
   .mobile-brand {
     display: block;
     color: var(--primary-dark);
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 900;
     letter-spacing: -0.5px;
   }
 
   .language-select {
     position: static;
-    min-width: 76px;
-    min-height: 40px;
-    padding: 7px 26px 7px 9px;
-    font-size: 13px;
+    min-width: 64px;
+    min-height: 36px;
+    padding: 5px 22px 5px 7px;
+    border-radius: 10px;
+    font-size: 12px;
   }
 
   .subtitle {
@@ -404,9 +405,10 @@ footer {
   }
 
   .guides-link {
-    min-height: 40px;
-    padding: 7px 11px;
-    font-size: 13px;
+    min-height: 36px;
+    padding: 5px 8px;
+    border-radius: 11px;
+    font-size: 12px;
     white-space: nowrap;
   }
 
@@ -431,8 +433,8 @@ footer {
   }
 
   textarea {
-    min-height: 116px;
-    padding: 14px;
+    min-height: 96px;
+    padding: 12px;
   }
 
   button,
@@ -454,29 +456,35 @@ footer {
   }
 
   .mode-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     margin-top: 16px;
     padding: 12px;
     border-radius: 18px;
   }
 
   .mode-title {
+    grid-column: 1 / -1;
     font-size: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
   }
 
   .mode-option {
-    margin-bottom: 8px;
-    padding: 11px 12px;
+    align-items: center;
+    min-height: 52px;
+    margin-bottom: 0;
+    padding: 8px 9px;
     border-radius: 14px;
   }
 
   .mode-option strong {
-    font-size: 15px;
+    margin-bottom: 0;
+    font-size: 14px;
   }
 
   .mode-option span {
-    font-size: 13px;
-    line-height: 1.35;
+    display: none;
   }
 
   .examples {
