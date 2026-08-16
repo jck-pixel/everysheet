@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  mid: localized(
+    {title:"完整例子：擷取訂單年份",instruction:"A 欄是訂單編號，在 B2 從第5個字元開始擷取4個字元。",headers:["A 訂單編號","B 年份"],rows:[["ORD-2026-0086","2026"],["ORD-2025-0142","2025"]],cell:"B2",formula:"=MID(A2,5,4)",result:"2026"},
+    {title:"Worked example: Extract an order year",instruction:"A contains order IDs. Return four characters beginning at position 5 in B2.",headers:["A Order ID","B Year"],rows:[["ORD-2026-0086","2026"],["ORD-2025-0142","2025"]],cell:"B2",formula:"=MID(A2,5,4)",result:"2026"},
+    {title:"実例：注文年を抽出",instruction:"A列は注文番号です。B2 で5文字目から4文字を抽出します。",headers:["A 注文番号","B 年"],rows:[["ORD-2026-0086","2026"],["ORD-2025-0142","2025"]],cell:"B2",formula:"=MID(A2,5,4)",result:"2026"},
+    {title:"完整示例：提取订单年份",instruction:"A 列是订单编号，在 B2 从第5个字符开始提取4个字符。",headers:["A 订单编号","B 年份"],rows:[["ORD-2026-0086","2026"],["ORD-2025-0142","2025"]],cell:"B2",formula:"=MID(A2,5,4)",result:"2026"}),
   right: localized(
     {title:"完整例子：擷取訂單流水號",instruction:"A 欄是訂單編號，在 B2 擷取右側4個字元。",headers:["A 訂單編號","B 流水號"],rows:[["ORD-2026-0086","0086"],["ORD-2026-0142","0142"]],cell:"B2",formula:"=RIGHT(A2,4)",result:"0086"},
     {title:"Worked example: Extract an order serial",instruction:"A contains order IDs. Extract the last four characters in B2.",headers:["A Order ID","B Serial"],rows:[["ORD-2026-0086","0086"],["ORD-2026-0142","0142"]],cell:"B2",formula:"=RIGHT(A2,4)",result:"0086"},
