@@ -33,8 +33,6 @@ const examples = [
   { label: "💰 加班費", text: "A欄是總工時，B欄是每小時工資，超過8小時的部分算加班費，加班倍率為1.33倍，加班費顯示在C欄" },
   { label: "🔍 VLOOKUP", text: "依照姓名查找對應薪資" },
   { label: "📅 日期差", text: "計算兩個日期相差幾天" },
-  { label: "📝 IF 判斷", text: "A欄大於100顯示OK，否則顯示NG" },
-  { label: "✅ 統計 NG", text: "統計B欄中出現NG的數量" },
 ];
 
 export default function Home() {

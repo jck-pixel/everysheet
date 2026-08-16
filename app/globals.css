@@ -23,6 +23,8 @@ body {
   min-height: 100dvh;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 main {
@@ -337,12 +339,31 @@ footer {
 }
 
   h1 {
-    font-size: 34px;
+    font-size: 30px;
     letter-spacing: -1px;
   }
 
+  .hero {
+    margin-bottom: 14px;
+  }
+
+  .badge {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
   .subtitle {
-    font-size: 17px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .hero-links {
+    margin-top: 12px;
+  }
+
+  .guides-link {
+    padding: 8px 14px;
+    font-size: 14px;
   }
 
   .app-card,
@@ -358,7 +379,8 @@ footer {
   }
 
   textarea {
-    min-height: 132px;
+    min-height: 116px;
+    padding: 14px;
   }
 
   button,
@@ -379,9 +401,155 @@ footer {
     padding-inline: 8px;
   }
 
+  .mode-box {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .mode-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .mode-option {
+    margin-bottom: 8px;
+    padding: 11px 12px;
+    border-radius: 14px;
+  }
+
+  .mode-option strong {
+    font-size: 15px;
+  }
+
+  .mode-option span {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .example-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 6px;
+    font-size: 13px;
+  }
+
   .result-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .info-grid {
+    display: none;
+  }
+
+  footer {
+    margin-top: 24px;
+  }
+
+  .guides-page {
+    padding: 0 !important;
+  }
+
+  .guides-hero {
+    padding: calc(24px + env(safe-area-inset-top)) 16px 22px !important;
+  }
+
+  .guides-brand {
+    margin: 0 8px 0 0 !important;
+    font-size: 16px !important;
+  }
+
+  .guides-badge {
+    padding: 5px 9px !important;
+    font-size: 11px !important;
+  }
+
+  .guides-title {
+    margin: 14px 0 8px !important;
+    font-size: 32px !important;
+    letter-spacing: -1px !important;
+  }
+
+  .guides-subtitle {
+    margin: 0 auto 16px !important;
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  .guides-primary-button {
+    min-height: 44px !important;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+  }
+
+  .guides-content {
+    padding: 0 14px 36px !important;
+  }
+
+  .guides-section-header {
+    margin: 24px 0 12px !important;
+    gap: 6px !important;
+  }
+
+  .guides-section-title {
+    margin-top: 4px !important;
+    font-size: 23px !important;
+  }
+
+  .guides-section-description {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .guides-popular-grid,
+  .guides-category-grid {
+    gap: 10px !important;
+  }
+
+  .guides-popular-card {
+    padding: 15px !important;
+    border-radius: 16px !important;
+  }
+
+  .guides-category-card {
+    display: grid !important;
+    grid-template-columns: 36px 1fr !important;
+    padding: 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .guides-category-icon {
+    grid-row: 1 / span 2;
+    font-size: 24px !important;
+  }
+
+  .guides-category-title {
+    margin: 0 !important;
+    font-size: 21px !important;
+  }
+
+  .guides-category-description {
+    margin: 3px 0 10px !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .guides-tag-list {
+    grid-column: 1 / -1;
+    gap: 7px !important;
+  }
+
+  .guides-tag {
+    padding: 7px 9px !important;
+    font-size: 12px !important;
   }
 }
 

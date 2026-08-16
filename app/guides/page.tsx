@@ -69,46 +69,47 @@ const popularGuides = [
 
 export default function GuidesPage() {
   return (
-    <main style={styles.page}>
-      <section style={styles.hero}>
-        <Link href="/" style={styles.brand}>
+    <main style={styles.page} className="guides-page">
+      <section style={styles.hero} className="guides-hero">
+        <Link href="/" style={styles.brand} className="guides-brand">
           EverySheet
         </Link>
 
-        <div style={styles.badge}>Excel Formula Guides</div>
+        <div style={styles.badge} className="guides-badge">Excel Formula Guides</div>
 
-        <h1 style={styles.title}>Excel 教學中心</h1>
+        <h1 style={styles.title} className="guides-title">Excel 教學中心</h1>
 
-        <p style={styles.subtitle}>
+        <p style={styles.subtitle} className="guides-subtitle">
           從基礎函數到實務公式，
           <br />
           快速找到你需要的 Excel 與 Google Sheets 教學。
         </p>
 
-        <Link href="/" style={styles.primaryButton}>
+        <Link href="/" style={styles.primaryButton} className="guides-primary-button">
           回到公式產生器
         </Link>
       </section>
 
-      <section style={styles.content}>
-        <div style={styles.sectionHeader}>
+      <section style={styles.content} className="guides-content">
+        <div style={styles.sectionHeader} className="guides-section-header">
           <div>
             <span style={styles.eyebrow}>熱門內容</span>
-            <h2 style={styles.sectionTitle}>🔥 熱門教學</h2>
+            <h2 style={styles.sectionTitle} className="guides-section-title">🔥 熱門教學</h2>
           </div>
 
-          <p style={styles.sectionDescription}>
+          <p style={styles.sectionDescription} className="guides-section-description">
             第一批教學文章將從最常用的 Excel 函數開始。
           </p>
         </div>
 
-       <div style={styles.popularGrid}>
+       <div style={styles.popularGrid} className="guides-popular-grid">
   {popularGuides.map((guide) =>
     guide.available ? (
       <Link
         key={guide.name}
         href={guide.href}
         style={styles.popularCardLink}
+        className="guides-popular-card"
       >
         <div style={styles.cardTop}>
           <span style={styles.functionName}>{guide.name}</span>
@@ -118,7 +119,7 @@ export default function GuidesPage() {
         <p style={styles.cardDescription}>{guide.description}</p>
       </Link>
     ) : (
-      <article key={guide.name} style={styles.popularCard}>
+      <article key={guide.name} style={styles.popularCard} className="guides-popular-card">
         <div style={styles.cardTop}>
           <span style={styles.functionName}>{guide.name}</span>
           <span style={styles.comingSoon}>即將推出</span>
@@ -130,31 +131,31 @@ export default function GuidesPage() {
   )}
 </div>
 
-        <div style={styles.sectionHeader}>
+        <div style={styles.sectionHeader} className="guides-section-header">
           <div>
             <span style={styles.eyebrow}>公式分類</span>
-            <h2 style={styles.sectionTitle}>📚 依分類瀏覽</h2>
+            <h2 style={styles.sectionTitle} className="guides-section-title">📚 依分類瀏覽</h2>
           </div>
 
-          <p style={styles.sectionDescription}>
+          <p style={styles.sectionDescription} className="guides-section-description">
             依照工作需求，快速找到適合的函數。
           </p>
         </div>
 
-        <div style={styles.categoryGrid}>
+        <div style={styles.categoryGrid} className="guides-category-grid">
           {categories.map((category) => (
-            <article key={category.title} style={styles.categoryCard}>
-              <div style={styles.categoryIcon}>{category.icon}</div>
+            <article key={category.title} style={styles.categoryCard} className="guides-category-card">
+              <div style={styles.categoryIcon} className="guides-category-icon">{category.icon}</div>
 
-              <h3 style={styles.categoryTitle}>{category.title}</h3>
+              <h3 style={styles.categoryTitle} className="guides-category-title">{category.title}</h3>
 
-              <p style={styles.categoryDescription}>
+              <p style={styles.categoryDescription} className="guides-category-description">
                 {category.description}
               </p>
 
-              <div style={styles.tagList}>
+              <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  <span key={item} style={styles.tag}>
+                  <span key={item} style={styles.tag} className="guides-tag">
                     {item}
                   </span>
                 ))}
