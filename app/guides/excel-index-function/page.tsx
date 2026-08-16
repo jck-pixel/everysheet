@@ -1,0 +1,3 @@
+import type { Metadata } from "next"; import { AppLanguage,languageOptions } from "../../i18n"; import GuideArticleLayout from "../GuideArticleLayout"; import {guideDemos} from "../guideDemos"; import {indexContent} from "./content";
+export const metadata:Metadata={title:"Excel INDEX 函數教學｜指定列欄取值｜EverySheet",description:"學習 Excel INDEX，依列數與欄數取值並搭配 MATCH 動態查找。"};
+export default function IndexGuidePage({searchParams}:{searchParams?:{lang?:string}}){const r=searchParams?.lang as AppLanguage|undefined;const l=languageOptions.some(o=>o.value===r)?r as AppLanguage:"zh-TW";return <GuideArticleLayout language={l} path="/guides/excel-index-function" content={indexContent[l]} demo={guideDemos.index[l]}/>;}

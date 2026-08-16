@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  index: localized(
+    {title:"完整例子：取得清單第 3 筆薪資",instruction:"B2:B5 是薪資清單，在 D2 取得第 3 筆。",headers:["A 姓名","B 薪資"],rows:[["小明","35,000"],["小美","38,000"],["小華","42,000"],["小安","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
+    {title:"Worked example: Return the third salary",instruction:"B2:B5 is the salary list. Return its third item in D2.",headers:["A Name","B Salary"],rows:[["Alex","35,000"],["Amy","38,000"],["Sam","42,000"],["Ann","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
+    {title:"実例：3番目の給与を取得",instruction:"B2:B5 は給与一覧です。D2 に3番目を返します。",headers:["A 氏名","B 給与"],rows:[["太郎","35,000"],["花子","38,000"],["次郎","42,000"],["安子","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"},
+    {title:"完整示例：返回第 3 条工资",instruction:"B2:B5 是工资列表，在 D2 返回第3条。",headers:["A 姓名","B 工资"],rows:[["小明","35,000"],["小美","38,000"],["小华","42,000"],["小安","36,000"]],cell:"D2",formula:"=INDEX(B2:B5,3)",result:"42,000"}),
   or: localized(
     {title:"完整例子：任一科及格",instruction:"B、C 欄是兩科分數，在 D2 顯示是否符合資格。",headers:["A 姓名","B 國文","C 英文","D 結果"],rows:[["小明","55","72","符合"],["小美","50","58","不符合"]],cell:"D2",formula:'=IF(OR(B2>=60,C2>=60),"符合","不符合")',result:"符合"},
     {title:"Worked example: Pass either subject",instruction:"B and C contain subject scores. Display eligibility in D2.",headers:["A Name","B Subject 1","C Subject 2","D Result"],rows:[["Alex","55","72","Eligible"],["Amy","50","58","Not eligible"]],cell:"D2",formula:'=IF(OR(B2>=60,C2>=60),"Eligible","Not eligible")',result:"Eligible"},
