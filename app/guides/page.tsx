@@ -185,7 +185,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "INDEX" || item === "MATCH" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIFS" || item === "COUNTIFS" || item === "DATEDIF" ? (
+                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "INDEX" || item === "MATCH" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIF" || item === "SUMIFS" || item === "COUNTIFS" || item === "DATEDIF" ? (
                     <Link
                       key={item}
                       href={item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR"
@@ -206,6 +206,8 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
                           ? `/guides/excel-vlookup-function?lang=${language}`
                           : item === "XLOOKUP"
                             ? `/guides/excel-xlookup-function?lang=${language}`
+                            : item === "SUMIF"
+                              ? `/guides/excel-sumif-function?lang=${language}`
                             : item === "SUMIFS"
                               ? `/guides/excel-sumifs-function?lang=${language}`
                               : item === "COUNTIFS"

@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countifs" | "iferror" | "datedif";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  sumif: localized(
+    {title:"完整例子：加總業務部費用",instruction:"B 欄是部門、C 欄是費用，在 E2 計算業務部總費用。",headers:["A 項目","B 部門","C 費用"],rows:[["交通","業務部","1,200"],["文具","行政部","500"],["餐費","業務部","800"]],cell:"E2",formula:'=SUMIF(B:B,"業務部",C:C)',result:"2,000"},
+    {title:"Worked example: Sum Sales costs",instruction:"B is department and C is cost. Calculate Sales total in E2.",headers:["A Item","B Department","C Cost"],rows:[["Travel","Sales","1,200"],["Supplies","Admin","500"],["Meals","Sales","800"]],cell:"E2",formula:'=SUMIF(B:B,"Sales",C:C)',result:"2,000"},
+    {title:"実例：営業部の費用を合計",instruction:"B列は部署、C列は費用です。E2 で営業部合計を求めます。",headers:["A 項目","B 部署","C 費用"],rows:[["交通","営業部","1,200"],["文具","管理部","500"],["食費","営業部","800"]],cell:"E2",formula:'=SUMIF(B:B,"営業部",C:C)',result:"2,000"},
+    {title:"完整示例：汇总销售部费用",instruction:"B 列是部门、C 列是费用，在 E2 计算销售部总费用。",headers:["A 项目","B 部门","C 费用"],rows:[["交通","销售部","1,200"],["文具","行政部","500"],["餐费","销售部","800"]],cell:"E2",formula:'=SUMIF(B:B,"销售部",C:C)',result:"2,000"}),
   match: localized(
     {title:"完整例子：找出商品位於清單第幾筆",instruction:"A2:A6 是商品清單，在 D2 尋找「蘋果」的相對位置。",headers:["A 商品"],rows:[["香蕉"],["橘子"],["蘋果"],["葡萄"],["西瓜"]],cell:"D2",formula:'=MATCH("蘋果",A2:A6,0)',result:"3"},
     {title:"Worked example: Find a product's position",instruction:"A2:A6 contains products. Find the relative position of Apples in D2.",headers:["A Product"],rows:[["Bananas"],["Oranges"],["Apples"],["Grapes"],["Watermelon"]],cell:"D2",formula:'=MATCH("Apples",A2:A6,0)',result:"3"},
