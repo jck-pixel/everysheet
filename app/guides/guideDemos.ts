@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  text: localized(
+    {title:"完整例子：統一合約日期格式",instruction:"A 欄是合約日期，在 B2 統一顯示為年/月/日。",headers:["A 合約日期","B 顯示文字"],rows:[["2026-08-16","2026/08/16"],["2026-09-05","2026/09/05"]],cell:"B2",formula:'=TEXT(A2,"yyyy/mm/dd")',result:"2026/08/16"},
+    {title:"Worked example: Standardize contract dates",instruction:"A contains contract dates. Display each as year/month/day in B2.",headers:["A Contract date","B Display text"],rows:[["2026-08-16","2026/08/16"],["2026-09-05","2026/09/05"]],cell:"B2",formula:'=TEXT(A2,"yyyy/mm/dd")',result:"2026/08/16"},
+    {title:"実例：契約日の日付形式を統一",instruction:"A列は契約日です。B2 で年/月/日の文字列にします。",headers:["A 契約日","B 表示文字"],rows:[["2026-08-16","2026/08/16"],["2026-09-05","2026/09/05"]],cell:"B2",formula:'=TEXT(A2,"yyyy/mm/dd")',result:"2026/08/16"},
+    {title:"完整示例：统一合同日期格式",instruction:"A 列是合同日期，在 B2 统一显示为年/月/日。",headers:["A 合同日期","B 显示文本"],rows:[["2026-08-16","2026/08/16"],["2026-09-05","2026/09/05"]],cell:"B2",formula:'=TEXT(A2,"yyyy/mm/dd")',result:"2026/08/16"}),
   mid: localized(
     {title:"完整例子：擷取訂單年份",instruction:"A 欄是訂單編號，在 B2 從第5個字元開始擷取4個字元。",headers:["A 訂單編號","B 年份"],rows:[["ORD-2026-0086","2026"],["ORD-2025-0142","2025"]],cell:"B2",formula:"=MID(A2,5,4)",result:"2026"},
     {title:"Worked example: Extract an order year",instruction:"A contains order IDs. Return four characters beginning at position 5 in B2.",headers:["A Order ID","B Year"],rows:[["ORD-2026-0086","2026"],["ORD-2025-0142","2025"]],cell:"B2",formula:"=MID(A2,5,4)",result:"2026"},
