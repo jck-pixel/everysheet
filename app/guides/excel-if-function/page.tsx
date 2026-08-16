@@ -4,7 +4,7 @@ import { AppLanguage, languageOptions } from "../../i18n";
 import GuideLanguageSelect from "../GuideLanguageSelect";
 import { ifGuideContent } from "./content";
 import GuideExampleTable from "../GuideExampleTable";
-import { guideDemos } from "../guideDemos";
+import { ifExamples } from "./examples";
 
 export const metadata: Metadata = {
   title: "Excel IF 函數教學｜語法、範例與常見錯誤｜EverySheet",
@@ -51,15 +51,7 @@ export default function LocalizedIfGuidePage({ searchParams }: { searchParams?: 
           <div style={styles.syntaxGrid}>{c.syntaxItems.map(([title, detail]) => <div key={title} style={styles.syntaxItem}><strong>{title}</strong><span>{detail}</span></div>)}</div>
         </section>
 
-        <GuideExampleTable demo={guideDemos.if[language]} language={language} />
-
-        {c.examples.map((example) => (
-          <section key={example.title} style={styles.contentCard} className="if-guide-card">
-            <h2 style={styles.sectionTitle}>{example.title}</h2>
-            <p style={styles.paragraph}>{example.description}</p>
-            <div style={styles.formulaBox}>{example.formula}</div>
-          </section>
-        ))}
+        {ifExamples[language].map((example) => <GuideExampleTable key={example.title} demo={example} language={language} />)}
 
         <section style={styles.contentCard} className="if-guide-card">
           <h2 style={styles.sectionTitle}>{c.errorsTitle}</h2>

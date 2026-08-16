@@ -2,7 +2,6 @@ import Link from "next/link";
 import { AppLanguage } from "../i18n";
 import GuideLanguageSelect from "./GuideLanguageSelect";
 import GuideExampleTable, { GuideDemo } from "./GuideExampleTable";
-import GuideFormulaDiagram from "./GuideFormulaDiagram";
 
 type Content = {
   guides: string; formulaTool: string; badge: string; title: string; subtitle: string;
@@ -25,7 +24,7 @@ export default function GuideArticleLayout({ language, path, content: c, demo, e
       {demo && <GuideExampleTable demo={demo} language={language} />}
       {c.examples.map((example, index) => exampleDemos?.[index]
         ? <GuideExampleTable key={example.title} demo={exampleDemos[index]} language={language} />
-        : <section key={example.title} style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{example.title}</h2><p style={s.paragraph}>{example.description}</p><GuideFormulaDiagram language={language} description={example.description} formula={example.formula} /></section>)}
+        : <section key={example.title} style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{example.title}</h2><p style={s.paragraph}>{example.description}</p><div style={s.formula}>{example.formula}</div></section>)}
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.tipsTitle}</h2><div style={s.grid}>{c.tips.map(([title, detail]) => <div key={title} style={s.gridItem}><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.errorsTitle}</h2><div style={s.errorList}>{c.errors.map(([title, detail]) => <div key={title} style={s.errorItem}><strong>{title}</strong><p style={s.errorText}>{detail}</p></div>)}</div></section>
       <section style={s.cta} className="if-guide-cta"><div><span style={s.ctaEyebrow}>EverySheet</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div><Link href={`/?lang=${language}`} style={s.ctaButton}>{c.ctaButton}</Link></section>
