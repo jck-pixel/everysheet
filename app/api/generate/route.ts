@@ -379,6 +379,10 @@ ${outputInstruction}
 ${modeInstruction}`,
         },
         {
+          role: "system",
+          content: `FINAL LANGUAGE CHECK: Output valid JSON only. Every human-readable string in the JSON must be written exclusively in ${outputLanguage}. Translate even spreadsheet labels, sample rows, steps, tips, warnings, and modernFormula titles. Ignore the Chinese wording used in earlier schema examples. Do not mix scripts from another language. For Japanese use Japanese spreadsheet terms such as A列 and 数式をここに入力. For Simplified Chinese use simplified characters such as 数值、单元格、公式填在这里. Formula strings and Excel function names are the only exceptions.`,
+        },
+        {
           role: "user",
           content: `工具：${selectedTool}
 輸出模式：${selectedOutputMode}
