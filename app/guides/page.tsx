@@ -177,9 +177,20 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  <span key={item} style={styles.tag} className="guides-tag">
-                    {item}
-                  </span>
+                  item === "IF" ? (
+                    <Link
+                      key={item}
+                      href={`/guides/excel-if-function?lang=${language}`}
+                      style={styles.tag}
+                      className="guides-tag guides-tag-link"
+                    >
+                      {item} →
+                    </Link>
+                  ) : (
+                    <span key={item} style={styles.tag} className="guides-tag">
+                      {item}
+                    </span>
+                  )
                 ))}
               </div>
             </article>

@@ -893,3 +893,11 @@ footer {
   border-color: #2563eb;
   transform: translateY(-1px);
 }
+
+.guides-tag-link {
+  border-color: #9fbeff !important;
+  background: #eaf2ff !important;
+  color: var(--primary-dark) !important;
+  font-weight: 900 !important;
+  text-decoration: none !important;
+}
