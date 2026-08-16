@@ -3,6 +3,8 @@ import Link from "next/link";
 import { AppLanguage, languageOptions } from "../../i18n";
 import GuideLanguageSelect from "../GuideLanguageSelect";
 import { xlookupGuideContent } from "./content";
+import GuideExampleTable from "../GuideExampleTable";
+import { guideDemos } from "../guideDemos";
 
 export const metadata: Metadata = {
   title: "Excel XLOOKUP 函數教學｜語法、範例與 VLOOKUP 比較｜EverySheet",
@@ -36,6 +38,8 @@ export default function XlookupGuidePage({ searchParams }: { searchParams?: { la
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.syntaxTitle}</h2><div style={s.formula}>{c.syntaxFormula}</div>
         <div style={s.grid}>{c.syntaxItems.map(([title, detail]) => <div key={title} style={s.gridItem}><strong>{title}</strong><span>{detail}</span></div>)}</div>
       </section>
+
+      <GuideExampleTable demo={guideDemos.xlookup[language]} language={language} />
 
       {c.examples.map((example) => <section key={example.title} style={s.card} className="if-guide-card">
         <h2 style={s.sectionTitle}>{example.title}</h2><p style={s.paragraph}>{example.description}</p><div style={s.formula}>{example.formula}</div>

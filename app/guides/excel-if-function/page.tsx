@@ -3,6 +3,8 @@ import Link from "next/link";
 import { AppLanguage, languageOptions } from "../../i18n";
 import GuideLanguageSelect from "../GuideLanguageSelect";
 import { ifGuideContent } from "./content";
+import GuideExampleTable from "../GuideExampleTable";
+import { guideDemos } from "../guideDemos";
 
 export const metadata: Metadata = {
   title: "Excel IF 函數教學｜語法、範例與常見錯誤｜EverySheet",
@@ -48,6 +50,8 @@ export default function LocalizedIfGuidePage({ searchParams }: { searchParams?: 
           <div style={styles.formulaBox}>{c.syntaxFormula}</div>
           <div style={styles.syntaxGrid}>{c.syntaxItems.map(([title, detail]) => <div key={title} style={styles.syntaxItem}><strong>{title}</strong><span>{detail}</span></div>)}</div>
         </section>
+
+        <GuideExampleTable demo={guideDemos.if[language]} language={language} />
 
         {c.examples.map((example) => (
           <section key={example.title} style={styles.contentCard} className="if-guide-card">

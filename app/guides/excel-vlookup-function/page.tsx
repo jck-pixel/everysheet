@@ -3,6 +3,8 @@ import Link from "next/link";
 import { AppLanguage, languageOptions } from "../../i18n";
 import GuideLanguageSelect from "../GuideLanguageSelect";
 import { vlookupGuideContent } from "./content";
+import GuideExampleTable from "../GuideExampleTable";
+import { guideDemos } from "../guideDemos";
 
 export const metadata: Metadata = {
   title: "Excel VLOOKUP 函數教學｜語法、範例與常見錯誤｜EverySheet",
@@ -45,6 +47,8 @@ export default function VlookupGuidePage({ searchParams }: { searchParams?: { la
           <div style={s.formula}>{c.syntaxFormula}</div>
           <div style={s.syntaxGrid}>{c.syntaxItems.map(([title, detail]) => <div key={title} style={s.syntaxItem}><strong>{title}</strong><span>{detail}</span></div>)}</div>
         </section>
+
+        <GuideExampleTable demo={guideDemos.vlookup[language]} language={language} />
 
         {c.examples.map((example) => <section key={example.title} style={s.card} className="if-guide-card">
           <h2 style={s.sectionTitle}>{example.title}</h2>
