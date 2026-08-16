@@ -34,6 +34,7 @@ main {
 }
 
 .hero {
+  position: relative;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -41,6 +42,19 @@ main {
 .mobile-brand,
 .guides-link-mobile {
   display: none;
+}
+
+.language-select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto;
+  min-height: 40px;
+  padding: 7px 34px 7px 11px;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .badge {
@@ -370,6 +384,14 @@ footer {
     font-size: 22px;
     font-weight: 900;
     letter-spacing: -0.5px;
+  }
+
+  .language-select {
+    position: static;
+    min-width: 76px;
+    min-height: 40px;
+    padding: 7px 26px 7px 9px;
+    font-size: 13px;
   }
 
   .subtitle {

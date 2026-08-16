@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import { AppLanguage, outputLanguageNames } from "../../i18n";
 
 function cleanFormula(formula: string) {
   const trimmed = String(formula || "").trim();
@@ -52,7 +53,7 @@ function getModeInstruction(mode: string) {
 
 export async function POST(req: Request) {
   try {
-    const { request, tool, outputMode, mode } = await req.json();
+    const { request, tool, outputMode, mode, language } = await req.json();
 
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ error: "尚未設定 OPENAI_API_KEY。" }, { status: 500 });
@@ -69,6 +70,9 @@ export async function POST(req: Request) {
     const selectedTool = tool || "Excel";
     const selectedOutputMode = outputMode || "general";
     const selectedMode = mode || "generate";
+    const selectedLanguage: AppLanguage =
+      language && language in outputLanguageNames ? language : "zh-TW";
+    const outputLanguage = outputLanguageNames[selectedLanguage];
 
     const outputInstruction =
   selectedOutputMode === "professional"
@@ -112,7 +116,7 @@ export async function POST(req: Request) {
       messages: [
         {
           role: "system",
-          content: `你是 EverySheet，專門協助使用者處理 Excel / Google Sheets 工作。請用繁體中文回答。
+          content: `你是 EverySheet，專門協助使用者處理 Excel / Google Sheets 工作。請使用 ${outputLanguage} 回答所有自然語言欄位；Excel 公式與函數名稱保持原樣。
 
 你必須只輸出 JSON，不要使用 markdown，不要輸出 JSON 以外的任何文字。
 
