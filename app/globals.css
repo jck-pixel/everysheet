@@ -489,35 +489,34 @@ footer {
   }
 
   .guides-hero {
-    padding: calc(24px + env(safe-area-inset-top)) 16px 22px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: calc(12px + env(safe-area-inset-top)) 16px 10px !important;
+    text-align: left !important;
   }
 
   .guides-brand {
-    margin: 0 8px 0 0 !important;
-    font-size: 16px !important;
+    margin: 0 !important;
+    font-size: 21px !important;
   }
 
-  .guides-badge {
-    padding: 5px 9px !important;
-    font-size: 11px !important;
-  }
-
+  .guides-badge,
   .guides-title {
-    margin: 14px 0 8px !important;
-    font-size: 32px !important;
-    letter-spacing: -1px !important;
+    display: none !important;
   }
 
   .guides-subtitle {
-    margin: 0 auto 16px !important;
-    font-size: 15px !important;
-    line-height: 1.5 !important;
+    display: none !important;
   }
 
   .guides-primary-button {
-    min-height: 44px !important;
-    padding: 0 18px !important;
-    font-size: 14px !important;
+    min-height: 40px !important;
+    padding: 0 12px !important;
+    border-radius: 12px !important;
+    font-size: 13px !important;
+    box-shadow: none !important;
   }
 
   .guides-content {
@@ -525,13 +524,18 @@ footer {
   }
 
   .guides-section-header {
-    margin: 24px 0 12px !important;
+    margin: 14px 0 10px !important;
     gap: 6px !important;
   }
 
+  .guides-section-header:first-child span,
+  .guides-section-header:first-child .guides-section-description {
+    display: none !important;
+  }
+
   .guides-section-title {
-    margin-top: 4px !important;
-    font-size: 23px !important;
+    margin-top: 0 !important;
+    font-size: 21px !important;
   }
 
   .guides-section-description {

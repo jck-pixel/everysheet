@@ -86,7 +86,7 @@ export default function GuidesPage() {
         </p>
 
         <Link href="/" style={styles.primaryButton} className="guides-primary-button">
-          回到公式產生器
+          公式產生器 →
         </Link>
       </section>
 
