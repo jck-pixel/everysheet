@@ -214,6 +214,7 @@ const isUnchangedFix =
   return (
     <main>
       <section className="hero">
+        <div className="mobile-brand">EverySheet</div>
         <div className="badge">Excel Formula Assistant</div>
 
         <h1>
@@ -230,7 +231,8 @@ const isUnchangedFix =
 
         <div className="hero-links">
   <Link href="/guides" className="guides-link">
-    📚 前往 Excel 教學中心
+    <span className="guides-link-wide">📚 前往 Excel 教學中心</span>
+    <span className="guides-link-mobile">教學中心 →</span>
   </Link>
 </div>
         

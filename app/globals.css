@@ -38,6 +38,11 @@ main {
   margin-bottom: 20px;
 }
 
+.mobile-brand,
+.guides-link-mobile {
+  display: none;
+}
+
 .badge {
   display: inline-block;
   padding: 6px 12px;
@@ -344,12 +349,27 @@ footer {
   }
 
   .hero {
-    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+    text-align: left;
   }
 
-  .badge {
-    margin-bottom: 8px;
-    font-size: 12px;
+  .hero > .badge,
+  .hero > h1,
+  .hero > .subtitle {
+    display: none;
+  }
+
+  .mobile-brand {
+    display: block;
+    color: var(--primary-dark);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
   }
 
   .subtitle {
@@ -358,12 +378,22 @@ footer {
   }
 
   .hero-links {
-    margin-top: 12px;
+    margin-top: 0;
   }
 
   .guides-link {
-    padding: 8px 14px;
-    font-size: 14px;
+    min-height: 40px;
+    padding: 7px 11px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .guides-link-wide {
+    display: none;
+  }
+
+  .guides-link-mobile {
+    display: inline;
   }
 
   .app-card,
