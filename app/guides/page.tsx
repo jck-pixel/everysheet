@@ -185,7 +185,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "INDEX" || item === "MATCH" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIF" || item === "SUMIFS" || item === "COUNTIFS" || item === "DATEDIF" ? (
+                  item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR" || item === "INDEX" || item === "MATCH" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIF" || item === "SUMIFS" || item === "COUNTIF" || item === "COUNTIFS" || item === "DATEDIF" ? (
                     <Link
                       key={item}
                       href={item === "IF" || item === "IFS" || item === "IFERROR" || item === "AND" || item === "OR"
@@ -210,6 +210,8 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
                               ? `/guides/excel-sumif-function?lang=${language}`
                             : item === "SUMIFS"
                               ? `/guides/excel-sumifs-function?lang=${language}`
+                              : item === "COUNTIF"
+                                ? `/guides/excel-countif-function?lang=${language}`
                               : item === "COUNTIFS"
                                 ? `/guides/excel-countifs-function?lang=${language}`
                                 : `/guides/excel-datedif-function?lang=${language}`}
