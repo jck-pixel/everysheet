@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text" | "trim" | "substitute";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text" | "trim" | "substitute" | "iferrorVlookup";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  iferrorVlookup: localized(
+    {title:"完整例子：輸入員工編號帶出姓名",instruction:"A2 輸入查詢編號，F:G 是員工資料；若編號不存在則顯示「查無資料」。",headers:["A 查詢編號","B 查詢結果","F 員工編號","G 姓名"],rows:[["E003","查無資料","E001","陳小明"],["","","E002","王小美"]],cell:"B2",formula:'=IFERROR(VLOOKUP(A2,$F$2:$G$3,2,FALSE),"查無資料")',result:"查無資料"},
+    {title:"Worked example: Enter an ID to return a name",instruction:"Enter an ID in A2 and search F:G. Display Not found when the ID does not exist.",headers:["A Lookup ID","B Result","F Employee ID","G Name"],rows:[["E003","Not found","E001","Alex Chen"],["","","E002","Amy Wang"]],cell:"B2",formula:'=IFERROR(VLOOKUP(A2,$F$2:$G$3,2,FALSE),"Not found")',result:"Not found"},
+    {title:"実例：社員番号から氏名を表示",instruction:"A2 に番号を入力して F:G を検索し、存在しない場合は「該当なし」を表示します。",headers:["A 検索番号","B 結果","F 社員番号","G 氏名"],rows:[["E003","該当なし","E001","山田太郎"],["","","E002","鈴木花子"]],cell:"B2",formula:'=IFERROR(VLOOKUP(A2,$F$2:$G$3,2,FALSE),"該当なし")',result:"該当なし"},
+    {title:"完整示例：输入员工编号返回姓名",instruction:"在 A2 输入查询编号并查找 F:G；编号不存在时显示“未找到”。",headers:["A 查询编号","B 查询结果","F 员工编号","G 姓名"],rows:[["E003","未找到","E001","陈小明"],["","","E002","王小美"]],cell:"B2",formula:'=IFERROR(VLOOKUP(A2,$F$2:$G$3,2,FALSE),"未找到")',result:"未找到"}),
   substitute: localized(
     {title:"完整例子：更新商品編號前綴",instruction:"A 欄是舊商品編號，在 B2 將 OLD 批次替換成 NEW。",headers:["A 舊商品編號","B 新商品編號"],rows:[["OLD-2026-001","NEW-2026-001"],["OLD-2026-002","NEW-2026-002"]],cell:"B2",formula:'=SUBSTITUTE(A2,"OLD","NEW")',result:"NEW-2026-001"},
     {title:"Worked example: Update product ID prefixes",instruction:"A contains old product IDs. Replace OLD with NEW in B2.",headers:["A Old product ID","B New product ID"],rows:[["OLD-2026-001","NEW-2026-001"],["OLD-2026-002","NEW-2026-002"]],cell:"B2",formula:'=SUBSTITUTE(A2,"OLD","NEW")',result:"NEW-2026-001"},

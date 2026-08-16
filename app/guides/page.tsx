@@ -69,12 +69,20 @@ const popularGuides = [
   },
 ];
 
+const combinedGuideText: Record<AppLanguage, { eyebrow: string; title: string; description: string; name: string; detail: string; badge: string; singleEyebrow: string; singleTitle: string }> = {
+  "zh-TW": { eyebrow:"多個函數", title:"組合公式教學案例", description:"把兩個以上函數組合起來，解決實際工作需求。", name:"IFERROR＋VLOOKUP", detail:"查找資料，找不到時顯示清楚提示。", badge:"2 個函數", singleEyebrow:"單一函數", singleTitle:"單一函數教學" },
+  en: { eyebrow:"Multiple functions", title:"Combined Formula Guides", description:"Combine two or more functions to solve practical spreadsheet tasks.", name:"IFERROR + VLOOKUP", detail:"Look up data and show a clear message when no match exists.", badge:"2 functions", singleEyebrow:"Single function", singleTitle:"Single Function Guides" },
+  ja: { eyebrow:"複数関数", title:"組み合わせ数式の実例", description:"2つ以上の関数を組み合わせ、実務の課題を解決します。", name:"IFERROR＋VLOOKUP", detail:"データを検索し、見つからない場合は分かりやすく表示。", badge:"2 関数", singleEyebrow:"単一関数", singleTitle:"単一関数ガイド" },
+  "zh-CN": { eyebrow:"多个函数", title:"组合公式教学案例", description:"组合两个以上函数，解决实际工作需求。", name:"IFERROR＋VLOOKUP", detail:"查找数据，未找到时显示清楚提示。", badge:"2 个函数", singleEyebrow:"单一函数", singleTitle:"单一函数教学" },
+};
+
 export default function GuidesPage({ searchParams }: { searchParams?: { lang?: string } }) {
   const requestedLanguage = searchParams?.lang as AppLanguage | undefined;
   const language = languageOptions.some((option) => option.value === requestedLanguage)
     ? requestedLanguage as AppLanguage
     : "zh-TW";
   const g = guideUiText[language];
+  const combined = combinedGuideText[language];
   const localizedPopularGuides = g.popularItems.map(([name, description], index) => ({
     name,
     description,
@@ -163,8 +171,27 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
         <div style={styles.sectionHeader} className="guides-section-header">
           <div>
-            <span style={styles.eyebrow}>公式分類</span>
-            <h2 style={styles.sectionTitle} className="guides-section-title">{g.categories}</h2>
+            <span style={styles.eyebrow}>{combined.eyebrow}</span>
+            <h2 style={styles.sectionTitle} className="guides-section-title">{combined.title}</h2>
+          </div>
+          <p style={styles.sectionDescription} className="guides-section-description">{combined.description}</p>
+        </div>
+
+        <div style={styles.combinedGrid}>
+          <Link href={`/guides/formulas/iferror-vlookup?lang=${language}`} style={styles.combinedCard}>
+            <div style={styles.cardTop}>
+              <span style={styles.functionName}>{combined.name}</span>
+              <span style={styles.combinedBadge}>{combined.badge}</span>
+            </div>
+            <p style={styles.cardDescription}>{combined.detail}</p>
+            <span style={styles.combinedAction}>{g.start} →</span>
+          </Link>
+        </div>
+
+        <div style={styles.sectionHeader} className="guides-section-header">
+          <div>
+            <span style={styles.eyebrow}>{combined.singleEyebrow}</span>
+            <h2 style={styles.sectionTitle} className="guides-section-title">{combined.singleTitle}</h2>
           </div>
 
           <p style={styles.sectionDescription} className="guides-section-description">
@@ -364,6 +391,41 @@ const styles: Record<string, React.CSSProperties> = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
     gap: "16px",
+  },
+
+  combinedGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+    gap: "16px",
+  },
+
+  combinedCard: {
+    display: "block",
+    padding: "24px",
+    border: "1px solid #c4b5fd",
+    borderRadius: "20px",
+    background: "linear-gradient(135deg,#ffffff 0%,#f5f3ff 100%)",
+    color: "#0f1b34",
+    textDecoration: "none",
+    boxShadow: "0 12px 35px rgba(109,40,217,.10)",
+  },
+
+  combinedBadge: {
+    padding: "6px 10px",
+    borderRadius: "999px",
+    background: "#ede9fe",
+    color: "#6d28d9",
+    fontSize: "12px",
+    fontWeight: 800,
+    whiteSpace: "nowrap",
+  },
+
+  combinedAction: {
+    display: "inline-block",
+    marginTop: "18px",
+    color: "#6d28d9",
+    fontSize: "14px",
+    fontWeight: 850,
   },
 
   popularCard: {
