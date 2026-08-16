@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text" | "trim";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right" | "mid" | "text" | "trim" | "substitute";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  substitute: localized(
+    {title:"完整例子：更新商品編號前綴",instruction:"A 欄是舊商品編號，在 B2 將 OLD 批次替換成 NEW。",headers:["A 舊商品編號","B 新商品編號"],rows:[["OLD-2026-001","NEW-2026-001"],["OLD-2026-002","NEW-2026-002"]],cell:"B2",formula:'=SUBSTITUTE(A2,"OLD","NEW")',result:"NEW-2026-001"},
+    {title:"Worked example: Update product ID prefixes",instruction:"A contains old product IDs. Replace OLD with NEW in B2.",headers:["A Old product ID","B New product ID"],rows:[["OLD-2026-001","NEW-2026-001"],["OLD-2026-002","NEW-2026-002"]],cell:"B2",formula:'=SUBSTITUTE(A2,"OLD","NEW")',result:"NEW-2026-001"},
+    {title:"実例：商品番号の接頭辞を更新",instruction:"A列は旧商品番号です。B2 で OLD を NEW に置換します。",headers:["A 旧商品番号","B 新商品番号"],rows:[["OLD-2026-001","NEW-2026-001"],["OLD-2026-002","NEW-2026-002"]],cell:"B2",formula:'=SUBSTITUTE(A2,"OLD","NEW")',result:"NEW-2026-001"},
+    {title:"完整示例：更新商品编号前缀",instruction:"A 列是旧商品编号，在 B2 将 OLD 批量替换成 NEW。",headers:["A 旧商品编号","B 新商品编号"],rows:[["OLD-2026-001","NEW-2026-001"],["OLD-2026-002","NEW-2026-002"]],cell:"B2",formula:'=SUBSTITUTE(A2,"OLD","NEW")',result:"NEW-2026-001"}),
   trim: localized(
     {title:"完整例子：清除員工姓名空格",instruction:"A 欄姓名含多餘空格，在 B2 清理後再向下複製。",headers:["A 原始姓名","B 清理結果"],rows:[["  王  小明  ","王 小明"],["  李小美 ","李小美"]],cell:"B2",formula:"=TRIM(A2)",result:"王 小明"},
     {title:"Worked example: Clean employee names",instruction:"A contains names with extra spaces. Clean them in B2 and copy down.",headers:["A Original name","B Clean result"],rows:[["  Alex  Chen  ","Alex Chen"],["  Amy Wang ","Amy Wang"]],cell:"B2",formula:"=TRIM(A2)",result:"Alex Chen"},
