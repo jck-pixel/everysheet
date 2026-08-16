@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today" | "networkdays" | "edate" | "left" | "right";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  right: localized(
+    {title:"完整例子：擷取訂單流水號",instruction:"A 欄是訂單編號，在 B2 擷取右側4個字元。",headers:["A 訂單編號","B 流水號"],rows:[["ORD-2026-0086","0086"],["ORD-2026-0142","0142"]],cell:"B2",formula:"=RIGHT(A2,4)",result:"0086"},
+    {title:"Worked example: Extract an order serial",instruction:"A contains order IDs. Extract the last four characters in B2.",headers:["A Order ID","B Serial"],rows:[["ORD-2026-0086","0086"],["ORD-2026-0142","0142"]],cell:"B2",formula:"=RIGHT(A2,4)",result:"0086"},
+    {title:"実例：注文の連番を抽出",instruction:"A列は注文番号です。B2 で右4文字を抽出します。",headers:["A 注文番号","B 連番"],rows:[["ORD-2026-0086","0086"],["ORD-2026-0142","0142"]],cell:"B2",formula:"=RIGHT(A2,4)",result:"0086"},
+    {title:"完整示例：提取订单流水号",instruction:"A 列是订单编号，在 B2 提取右侧4个字符。",headers:["A 订单编号","B 流水号"],rows:[["ORD-2026-0086","0086"],["ORD-2026-0142","0142"]],cell:"B2",formula:"=RIGHT(A2,4)",result:"0086"}),
   left: localized(
     {title:"完整例子：擷取員工部門代碼",instruction:"A 欄是員工編號，在 B2 擷取左側2個字元。",headers:["A 員工編號","B 部門代碼"],rows:[["HR-2026-001","HR"],["IT-2026-002","IT"]],cell:"B2",formula:"=LEFT(A2,2)",result:"HR"},
     {title:"Worked example: Extract department code",instruction:"A contains employee IDs. Extract the first two characters in B2.",headers:["A Employee ID","B Department"],rows:[["HR-2026-001","HR"],["IT-2026-002","IT"]],cell:"B2",formula:"=LEFT(A2,2)",result:"HR"},
