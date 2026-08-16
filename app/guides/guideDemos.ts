@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif" | "today";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  today: localized(
+    {title:"完整例子：計算合約剩餘天數",instruction:"B2 是到期日，在 C2 用今天日期計算剩餘天數。",headers:["A 合約","B 到期日","C 剩餘天數"],rows:[["網站維護","2026/09/15","30"]],cell:"C2",formula:"=B2-TODAY()",result:"30"},
+    {title:"Worked example: Contract days remaining",instruction:"B2 is the due date. Calculate remaining days in C2.",headers:["A Contract","B Due date","C Days left"],rows:[["Website support","2026/09/15","30"]],cell:"C2",formula:"=B2-TODAY()",result:"30"},
+    {title:"実例：契約の残日数",instruction:"B2 は期限日です。C2 で残日数を計算します。",headers:["A 契約","B 期限日","C 残日数"],rows:[["サイト保守","2026/09/15","30"]],cell:"C2",formula:"=B2-TODAY()",result:"30"},
+    {title:"完整示例：计算合同剩余天数",instruction:"B2 是到期日，在 C2 计算剩余天数。",headers:["A 合同","B 到期日","C 剩余天数"],rows:[["网站维护","2026/09/15","30"]],cell:"C2",formula:"=B2-TODAY()",result:"30"}),
   averageif: localized(
     {title:"完整例子：計算業務部平均薪資",instruction:"B 欄是部門、C 欄是薪資，在 E2 計算業務部平均。",headers:["A 姓名","B 部門","C 薪資"],rows:[["小明","業務部","36,000"],["小美","行政部","34,000"],["小華","業務部","42,000"]],cell:"E2",formula:'=AVERAGEIF(B:B,"業務部",C:C)',result:"39,000"},
     {title:"Worked example: Average Sales salary",instruction:"B is department and C is salary. Calculate the Sales average in E2.",headers:["A Name","B Department","C Salary"],rows:[["Alex","Sales","36,000"],["Amy","Admin","34,000"],["Sam","Sales","42,000"]],cell:"E2",formula:'=AVERAGEIF(B:B,"Sales",C:C)',result:"39,000"},
