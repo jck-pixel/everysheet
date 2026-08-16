@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "vlookup" | "xlookup" | "sumifs" | "countifs" | "iferror" | "datedif";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  ifs: localized(
+    { title:"完整例子：依分數顯示等級", instruction:"B 欄是分數，在 C2 輸入公式後向下複製。", headers:["A 姓名","B 分數","C 等級"], rows:[["小明","92","A"],["小美","76","C"],["小華","55","F"]], cell:"C2", formula:'=IFS(B2>=90,"A",B2>=80,"B",B2>=70,"C",B2>=60,"D",TRUE,"F")', result:"A" },
+    { title:"Worked example: Grade bands", instruction:"Column B contains scores. Enter the formula in C2 and copy down.", headers:["A Name","B Score","C Grade"], rows:[["Alex","92","A"],["Amy","76","C"],["Sam","55","F"]], cell:"C2", formula:'=IFS(B2>=90,"A",B2>=80,"B",B2>=70,"C",B2>=60,"D",TRUE,"F")', result:"A" },
+    { title:"実例：点数から評価を表示", instruction:"B列は点数です。C2 に数式を入力して下へコピーします。", headers:["A 氏名","B 点数","C 評価"], rows:[["太郎","92","A"],["花子","76","C"],["次郎","55","F"]], cell:"C2", formula:'=IFS(B2>=90,"A",B2>=80,"B",B2>=70,"C",B2>=60,"D",TRUE,"F")', result:"A" },
+    { title:"完整示例：根据分数显示等级", instruction:"B 列是分数，在 C2 输入公式后向下复制。", headers:["A 姓名","B 分数","C 等级"], rows:[["小明","92","A"],["小美","76","C"],["小华","55","F"]], cell:"C2", formula:'=IFS(B2>=90,"A",B2>=80,"B",B2>=70,"C",B2>=60,"D",TRUE,"F")', result:"A" }),
   if: localized(
     { title:"完整例子：判斷是否及格", instruction:"B 欄是分數，請在 C2 輸入公式，再向下複製。", headers:["A 姓名","B 分數","C 結果"], rows:[["小明","75","及格"],["小美","52","不及格"]], cell:"C2", formula:'=IF(B2>=60,"及格","不及格")', result:"及格" },
     { title:"Worked example: Pass or fail", instruction:"Column B contains scores. Enter the formula in C2 and copy it down.", headers:["A Name","B Score","C Result"], rows:[["Alex","75","Pass"],["Amy","52","Fail"]], cell:"C2", formula:'=IF(B2>=60,"Pass","Fail")', result:"Pass" },
