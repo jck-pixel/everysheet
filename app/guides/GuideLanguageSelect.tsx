@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { AppLanguage, languageOptions } from "../i18n";
 
-export default function GuideLanguageSelect({ language }: { language: AppLanguage }) {
+export default function GuideLanguageSelect({ language, path = "/guides" }: { language: AppLanguage; path?: string }) {
   const router = useRouter();
 
   return (
@@ -14,7 +14,7 @@ export default function GuideLanguageSelect({ language }: { language: AppLanguag
         const nextLanguage = event.target.value as AppLanguage;
         localStorage.setItem("everysheet-language", nextLanguage);
         document.documentElement.lang = nextLanguage;
-        router.push(`/guides?lang=${nextLanguage}`);
+        router.push(`${path}?lang=${nextLanguage}`);
       }}
       aria-label="Language"
     >
