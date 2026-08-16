@@ -78,8 +78,12 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
   const localizedPopularGuides = g.popularItems.map(([name, description], index) => ({
     name,
     description,
-    href: index === 0 ? `/guides/excel-if-function?lang=${language}` : "",
-    available: index === 0,
+    href: index === 0
+      ? `/guides/excel-if-function?lang=${language}`
+      : index === 1
+        ? `/guides/excel-vlookup-function?lang=${language}`
+        : "",
+    available: index <= 1,
   }));
   const localizedCategories = g.categoryItems.map(([icon, title, description, items]) => ({
     icon,
@@ -177,10 +181,12 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" ? (
+                  item === "IF" || item === "VLOOKUP" ? (
                     <Link
                       key={item}
-                      href={`/guides/excel-if-function?lang=${language}`}
+                      href={item === "IF"
+                        ? `/guides/excel-if-function?lang=${language}`
+                        : `/guides/excel-vlookup-function?lang=${language}`}
                       style={styles.tag}
                       className="guides-tag guides-tag-link"
                     >
