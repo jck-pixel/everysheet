@@ -1,10 +1,15 @@
 import { AppLanguage } from "../i18n";
 import type { GuideDemo } from "./GuideExampleTable";
 
-type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "iferror" | "datedif";
+type Slug = "if" | "ifs" | "and" | "or" | "index" | "match" | "vlookup" | "xlookup" | "sumif" | "sumifs" | "countif" | "countifs" | "averageif" | "iferror" | "datedif";
 const localized = (zh: GuideDemo, en: GuideDemo, ja: GuideDemo, cn: GuideDemo): Record<AppLanguage, GuideDemo> => ({ "zh-TW": zh, en, ja, "zh-CN": cn });
 
 export const guideDemos: Record<Slug, Record<AppLanguage, GuideDemo>> = {
+  averageif: localized(
+    {title:"完整例子：計算業務部平均薪資",instruction:"B 欄是部門、C 欄是薪資，在 E2 計算業務部平均。",headers:["A 姓名","B 部門","C 薪資"],rows:[["小明","業務部","36,000"],["小美","行政部","34,000"],["小華","業務部","42,000"]],cell:"E2",formula:'=AVERAGEIF(B:B,"業務部",C:C)',result:"39,000"},
+    {title:"Worked example: Average Sales salary",instruction:"B is department and C is salary. Calculate the Sales average in E2.",headers:["A Name","B Department","C Salary"],rows:[["Alex","Sales","36,000"],["Amy","Admin","34,000"],["Sam","Sales","42,000"]],cell:"E2",formula:'=AVERAGEIF(B:B,"Sales",C:C)',result:"39,000"},
+    {title:"実例：営業部の平均給与",instruction:"B列は部署、C列は給与です。E2 で営業部の平均を求めます。",headers:["A 氏名","B 部署","C 給与"],rows:[["太郎","営業部","36,000"],["花子","管理部","34,000"],["次郎","営業部","42,000"]],cell:"E2",formula:'=AVERAGEIF(B:B,"営業部",C:C)',result:"39,000"},
+    {title:"完整示例：计算销售部平均工资",instruction:"B 列是部门、C 列是工资，在 E2 计算销售部平均。",headers:["A 姓名","B 部门","C 工资"],rows:[["小明","销售部","36,000"],["小美","行政部","34,000"],["小华","销售部","42,000"]],cell:"E2",formula:'=AVERAGEIF(B:B,"销售部",C:C)',result:"39,000"}),
   countif: localized(
     {title:"完整例子：統計及格人數",instruction:"B 欄是分數，在 D2 統計 60 分以上人數。",headers:["A 姓名","B 分數"],rows:[["小明","75"],["小美","52"],["小華","68"]],cell:"D2",formula:'=COUNTIF(B:B,">=60")',result:"2"},
     {title:"Worked example: Count passing scores",instruction:"B contains scores. Count scores of 60 or above in D2.",headers:["A Name","B Score"],rows:[["Alex","75"],["Amy","52"],["Sam","68"]],cell:"D2",formula:'=COUNTIF(B:B,">=60")',result:"2"},
