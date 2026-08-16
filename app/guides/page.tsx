@@ -185,11 +185,13 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
               <div style={styles.tagList} className="guides-tag-list">
                 {category.items.map((item) => (
-                  item === "IF" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIFS" || item === "COUNTIFS" ? (
+                  item === "IF" || item === "IFERROR" || item === "VLOOKUP" || item === "XLOOKUP" || item === "SUMIFS" || item === "COUNTIFS" ? (
                     <Link
                       key={item}
-                      href={item === "IF"
-                        ? `/guides/excel-if-function?lang=${language}`
+                      href={item === "IF" || item === "IFERROR"
+                        ? item === "IF"
+                          ? `/guides/excel-if-function?lang=${language}`
+                          : `/guides/excel-iferror-function?lang=${language}`
                         : item === "VLOOKUP"
                           ? `/guides/excel-vlookup-function?lang=${language}`
                           : item === "XLOOKUP"
