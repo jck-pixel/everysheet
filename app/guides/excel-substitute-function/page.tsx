@@ -5,7 +5,7 @@ import { guideDemos } from "../guideDemos";
 import { substituteContent } from "./content";
 
 export const metadata: Metadata = {
-  title: "Excel SUBSTITUTE 函數教學｜尋找與替換文字｜EverySheet",
+  title: "Excel SUBSTITUTE 函數教學｜尋找與替換文字｜EveryFormula",
   description: "學習 Excel SUBSTITUTE，批次替換商品編號、移除符號並清理文字資料。",
 };
 

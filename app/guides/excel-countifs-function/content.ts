@@ -14,7 +14,7 @@ export const countifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "實用技巧", tips: [["條件是同時成立", "COUNTIFS 使用 AND 邏輯，每個條件都要符合。"], ["比較符號加引號", "例如 \">=60\"；引用儲存格則寫 \">=\"&F2。"], ["日期使用 DATE", "日期區間以起日 >=、下一期起日 < 最穩定。"], ["文字可用萬用字元", "* 代表任意字串，? 代表單一字元。"]],
     errorsTitle: "常見錯誤", errors: [["結果是 0", "檢查文字空格、全形半形、日期及數字格式。"], ["條件範圍大小不同", "每個條件範圍必須具有相同列數與起訖位置。"], ["把 COUNTIFS 當 OR 使用", "COUNTIFS 是 AND；任一條件成立時需分別 COUNTIF 後相加。"], ["比較符號沒有引號", "大於、小於等運算符要放在雙引號內。"]],
-    ctaTitle: "條件很多，不知道怎麼排列？", ctaText: "描述要統計的資料與條件，EverySheet 會建立 COUNTIFS 公式。", ctaButton: "建立 COUNTIFS 公式", back: "← 返回 Excel 教學中心",
+    ctaTitle: "條件很多，不知道怎麼排列？", ctaText: "描述要統計的資料與條件，EveryFormula 會建立 COUNTIFS 公式。", ctaButton: "建立 COUNTIFS 公式", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Statistical function", title: "Excel COUNTIFS Guide", subtitle: "Count records using multiple conditions such as department, status, score, and date.",
@@ -28,7 +28,7 @@ export const countifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "Useful tips", tips: [["All conditions must match", "COUNTIFS uses AND logic."], ["Quote operators", "Use \">=60\" or join a cell as \">=\"&F2."], ["Use DATE", "Use >= for the start and < for the next period."], ["Use wildcards", "* matches text of any length; ? matches one character."]],
     errorsTitle: "Common mistakes", errors: [["The result is 0", "Check spaces, text, dates, and number formats."], ["Ranges differ in size", "Every criteria range must have the same dimensions."], ["Expecting OR logic", "COUNTIFS uses AND; add separate COUNTIF results for OR logic."], ["Operators are not quoted", "Greater-than and less-than operators belong inside quotation marks."]],
-    ctaTitle: "Too many criteria to arrange?", ctaText: "Describe what to count and EverySheet will build the COUNTIFS formula.", ctaButton: "Create a COUNTIFS formula", back: "← Back to Excel Guides",
+    ctaTitle: "Too many criteria to arrange?", ctaText: "Describe what to count and EveryFormula will build the COUNTIFS formula.", ctaButton: "Create a COUNTIFS formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "集計関数", title: "Excel COUNTIFS 関数ガイド", subtitle: "部署、状態、日付など複数条件に一致する件数を集計します。",
@@ -42,7 +42,7 @@ export const countifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "実用的なヒント", tips: [["すべての条件が一致", "COUNTIFS は AND 条件です。"], ["演算子は引用符内", "\">=60\" または \">=\"&F2 と書きます。"], ["DATE を使用", "開始日は >=、次の期間開始日は < を使います。"], ["ワイルドカード", "* は任意の文字列、? は1文字です。"]],
     errorsTitle: "よくある間違い", errors: [["結果が 0", "空白、文字、日付、数値形式を確認します。"], ["範囲サイズが異なる", "各条件範囲を同じ大きさにします。"], ["OR 条件と誤解", "COUNTIFS は AND です。OR は別々に数えて加算します。"], ["演算子に引用符がない", "比較演算子はダブルクォーテーション内に書きます。"]],
-    ctaTitle: "条件の並べ方が分かりませんか？", ctaText: "集計内容を説明すると EverySheet が数式を作成します。", ctaButton: "COUNTIFS 数式を作成", back: "← Excel 学習センターに戻る",
+    ctaTitle: "条件の並べ方が分かりませんか？", ctaText: "集計内容を説明すると EveryFormula が数式を作成します。", ctaButton: "COUNTIFS 数式を作成", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "统计函数", title: "Excel COUNTIFS 函数教学", subtitle: "根据部门、状态、日期等多个条件计算数量，快速完成考勤、人数与订单统计。",
@@ -56,6 +56,6 @@ export const countifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "实用技巧", tips: [["所有条件同时成立", "COUNTIFS 使用 AND 逻辑。"], ["比较符号加引号", "例如 \">=60\"，引用单元格写 \">=\"&F2。"], ["日期使用 DATE", "开始日用 >=，下一期间开始日用 <。"], ["文本通配符", "* 代表任意字符串，? 代表一个字符。"]],
     errorsTitle: "常见错误", errors: [["结果是 0", "检查空格、文本、日期与数字格式。"], ["条件范围大小不同", "每个条件范围必须具有相同大小。"], ["误当成 OR 逻辑", "COUNTIFS 是 AND；OR 需要分别 COUNTIF 后相加。"], ["比较符号没有引号", "大于、小于等运算符应放在双引号内。"]],
-    ctaTitle: "条件很多，不知道怎么排列？", ctaText: "描述要统计的数据与条件，EverySheet 会创建 COUNTIFS 公式。", ctaButton: "生成 COUNTIFS 公式", back: "← 返回 Excel 教学中心",
+    ctaTitle: "条件很多，不知道怎么排列？", ctaText: "描述要统计的数据与条件，EveryFormula 会创建 COUNTIFS 公式。", ctaButton: "生成 COUNTIFS 公式", back: "← 返回 Excel 教学中心",
   },
 };

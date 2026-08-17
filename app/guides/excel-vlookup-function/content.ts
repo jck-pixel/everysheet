@@ -22,7 +22,7 @@ export const vlookupGuideContent: Record<AppLanguage, GuideContent> = {
       { title: "範例四：找不到時顯示提示", description: "搭配 IFERROR，找不到資料時顯示「查無資料」。", formula: "=IFERROR(VLOOKUP(A2,$F$2:$H$100,3,FALSE),\"查無資料\")" },
     ],
     errorsTitle: "常見錯誤", errors: [["出現 #N/A", "確認查找值存在、文字與數字格式一致，並移除多餘空格。"], ["回傳欄數填錯", "欄數從資料範圍最左欄開始算，第 1 欄、2 欄依序計算。"], ["忘記使用 FALSE", "一般編號或姓名查找應使用 FALSE 做精確比對。"], ["查找欄不在最左邊", "VLOOKUP 只能向右查找；需要向左時可改用 XLOOKUP 或 INDEX＋MATCH。"]],
-    ctaTitle: "資料範圍很複雜，不知道怎麼寫？", ctaText: "描述查找欄與回傳欄，EverySheet 會替你建立公式。", ctaButton: "建立 VLOOKUP 公式", back: "← 返回 Excel 教學中心",
+    ctaTitle: "資料範圍很複雜，不知道怎麼寫？", ctaText: "描述查找欄與回傳欄，EveryFormula 會替你建立公式。", ctaButton: "建立 VLOOKUP 公式", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Lookup function", title: "Excel VLOOKUP Guide",
@@ -38,7 +38,7 @@ export const vlookupGuideContent: Record<AppLanguage, GuideContent> = {
       { title: "Example 4: Show a friendly message", description: "Use IFERROR to display Not found instead of an error.", formula: "=IFERROR(VLOOKUP(A2,$F$2:$H$100,3,FALSE),\"Not found\")" },
     ],
     errorsTitle: "Common mistakes", errors: [["#N/A appears", "Check that the value exists, number and text formats match, and extra spaces are removed."], ["Wrong column number", "Count columns from the left edge of the selected table range."], ["FALSE is missing", "Use FALSE for an exact ID or name match."], ["Lookup column is not first", "VLOOKUP only looks right; use XLOOKUP or INDEX and MATCH when needed."]],
-    ctaTitle: "Is your lookup table complicated?", ctaText: "Describe the lookup and return columns and EverySheet will build the formula.", ctaButton: "Create a VLOOKUP formula", back: "← Back to Excel Guides",
+    ctaTitle: "Is your lookup table complicated?", ctaText: "Describe the lookup and return columns and EveryFormula will build the formula.", ctaButton: "Create a VLOOKUP formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "検索関数", title: "Excel VLOOKUP 関数ガイド",
@@ -54,7 +54,7 @@ export const vlookupGuideContent: Record<AppLanguage, GuideContent> = {
       { title: "例4：見つからない場合の表示", description: "IFERROR でエラーの代わりに「該当なし」と表示します。", formula: "=IFERROR(VLOOKUP(A2,$F$2:$H$100,3,FALSE),\"該当なし\")" },
     ],
     errorsTitle: "よくある間違い", errors: [["#N/A が表示される", "値の存在、文字列と数値の形式、余分な空白を確認します。"], ["列番号が違う", "選択範囲の左端を1列目として数えます。"], ["FALSE がない", "番号や氏名の完全一致検索には FALSE を使います。"], ["検索列が左端にない", "VLOOKUP は右方向のみです。XLOOKUP または INDEX＋MATCH を使います。"]],
-    ctaTitle: "検索範囲が複雑ですか？", ctaText: "検索列と返す列を説明すると EverySheet が数式を作成します。", ctaButton: "VLOOKUP 数式を作成", back: "← Excel 学習センターに戻る",
+    ctaTitle: "検索範囲が複雑ですか？", ctaText: "検索列と返す列を説明すると EveryFormula が数式を作成します。", ctaButton: "VLOOKUP 数式を作成", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "查找函数", title: "Excel VLOOKUP 函数教学",
@@ -70,6 +70,6 @@ export const vlookupGuideContent: Record<AppLanguage, GuideContent> = {
       { title: "示例四：找不到时显示提示", description: "搭配 IFERROR，在找不到时显示“未找到”。", formula: "=IFERROR(VLOOKUP(A2,$F$2:$H$100,3,FALSE),\"未找到\")" },
     ],
     errorsTitle: "常见错误", errors: [["出现 #N/A", "确认查找值存在、文本与数字格式一致，并删除多余空格。"], ["返回列数错误", "从数据范围最左列开始计算列数。"], ["忘记使用 FALSE", "编号或姓名查找通常应使用 FALSE 精确匹配。"], ["查找列不在最左边", "VLOOKUP 只能向右查找，可改用 XLOOKUP 或 INDEX＋MATCH。"]],
-    ctaTitle: "数据范围很复杂，不知道怎么写？", ctaText: "描述查找列与返回列，EverySheet 会帮你创建公式。", ctaButton: "生成 VLOOKUP 公式", back: "← 返回 Excel 教学中心",
+    ctaTitle: "数据范围很复杂，不知道怎么写？", ctaText: "描述查找列与返回列，EveryFormula 会帮你创建公式。", ctaButton: "生成 VLOOKUP 公式", back: "← 返回 Excel 教学中心",
   },
 };

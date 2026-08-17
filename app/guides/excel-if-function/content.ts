@@ -22,7 +22,7 @@ export const ifGuideContent: Record<AppLanguage, IfGuideContent> = {
       { title: "範例四：搭配 OR", description: "A2 大於 100 或 B2 大於 50 時顯示 PASS。", formula: '=IF(OR(A2>100,B2>50),"PASS","")' },
     ],
     errorsTitle: "常見錯誤", errors: [["文字沒有加雙引號", "文字結果必須使用雙引號，例如「及格」要寫成 \"及格\"。"], ["括號或逗號缺少", "IF 需要三個部分，缺少逗號或右括號會造成錯誤。"], ["百分比格式錯誤", "80% 也可寫成 0.8，但要確認儲存格的實際格式。"], ["巢狀 IF 太多層", "條件太多時可考慮 IFS、XLOOKUP 或建立對照表。"]],
-    ctaTitle: "條件太複雜，不知道 IF 怎麼寫？", ctaText: "直接描述條件，EverySheet 會替你建立公式。", ctaButton: "立即產生 IF 公式", back: "← 返回 Excel 教學中心",
+    ctaTitle: "條件太複雜，不知道 IF 怎麼寫？", ctaText: "直接描述條件，EveryFormula 會替你建立公式。", ctaButton: "立即產生 IF 公式", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Logical function", title: "Excel IF Function Guide",
@@ -38,7 +38,7 @@ export const ifGuideContent: Record<AppLanguage, IfGuideContent> = {
       { title: "Example 4: Use OR", description: "Show PASS when A2 is above 100 or B2 is above 50.", formula: '=IF(OR(A2>100,B2>50),"PASS","")' },
     ],
     errorsTitle: "Common mistakes", errors: [["Missing quotation marks", "Text results must be enclosed in double quotation marks."], ["Missing commas or parentheses", "IF needs three arguments and a closing parenthesis."], ["Wrong percentage format", "80% can also be written as 0.8; check the actual cell format."], ["Too many nested IFs", "For many conditions, consider IFS, XLOOKUP, or a lookup table."]],
-    ctaTitle: "Is your IF condition getting complicated?", ctaText: "Describe the conditions and EverySheet will create the formula.", ctaButton: "Create an IF formula", back: "← Back to Excel Guides",
+    ctaTitle: "Is your IF condition getting complicated?", ctaText: "Describe the conditions and EveryFormula will create the formula.", ctaButton: "Create an IF formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "論理関数", title: "Excel IF 関数ガイド",
@@ -54,7 +54,7 @@ export const ifGuideContent: Record<AppLanguage, IfGuideContent> = {
       { title: "例4：OR と組み合わせる", description: "A2 が 100 超または B2 が 50 超なら PASS。", formula: '=IF(OR(A2>100,B2>50),"PASS","")' },
     ],
     errorsTitle: "よくある間違い", errors: [["文字列の引用符がない", "文字列の結果はダブルクォーテーションで囲みます。"], ["カンマや括弧が不足", "IF には3つの引数と閉じ括弧が必要です。"], ["パーセント形式の誤り", "80% は 0.8 とも書けます。セルの形式を確認してください。"], ["IF の入れ子が多すぎる", "条件が多い場合は IFS、XLOOKUP、対応表を検討します。"]],
-    ctaTitle: "IF の条件が複雑ですか？", ctaText: "条件を文章で入力すると EverySheet が数式を作成します。", ctaButton: "IF 数式を作成", back: "← Excel 学習センターに戻る",
+    ctaTitle: "IF の条件が複雑ですか？", ctaText: "条件を文章で入力すると EveryFormula が数式を作成します。", ctaButton: "IF 数式を作成", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "逻辑函数", title: "Excel IF 函数教学",
@@ -70,6 +70,6 @@ export const ifGuideContent: Record<AppLanguage, IfGuideContent> = {
       { title: "示例四：搭配 OR", description: "A2 大于 100 或 B2 大于 50 时显示 PASS。", formula: '=IF(OR(A2>100,B2>50),"PASS","")' },
     ],
     errorsTitle: "常见错误", errors: [["文本没有加双引号", "文本结果必须使用双引号。"], ["缺少逗号或括号", "IF 需要三个参数和右括号。"], ["百分比格式错误", "80% 也可以写成 0.8，请确认单元格格式。"], ["嵌套 IF 太多层", "条件太多时可考虑 IFS、XLOOKUP 或建立对照表。"]],
-    ctaTitle: "条件太复杂，不知道 IF 怎么写？", ctaText: "直接描述条件，EverySheet 会帮你创建公式。", ctaButton: "立即生成 IF 公式", back: "← 返回 Excel 教学中心",
+    ctaTitle: "条件太复杂，不知道 IF 怎么写？", ctaText: "直接描述条件，EveryFormula 会帮你创建公式。", ctaButton: "立即生成 IF 公式", back: "← 返回 Excel 教学中心",
   },
 };

@@ -4,7 +4,7 @@ import GuideArticleLayout from "../GuideArticleLayout";
 import { iferrorContent } from "./content";
 import { iferrorExamples } from "./examples";
 
-export const metadata: Metadata = { title: "Excel IFERROR 函數教學｜處理公式錯誤｜EverySheet", description: "學習 Excel IFERROR，處理 #N/A、#DIV/0!、#VALUE! 與查找錯誤。" };
+export const metadata: Metadata = { title: "Excel IFERROR 函數教學｜處理公式錯誤｜EveryFormula", description: "學習 Excel IFERROR，處理 #N/A、#DIV/0!、#VALUE! 與查找錯誤。" };
 
 export default function IferrorGuidePage({ searchParams }: { searchParams?: { lang?: string } }) {
   const requested = searchParams?.lang as AppLanguage | undefined;

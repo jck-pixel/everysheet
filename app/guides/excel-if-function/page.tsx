@@ -7,7 +7,7 @@ import GuideExampleTable from "../GuideExampleTable";
 import { ifExamples } from "./examples";
 
 export const metadata: Metadata = {
-  title: "Excel IF 函數教學｜語法、範例與常見錯誤｜EverySheet",
+  title: "Excel IF 函數教學｜語法、範例與常見錯誤｜EveryFormula",
   description:
     "完整學習 Excel IF 函數，包含基本語法、數字判斷、文字判斷、AND／OR 多條件範例，以及常見錯誤與使用方法。",
 };
@@ -23,7 +23,7 @@ export default function LocalizedIfGuidePage({ searchParams }: { searchParams?: 
     <main style={styles.page} className="if-guide-page">
       <header style={styles.header}>
         <div style={styles.nav} className="if-guide-nav">
-          <Link href={`/?lang=${language}`} style={styles.brand}>EverySheet</Link>
+          <Link href={`/?lang=${language}`} style={styles.brand}>EveryFormula</Link>
           <GuideLanguageSelect language={language} path="/guides/excel-if-function" />
           <div style={styles.navLinks} className="if-guide-nav-links">
             <Link href={`/guides?lang=${language}`} style={styles.navLink}>{c.guides}</Link>
@@ -59,7 +59,7 @@ export default function LocalizedIfGuidePage({ searchParams }: { searchParams?: 
         </section>
 
         <section style={styles.cta} className="if-guide-cta">
-          <div><span style={styles.ctaEyebrow}>EverySheet</span><h2 style={styles.ctaTitle}>{c.ctaTitle}</h2><p style={styles.ctaDescription}>{c.ctaText}</p></div>
+          <div><span style={styles.ctaEyebrow}>EveryFormula</span><h2 style={styles.ctaTitle}>{c.ctaTitle}</h2><p style={styles.ctaDescription}>{c.ctaText}</p></div>
           <Link href={`/?lang=${language}`} style={styles.ctaButton}>{c.ctaButton}</Link>
         </section>
 
@@ -75,7 +75,7 @@ function LegacyIfGuidePage() {
       <header style={styles.header}>
         <div style={styles.nav}>
           <Link href="/" style={styles.brand}>
-            EverySheet
+            EveryFormula
           </Link>
 
           <div style={styles.navLinks}>
@@ -256,13 +256,13 @@ function LegacyIfGuidePage() {
 
         <section style={styles.cta}>
           <div>
-            <span style={styles.ctaEyebrow}>EverySheet 公式助手</span>
+            <span style={styles.ctaEyebrow}>EveryFormula 公式助手</span>
 
             <h2 style={styles.ctaTitle}>條件太複雜，不知道 IF 怎麼寫？</h2>
 
             <p style={styles.ctaDescription}>
               直接用中文描述，例如「B 欄大於 60 且 C 欄達到 80% 顯示通過」，
-              EverySheet 會幫你建立公式。
+              EveryFormula 會幫你建立公式。
             </p>
           </div>
 

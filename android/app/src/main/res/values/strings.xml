@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">EverySheet</string>
-    <string name="title_activity_main">EverySheet</string>
+    <string name="app_name">EveryFormula</string>
+    <string name="title_activity_main">EveryFormula</string>
     <string name="package_name">com.orivio.everysheet</string>
     <string name="custom_url_scheme">com.orivio.everysheet</string>
 </resources>

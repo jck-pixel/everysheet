@@ -4,7 +4,7 @@ import GuideArticleLayout from "../GuideArticleLayout";
 import { datedifContent } from "./content";
 import { guideDemos } from "../guideDemos";
 
-export const metadata: Metadata = { title: "Excel DATEDIF 函數教學｜年齡、年資與日期差｜EverySheet", description: "學習 Excel DATEDIF，計算年齡、年資、月份與兩日期相差天數。" };
+export const metadata: Metadata = { title: "Excel DATEDIF 函數教學｜年齡、年資與日期差｜EveryFormula", description: "學習 Excel DATEDIF，計算年齡、年資、月份與兩日期相差天數。" };
 
 export default function DatedifGuidePage({ searchParams }: { searchParams?: { lang?: string } }) {
   const requested = searchParams?.lang as AppLanguage | undefined;

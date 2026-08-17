@@ -9,7 +9,7 @@ export const rightContent: Record<AppLanguage, SumifsContent> = {
     examples:[{title:"範例一：擷取訂單流水號",description:"A2 是 ORD-2026-0086，取右側 4 個字元。",formula:"=RIGHT(A2,4)"},{title:"範例二：取得電話末四碼",description:"從電話號碼右側取得 4 碼。",formula:"=RIGHT(A2,4)"},{title:"範例三：只取最後一個字",description:"省略字元數時預設取 1 個。",formula:"=RIGHT(A2)"},{title:"範例四：搭配 LEN 與 FIND",description:"取得第一個連字號之後的所有內容。",formula:'=RIGHT(A2,LEN(A2)-FIND("-",A2))'}],
     tipsTitle:"實用技巧",tips:[["數字結果仍是文字","後續要計算可使用 VALUE 轉為數字。"],["中文也算一個字元","每個中文字通常計為 1。"],["固定長度最適合","尾碼長度不固定時可搭配 LEN、FIND 或 TEXTAFTER。"],["保留前導零","RIGHT 回傳文字，因此 0086 不會變成 86。"]],
     errorsTitle:"常見錯誤",errors:[["字元數超過長度","會直接回傳完整文字，不一定是錯誤。"],["字元數為負數","會出現 #VALUE!。"],["結果無法加總","RIGHT 回傳文字，請搭配 VALUE。"],["抓到空白字元","原資料尾端若有空白，可先用 TRIM 清理。"]],
-    ctaTitle:"不知道尾碼要怎麼擷取？",ctaText:"提供原始文字與想保留的尾端內容，EverySheet 會建立 RIGHT 公式。",ctaButton:"建立文字公式",back:"← 返回 Excel 教學中心",
+    ctaTitle:"不知道尾碼要怎麼擷取？",ctaText:"提供原始文字與想保留的尾端內容，EveryFormula 會建立 RIGHT 公式。",ctaButton:"建立文字公式",back:"← 返回 Excel 教學中心",
   },
   en: {
     guides:"Excel Guides",formulaTool:"Formula tool",badge:"Text function",title:"Excel RIGHT Guide",subtitle:"Extract characters from the right side of text for order numbers, phone endings, file extensions, and date text.",
@@ -18,7 +18,7 @@ export const rightContent: Record<AppLanguage, SumifsContent> = {
     examples:[{title:"Example 1: Order serial number",description:"A2 is ORD-2026-0086; return the last four characters.",formula:"=RIGHT(A2,4)"},{title:"Example 2: Last four phone digits",description:"Return four digits from the right side.",formula:"=RIGHT(A2,4)"},{title:"Example 3: Last character",description:"Omit num_chars to return one.",formula:"=RIGHT(A2)"},{title:"Example 4: Use LEN and FIND",description:"Return everything after the first hyphen.",formula:'=RIGHT(A2,LEN(A2)-FIND("-",A2))'}],
     tipsTitle:"Useful tips",tips:[["Numbers become text","Use VALUE when the result must be calculated."],["Each character counts","Letters, digits, and symbols each count."],["Best for fixed lengths","Use LEN, FIND, or TEXTAFTER for variable suffixes."],["Leading zeros remain","RIGHT preserves 0086 as text."]],
     errorsTitle:"Common mistakes",errors:[["Count exceeds text length","The full text is returned."],["Negative count","Returns #VALUE!."],["Cannot sum the result","Convert text with VALUE."],["Trailing spaces are captured","Clean the source with TRIM first."]],
-    ctaTitle:"Not sure how to extract a suffix?",ctaText:"Provide the original text and desired ending and EverySheet will build the RIGHT formula.",ctaButton:"Create a text formula",back:"← Back to Excel Guides",
+    ctaTitle:"Not sure how to extract a suffix?",ctaText:"Provide the original text and desired ending and EveryFormula will build the RIGHT formula.",ctaButton:"Create a text formula",back:"← Back to Excel Guides",
   },
   ja: {
     guides:"Excel 学習センター",formulaTool:"数式ツール",badge:"文字列処理",title:"Excel RIGHT 関数ガイド",subtitle:"文字列の右側から指定文字数を抽出し、注文番号、電話番号の末尾、連番を分割します。",
@@ -27,7 +27,7 @@ export const rightContent: Record<AppLanguage, SumifsContent> = {
     examples:[{title:"例1：注文の連番",description:"A2 が ORD-2026-0086 の場合、右4文字。",formula:"=RIGHT(A2,4)"},{title:"例2：電話番号の下4桁",description:"右側から4桁を取得。",formula:"=RIGHT(A2,4)"},{title:"例3：末尾1文字",description:"文字数を省略。",formula:"=RIGHT(A2)"},{title:"例4：LEN と FIND",description:"最初のハイフン以降を取得。",formula:'=RIGHT(A2,LEN(A2)-FIND("-",A2))'}],
     tipsTitle:"実用的なヒント",tips:[["数値も文字列になる","計算には VALUE を使います。"],["日本語も1文字","各文字を1として数えます。"],["固定長に最適","可変長は LEN、FIND、TEXTAFTER。"],["先頭のゼロを保持","0086 をそのまま返します。"]],
     errorsTitle:"よくある間違い",errors:[["文字数が長すぎる","全文を返します。"],["負の文字数","#VALUE!。"],["合計できない","VALUE で数値化。"],["末尾の空白も抽出","先に TRIM で整えます。"]],
-    ctaTitle:"末尾の抽出方法が分かりませんか？",ctaText:"元の文字と必要な末尾を説明すると EverySheet が数式を作成します。",ctaButton:"文字列数式を作成",back:"← Excel 学習センターに戻る",
+    ctaTitle:"末尾の抽出方法が分かりませんか？",ctaText:"元の文字と必要な末尾を説明すると EveryFormula が数式を作成します。",ctaButton:"文字列数式を作成",back:"← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides:"Excel 教学中心",formulaTool:"公式生成器",badge:"文本处理",title:"Excel RIGHT 函数教学",subtitle:"从文本右侧提取指定字符数，快速获取订单流水号、电话末位与文件扩展名。",
@@ -36,6 +36,6 @@ export const rightContent: Record<AppLanguage, SumifsContent> = {
     examples:[{title:"示例一：提取订单流水号",description:"A2 是 ORD-2026-0086，取右侧4个字符。",formula:"=RIGHT(A2,4)"},{title:"示例二：电话末四位",description:"从电话号码右侧获取4位。",formula:"=RIGHT(A2,4)"},{title:"示例三：最后一个字符",description:"省略字符数。",formula:"=RIGHT(A2)"},{title:"示例四：搭配 LEN 与 FIND",description:"提取第一个连字符后的所有内容。",formula:'=RIGHT(A2,LEN(A2)-FIND("-",A2))'}],
     tipsTitle:"实用技巧",tips:[["数字结果仍是文本","计算时可使用 VALUE。"],["中文计为一个字符","每个汉字通常计为1。"],["适合固定长度","不固定时搭配 LEN、FIND 或 TEXTAFTER。"],["保留开头零","0086 不会变成86。"]],
     errorsTitle:"常见错误",errors:[["字符数超过长度","会返回完整文本。"],["字符数为负数","出现 #VALUE!。"],["结果无法求和","使用 VALUE 转为数字。"],["提取到末尾空格","可先使用 TRIM 清理。"]],
-    ctaTitle:"不知道末位怎么提取？",ctaText:"提供原始文本与目标末尾，EverySheet 会创建 RIGHT 公式。",ctaButton:"生成文本公式",back:"← 返回 Excel 教学中心",
+    ctaTitle:"不知道末位怎么提取？",ctaText:"提供原始文本与目标末尾，EveryFormula 会创建 RIGHT 公式。",ctaButton:"生成文本公式",back:"← 返回 Excel 教学中心",
   },
 };

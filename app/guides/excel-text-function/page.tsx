@@ -5,7 +5,7 @@ import { guideDemos } from "../guideDemos";
 import { textContent } from "./content";
 
 export const metadata: Metadata = {
-  title: "Excel TEXT 函數教學｜日期與數字格式｜EverySheet",
+  title: "Excel TEXT 函數教學｜日期與數字格式｜EveryFormula",
   description: "學習 Excel TEXT，格式化日期、金額、百分比並為編號補零。",
 };
 

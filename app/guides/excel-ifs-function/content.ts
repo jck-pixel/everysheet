@@ -14,7 +14,7 @@ export const ifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"實用技巧", tips:[["順序很重要","IFS 遇到第一個成立條件就停止，門檻通常由高到低排列。"],["最後使用 TRUE","TRUE 可作為都不符合時的預設結果。"],["條件與結果成對","每一個條件後面必須緊接對應結果。"],["版本支援","IFS 適用 Microsoft 365、Excel 2019 及較新版本。"]],
     errorsTitle:"常見錯誤", errors:[["出現 #N/A","沒有任何條件成立且未設定 TRUE 預設結果。"],["條件順序顛倒","若先寫 B2>=60，高分也會先得到及格而不會繼續判斷 A、B 等級。"],["條件與結果數量不同","每個條件都必須有對應結果。"],["舊版 Excel 無法使用","可改用巢狀 IF 或建立查找表。"]],
-    ctaTitle:"分級條件太多，不知道怎麼排列？", ctaText:"描述各級門檻與結果，EverySheet 會建立 IFS 公式。", ctaButton:"建立 IFS 公式", back:"← 返回 Excel 教學中心",
+    ctaTitle:"分級條件太多，不知道怎麼排列？", ctaText:"描述各級門檻與結果，EveryFormula 會建立 IFS 公式。", ctaButton:"建立 IFS 公式", back:"← 返回 Excel 教學中心",
   },
   en: {
     guides:"Excel Guides", formulaTool:"Formula tool", badge:"Logical function", title:"Excel IFS Guide", subtitle:"Test multiple conditions in order and replace deeply nested IF formulas for grades, tiers, and bonuses.",
@@ -28,7 +28,7 @@ export const ifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"Useful tips", tips:[["Order matters","IFS stops at the first true test; thresholds usually go from high to low."],["Finish with TRUE","TRUE provides a default when no earlier condition matches."],["Use pairs","Every test must be followed by its result."],["Version support","IFS is available in Microsoft 365, Excel 2019, and newer versions."]],
     errorsTitle:"Common mistakes", errors:[["#N/A appears","No condition is true and no final TRUE fallback was provided."],["Thresholds are reversed","A low threshold placed first catches higher values too early."],["Tests and results do not match","Every condition needs a corresponding result."],["Older Excel version","Use nested IF or a lookup table instead."]],
-    ctaTitle:"Too many tiers to arrange?", ctaText:"Describe each threshold and result and EverySheet will build the IFS formula.", ctaButton:"Create an IFS formula", back:"← Back to Excel Guides",
+    ctaTitle:"Too many tiers to arrange?", ctaText:"Describe each threshold and result and EveryFormula will build the IFS formula.", ctaButton:"Create an IFS formula", back:"← Back to Excel Guides",
   },
   ja: {
     guides:"Excel 学習センター", formulaTool:"数式ツール", badge:"論理関数", title:"Excel IFS 関数ガイド", subtitle:"複数条件を順番に判定し、入れ子の IF を分かりやすく置き換えます。",
@@ -42,7 +42,7 @@ export const ifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"実用的なヒント", tips:[["順序が重要","最初に成立した条件で停止するため、通常は高い基準から並べます。"],["最後に TRUE","どれにも該当しない場合の既定結果になります。"],["条件と結果は対","各条件の直後に対応結果を置きます。"],["対応バージョン","Microsoft 365、Excel 2019 以降で利用できます。"]],
     errorsTitle:"よくある間違い", errors:[["#N/A が表示","成立条件がなく、最後の TRUE もありません。"],["条件順が逆","低い基準を先に置くと高い値もそこで確定します。"],["条件と結果の数が違う","各条件に結果が必要です。"],["古い Excel", "入れ子の IF または対応表を使用します。"]],
-    ctaTitle:"区分が多くて並べ方が分かりませんか？", ctaText:"各基準と結果を説明すると EverySheet が IFS 数式を作成します。", ctaButton:"IFS 数式を作成", back:"← Excel 学習センターに戻る",
+    ctaTitle:"区分が多くて並べ方が分かりませんか？", ctaText:"各基準と結果を説明すると EveryFormula が IFS 数式を作成します。", ctaButton:"IFS 数式を作成", back:"← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides:"Excel 教学中心", formulaTool:"公式生成器", badge:"逻辑函数", title:"Excel IFS 函数教学", subtitle:"依次判断多个条件，取代多层嵌套 IF，让成绩、等级与奖金公式更容易阅读。",
@@ -56,6 +56,6 @@ export const ifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"实用技巧", tips:[["顺序很重要","IFS 在第一个成立条件停止，门槛通常从高到低排列。"],["最后使用 TRUE","作为所有条件都不成立时的默认结果。"],["条件结果成对","每个条件后必须紧接对应结果。"],["版本支持","适用于 Microsoft 365、Excel 2019 及更新版本。"]],
     errorsTitle:"常见错误", errors:[["出现 #N/A","没有任何条件成立且未设置 TRUE 默认结果。"],["条件顺序颠倒","先写低门槛会使高分提前停止判断。"],["条件与结果数量不同","每个条件必须有对应结果。"],["旧版 Excel 无法使用","可改用嵌套 IF 或查找表。"]],
-    ctaTitle:"分级条件太多，不知道怎么排列？", ctaText:"描述各级门槛与结果，EverySheet 会创建 IFS 公式。", ctaButton:"生成 IFS 公式", back:"← 返回 Excel 教学中心",
+    ctaTitle:"分级条件太多，不知道怎么排列？", ctaText:"描述各级门槛与结果，EveryFormula 会创建 IFS 公式。", ctaButton:"生成 IFS 公式", back:"← 返回 Excel 教学中心",
   },
 };

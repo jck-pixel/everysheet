@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "EverySheet｜Excel 公式助手",
-    short_name: "EverySheet",
-    description: "用中文建立、修正、解釋與優化 Excel 和 Google Sheets 公式。",
+    name: "EveryFormula｜公式產生器",
+    short_name: "EveryFormula",
+    description: "用文字建立、修正、解釋與優化 Excel 和 Google Sheets 公式。",
     start_url: "/",
     display: "standalone",
     background_color: "#f6f7fb",

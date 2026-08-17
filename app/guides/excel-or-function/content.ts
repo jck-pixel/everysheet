@@ -14,7 +14,7 @@ export const orContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"實用技巧", tips:[["OR 是任一成立","若要求全部條件成立，應使用 AND。"],["搭配 IF 顯示文字","OR 本身只回傳 TRUE 或 FALSE。"],["可與 AND 組合","例如年齡達標，且兩種證件任一有效。"],["避免重複計數","用多個 COUNTIF 相加做 OR 統計時，重複符合者可能被計算兩次。"]],
     errorsTitle:"常見錯誤", errors:[["把 OR 當成 AND","OR 只要一項成立；所有條件都必要時請使用 AND。"],["文字未加雙引號","急件、完成等文字條件必須放在雙引號內。"],["括號層級錯誤","OR 與 IF、AND 組合時，要確認每層括號完整。"],["直接顯示 TRUE／FALSE","若要顯示提醒文字，請搭配 IF。"]],
-    ctaTitle:"替代條件太多，不知道怎麼組合？", ctaText:"描述哪些條件任一成立即可，EverySheet 會建立 OR 或 IF 公式。", ctaButton:"建立條件公式", back:"← 返回 Excel 教學中心",
+    ctaTitle:"替代條件太多，不知道怎麼組合？", ctaText:"描述哪些條件任一成立即可，EveryFormula 會建立 OR 或 IF 公式。", ctaButton:"建立條件公式", back:"← 返回 Excel 教學中心",
   },
   en: {
     guides:"Excel Guides", formulaTool:"Formula tool", badge:"Logical function", title:"Excel OR Guide", subtitle:"Return true when any condition is met for alternatives, alerts, eligibility, and exception rules.",
@@ -28,7 +28,7 @@ export const orContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"Useful tips", tips:[["OR means any", "Use AND when every condition is required."],["Use IF for custom text","OR alone returns only TRUE or FALSE."],["Combine with AND","Require one condition plus either of two alternatives."],["Avoid double counting","Adding COUNTIF results can count rows twice when both criteria match."]],
     errorsTitle:"Common mistakes", errors:[["Confusing OR with AND","OR needs one true condition; AND needs all."],["Text is not quoted","Text criteria require double quotation marks."],["Parentheses are misplaced","Check every layer when combining OR, IF, and AND."],["TRUE/FALSE is displayed","Wrap OR in IF to show a message."]],
-    ctaTitle:"Too many alternatives to combine?", ctaText:"Describe which conditions may qualify and EverySheet will build the OR or IF formula.", ctaButton:"Create a condition formula", back:"← Back to Excel Guides",
+    ctaTitle:"Too many alternatives to combine?", ctaText:"Describe which conditions may qualify and EveryFormula will build the OR or IF formula.", ctaButton:"Create a condition formula", back:"← Back to Excel Guides",
   },
   ja: {
     guides:"Excel 学習センター", formulaTool:"数式ツール", badge:"論理関数", title:"Excel OR 関数ガイド", subtitle:"複数条件のどれか1つが成立すれば TRUE を返し、代替条件や警告を判定します。",
@@ -42,7 +42,7 @@ export const orContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"実用的なヒント", tips:[["OR はどれか1つ","すべて必要なら AND を使います。"],["IF で文字表示","OR 単体は TRUE／FALSE のみです。"],["AND と組み合わせる","必須条件と選択条件を組み合わせます。"],["重複計数に注意","COUNTIF の加算では両方に一致する行を二重計数する場合があります。"]],
     errorsTitle:"よくある間違い", errors:[["OR と AND の混同","OR は1項目、AND はすべての成立が必要です。"],["文字に引用符がない","文字条件はダブルクォーテーションで囲みます。"],["括弧の階層が違う","OR、IF、AND の各括弧を確認します。"],["TRUE／FALSE が表示","メッセージ表示には IF を使います。"]],
-    ctaTitle:"代替条件の組み合わせが分かりませんか？", ctaText:"どの条件が1つでも成立すればよいか説明すると EverySheet が数式を作成します。", ctaButton:"条件数式を作成", back:"← Excel 学習センターに戻る",
+    ctaTitle:"代替条件の組み合わせが分かりませんか？", ctaText:"どの条件が1つでも成立すればよいか説明すると EveryFormula が数式を作成します。", ctaButton:"条件数式を作成", back:"← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides:"Excel 教学中心", formulaTool:"公式生成器", badge:"逻辑函数", title:"Excel OR 函数教学", subtitle:"多个条件只要一个成立即可，适合替代条件、提醒、资格与例外判断。",
@@ -56,6 +56,6 @@ export const orContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"实用技巧", tips:[["OR 是任一成立","要求全部成立应使用 AND。"],["搭配 IF 显示文本","OR 本身只返回 TRUE 或 FALSE。"],["可以与 AND 组合","组合必选条件与任选条件。"],["避免重复计数","多个 COUNTIF 相加时，重复符合者可能被计算两次。"]],
     errorsTitle:"常见错误", errors:[["把 OR 当成 AND","OR 只需一项成立；所有条件都必要时使用 AND。"],["文本未加双引号","急件、完成等文本条件必须放在双引号内。"],["括号层级错误","组合 OR、IF、AND 时检查每层括号。"],["直接显示 TRUE／FALSE","如需提醒文本，请搭配 IF。"]],
-    ctaTitle:"替代条件太多，不知道怎么组合？", ctaText:"描述哪些条件任一成立即可，EverySheet 会创建 OR 或 IF 公式。", ctaButton:"生成条件公式", back:"← 返回 Excel 教学中心",
+    ctaTitle:"替代条件太多，不知道怎么组合？", ctaText:"描述哪些条件任一成立即可，EveryFormula 会创建 OR 或 IF 公式。", ctaButton:"生成条件公式", back:"← 返回 Excel 教学中心",
   },
 };

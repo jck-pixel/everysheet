@@ -6,7 +6,7 @@ const serverUrl =
 
 const config: CapacitorConfig = {
   appId: "com.orivio.everysheet",
-  appName: "EverySheet",
+  appName: "EveryFormula",
   webDir: "public",
   server: {
     url: serverUrl,

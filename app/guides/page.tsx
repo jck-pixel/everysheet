@@ -4,7 +4,7 @@ import { AppLanguage, guideUiText, languageOptions } from "../i18n";
 import GuideLanguageSelect from "./GuideLanguageSelect";
 
 export const metadata: Metadata = {
-  title: "Excel 教學中心｜函數教學與實務公式｜EverySheet",
+  title: "Excel 教學中心｜函數教學與實務公式｜EveryFormula",
   description:
     "免費學習 Excel 與 Google Sheets 函數，包含 IF、VLOOKUP、XLOOKUP、SUMIFS、COUNTIFS、日期與文字處理公式。",
 };
@@ -69,12 +69,17 @@ const popularGuides = [
   },
 ];
 
-const combinedGuideText: Record<AppLanguage, { eyebrow: string; title: string; description: string; name: string; detail: string; badge: string; singleEyebrow: string; singleTitle: string }> = {
-  "zh-TW": { eyebrow:"多個函數", title:"組合公式教學案例", description:"把兩個以上函數組合起來，解決實際工作需求。", name:"IFERROR＋VLOOKUP", detail:"查找資料，找不到時顯示清楚提示。", badge:"2 個函數", singleEyebrow:"單一函數", singleTitle:"單一函數教學" },
-  en: { eyebrow:"Multiple functions", title:"Combined Formula Guides", description:"Combine two or more functions to solve practical spreadsheet tasks.", name:"IFERROR + VLOOKUP", detail:"Look up data and show a clear message when no match exists.", badge:"2 functions", singleEyebrow:"Single function", singleTitle:"Single Function Guides" },
-  ja: { eyebrow:"複数関数", title:"組み合わせ数式の実例", description:"2つ以上の関数を組み合わせ、実務の課題を解決します。", name:"IFERROR＋VLOOKUP", detail:"データを検索し、見つからない場合は分かりやすく表示。", badge:"2 関数", singleEyebrow:"単一関数", singleTitle:"単一関数ガイド" },
-  "zh-CN": { eyebrow:"多个函数", title:"组合公式教学案例", description:"组合两个以上函数，解决实际工作需求。", name:"IFERROR＋VLOOKUP", detail:"查找数据，未找到时显示清楚提示。", badge:"2 个函数", singleEyebrow:"单一函数", singleTitle:"单一函数教学" },
+const combinedGuideText: Record<AppLanguage, { eyebrow: string; title: string; description: string; name: string; detail: string; badge: string; pending: string; singleEyebrow: string; singleTitle: string }> = {
+  "zh-TW": { eyebrow:"多個函數", title:"組合公式教學案例", description:"把兩個以上函數組合起來，解決實際工作需求。", name:"IFERROR＋VLOOKUP", detail:"查找資料，找不到時顯示清楚提示。", badge:"2 個函數", pending:"待更新", singleEyebrow:"單一函數", singleTitle:"單一函數教學" },
+  en: { eyebrow:"Multiple functions", title:"Combined Formula Guides", description:"Combine two or more functions to solve practical spreadsheet tasks.", name:"IFERROR + VLOOKUP", detail:"Look up data and show a clear message when no match exists.", badge:"2 functions", pending:"Update pending", singleEyebrow:"Single function", singleTitle:"Single Function Guides" },
+  ja: { eyebrow:"複数関数", title:"組み合わせ数式の実例", description:"2つ以上の関数を組み合わせ、実務の課題を解決します。", name:"IFERROR＋VLOOKUP", detail:"データを検索し、見つからない場合は分かりやすく表示。", badge:"2 関数", pending:"更新予定", singleEyebrow:"単一関数", singleTitle:"単一関数ガイド" },
+  "zh-CN": { eyebrow:"多个函数", title:"组合公式教学案例", description:"组合两个以上函数，解决实际工作需求。", name:"IFERROR＋VLOOKUP", detail:"查找数据，未找到时显示清楚提示。", badge:"2 个函数", pending:"待更新", singleEyebrow:"单一函数", singleTitle:"单一函数教学" },
 };
+
+const updatedSingleGuides = new Set([
+  "IF", "IFS", "IFERROR", "AND", "OR", "VLOOKUP", "XLOOKUP",
+  "INDEX", "MATCH", "SUMIF", "SUMIFS",
+]);
 
 export default function GuidesPage({ searchParams }: { searchParams?: { lang?: string } }) {
   const requestedLanguage = searchParams?.lang as AppLanguage | undefined;
@@ -108,7 +113,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
     <main style={styles.page} className="guides-page">
       <section style={styles.hero} className="guides-hero">
         <Link href="/" style={styles.brand} className="guides-brand">
-          EverySheet
+          EveryFormula
         </Link>
 
         <GuideLanguageSelect language={language} />
@@ -172,7 +177,9 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
         <div style={styles.sectionHeader} className="guides-section-header">
           <div>
             <span style={styles.eyebrow}>{combined.eyebrow}</span>
-            <h2 style={styles.sectionTitle} className="guides-section-title">{combined.title}</h2>
+            <h2 style={styles.sectionTitle} className="guides-section-title">
+              {combined.title} <span style={styles.pendingText}>（{combined.pending}）</span>
+            </h2>
           </div>
           <p style={styles.sectionDescription} className="guides-section-description">{combined.description}</p>
         </div>
@@ -247,7 +254,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
                       style={styles.tag}
                       className="guides-tag guides-tag-link"
                     >
-                      {item} →
+                      {item}{updatedSingleGuides.has(item) ? " →" : `（${combined.pending}）`}
                     </Link>
                   ) : (
                     <span key={item} style={styles.tag} className="guides-tag">
@@ -262,11 +269,11 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
         <section style={styles.cta}>
           <div>
-            <span style={styles.ctaEyebrow}>EverySheet 公式助手</span>
+            <span style={styles.ctaEyebrow}>EveryFormula 公式助手</span>
             <h2 style={styles.ctaTitle}>不知道該使用哪個函數？</h2>
 
             <p style={styles.ctaDescription}>
-              直接用中文描述需求，EverySheet 會協助你建立、修正、解釋或優化公式。
+              直接用中文描述需求，EveryFormula 會協助你建立、修正、解釋或優化公式。
             </p>
           </div>
 
@@ -278,7 +285,7 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
 
       <footer style={styles.footer}>
         <Link href="/" style={styles.footerLink}>
-          ← 返回 EverySheet
+          ← 返回 EveryFormula
         </Link>
 
         <span>Excel 教學中心 © 2026</span>
@@ -378,6 +385,13 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "7px 0 0",
     fontSize: "30px",
     lineHeight: 1.25,
+  },
+
+  pendingText: {
+    color: "#b45309",
+    fontSize: "0.55em",
+    fontWeight: 800,
+    whiteSpace: "nowrap",
   },
 
   sectionDescription: {

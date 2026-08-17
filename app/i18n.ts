@@ -9,12 +9,12 @@ export const languageOptions: { value: AppLanguage; label: string }[] = [
 
 export const uiText = {
   "zh-TW": {
-    mobileBrand: "EverySheet",
+    mobileBrand: "EveryFormula",
     guideLink: "教學中心 →",
     inputLabel: "請輸入你的需求",
     defaultRequest: "超過 8 小時算加班費",
     placeholder: "例如：A欄是投入數量，B欄是不良數量，請幫我計算良率",
-    hint: "💡 不用擔心描述不完整，EverySheet 會自動詢問缺少的資訊。",
+    hint: "💡 不用擔心描述不完整，EveryFormula 會自動詢問缺少的資訊。",
     generate: "✨ 建立公式",
     fix: "🛠 修正公式",
     explain: "📖 解釋公式",
@@ -56,9 +56,9 @@ export const uiText = {
     ],
   },
   en: {
-    mobileBrand: "EverySheet", guideLink: "Guides →", inputLabel: "Describe what you need",
+    mobileBrand: "EveryFormula", guideLink: "Guides →", inputLabel: "Describe what you need",
     defaultRequest: "Calculate overtime after 8 hours", placeholder: "Example: Column A is input and B is defects. Calculate the yield rate.",
-    hint: "💡 Your description does not need to be perfect. EverySheet will ask for missing details.",
+    hint: "💡 Your description does not need to be perfect. EveryFormula will ask for missing details.",
     generate: "✨ Create", fix: "🛠 Fix", explain: "📖 Explain", optimize: "⚡ Optimize",
     resultFormat: "Result format", general: "Standard", generalDescription: "Get a ready-to-use answer with simple formatting.",
     professional: "Professional Excel", professionalDescription: "Keep calculable values for analysis and reporting.",
@@ -70,9 +70,9 @@ export const uiText = {
     examples: [["📊 Yield rate", "Column A is input quantity and B is defects. Calculate yield percentage and show 0% when input is 0."], ["💰 Overtime", "Column A is total hours and B is hourly pay. Hours over 8 use a 1.33 overtime multiplier, with the result in column C."], ["🔍 VLOOKUP", "Find the matching salary by employee name."], ["📅 Date difference", "Calculate the number of days between two dates."]],
   },
   ja: {
-    mobileBrand: "EverySheet", guideLink: "学習センター →", inputLabel: "必要な内容を入力してください",
+    mobileBrand: "EveryFormula", guideLink: "学習センター →", inputLabel: "必要な内容を入力してください",
     defaultRequest: "8時間を超えた分の残業代を計算", placeholder: "例：A列は投入数、B列は不良数です。歩留まりを計算してください。",
-    hint: "💡 説明が不完全でも大丈夫です。EverySheet が不足情報を確認します。",
+    hint: "💡 説明が不完全でも大丈夫です。EveryFormula が不足情報を確認します。",
     generate: "✨ 数式を作成", fix: "🛠 数式を修正", explain: "📖 数式を説明", optimize: "⚡ 最適化",
     resultFormat: "結果形式を選択", general: "一般向け", generalDescription: "すぐ使える分かりやすい結果を表示します。",
     professional: "プロ向け Excel", professionalDescription: "分析やレポートに適した計算可能な値を保持します。",
@@ -84,9 +84,9 @@ export const uiText = {
     examples: [["📊 歩留まり", "A列は投入数、B列は不良数です。投入数が0の場合は0%と表示して歩留まりを計算してください。"], ["💰 残業代", "A列は総労働時間、B列は時給です。8時間を超えた分は1.33倍で計算し、C列に表示してください。"], ["🔍 VLOOKUP", "氏名から対応する給与を検索してください。"], ["📅 日付差", "2つの日付の差を日数で計算してください。"]],
   },
   "zh-CN": {
-    mobileBrand: "EverySheet", guideLink: "教学中心 →", inputLabel: "请输入你的需求",
+    mobileBrand: "EveryFormula", guideLink: "教学中心 →", inputLabel: "请输入你的需求",
     defaultRequest: "超过 8 小时计算加班费", placeholder: "例如：A列是投入数量，B列是不良数量，请帮我计算良率。",
-    hint: "💡 不用担心描述不完整，EverySheet 会自动询问缺少的信息。",
+    hint: "💡 不用担心描述不完整，EveryFormula 会自动询问缺少的信息。",
     generate: "✨ 创建公式", fix: "🛠 修正公式", explain: "📖 解释公式", optimize: "⚡ 优化公式",
     resultFormat: "选择结果格式", general: "一般使用", generalDescription: "直接得到需要的结果，不用再次调整格式。",
     professional: "专业 Excel", professionalDescription: "保留可计算数值，适合进一步分析与报表。",

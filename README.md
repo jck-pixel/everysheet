@@ -1,8 +1,8 @@
-# # EverySheet
+# # EveryFormula
 
 Excel / Google Sheets 公式助手。
 
-EverySheet 能幫助你快速：
+EveryFormula 能幫助你快速：
 
 - 建立公式
 - 修正公式
@@ -52,7 +52,7 @@ OPENAI_API_KEY=你的 OpenAI API Key
 
 ## Android App
 
-Android App 使用 Capacitor 封裝正式 EverySheet 網站，套件名稱為
+Android App 使用 Capacitor 封裝正式 EveryFormula 網站，套件名稱為
 `com.orivio.everysheet`。
 
 ```bash

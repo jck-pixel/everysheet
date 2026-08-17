@@ -5,7 +5,7 @@ import { guideDemos } from "../guideDemos";
 import { trimContent } from "./content";
 
 export const metadata: Metadata = {
-  title: "Excel TRIM 函數教學｜清除多餘空格｜EverySheet",
+  title: "Excel TRIM 函數教學｜清除多餘空格｜EveryFormula",
   description: "學習 Excel TRIM，清除姓名、商品名稱與匯入資料中的多餘空格。",
 };
 

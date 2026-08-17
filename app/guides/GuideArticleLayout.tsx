@@ -14,7 +14,7 @@ type Content = {
 export default function GuideArticleLayout({ language, path, content: c, demo, exampleDemos }: { language: AppLanguage; path: string; content: Content; demo?: GuideDemo; exampleDemos?: GuideDemo[] }) {
   return <main style={s.page} className="if-guide-page">
     <header style={s.header}><div style={s.nav} className="if-guide-nav">
-      <Link href={`/?lang=${language}`} style={s.brand}>EverySheet</Link><GuideLanguageSelect language={language} path={path} />
+      <Link href={`/?lang=${language}`} style={s.brand}>EveryFormula</Link><GuideLanguageSelect language={language} path={path} />
       <div style={s.navLinks} className="if-guide-nav-links"><Link href={`/guides?lang=${language}`} style={s.navLink}>{c.guides}</Link><Link href={`/?lang=${language}`} style={s.primaryNavLink}>{c.formulaTool}</Link></div>
     </div></header>
     <article style={s.article} className="if-guide-article">
@@ -27,7 +27,7 @@ export default function GuideArticleLayout({ language, path, content: c, demo, e
         : <section key={example.title} style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{example.title}</h2><p style={s.paragraph}>{example.description}</p><div style={s.formula}>{example.formula}</div></section>)}
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.tipsTitle}</h2><div style={s.grid}>{c.tips.map(([title, detail]) => <div key={title} style={s.gridItem}><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
       <section style={s.card} className="if-guide-card"><h2 style={s.sectionTitle}>{c.errorsTitle}</h2><div style={s.errorList}>{c.errors.map(([title, detail]) => <div key={title} style={s.errorItem}><strong>{title}</strong><p style={s.errorText}>{detail}</p></div>)}</div></section>
-      <section style={s.cta} className="if-guide-cta"><div><span style={s.ctaEyebrow}>EverySheet</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div><Link href={`/?lang=${language}`} style={s.ctaButton}>{c.ctaButton}</Link></section>
+      <section style={s.cta} className="if-guide-cta"><div><span style={s.ctaEyebrow}>EveryFormula</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div><Link href={`/?lang=${language}`} style={s.ctaButton}>{c.ctaButton}</Link></section>
       <div style={s.backArea}><Link href={`/guides?lang=${language}`} style={s.backLink}>{c.back}</Link></div>
     </article>
   </main>;

@@ -24,7 +24,7 @@ export const sumifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "實用技巧", tips: [["文字萬用字元", "* 代表任意多個字元，? 代表一個字元。"], ["比較運算要加引號", "大於等於寫成 \">=100\"；與儲存格連接則寫 \">=\"&F2。"], ["日期用 DATE", "用 DATE 建立日期條件，較不受電腦日期格式影響。"], ["範圍大小一致", "加總範圍與每個條件範圍應從相同行開始並有相同大小。"]],
     errorsTitle: "常見錯誤", errors: [["結果是 0", "確認條件文字、空格、日期與數字格式是否一致。"], ["條件與範圍順序顛倒", "SUMIFS 的第一個參數是加總範圍，之後才是條件範圍與條件。"], ["日期條件直接輸入文字", "建議使用 DATE，或將比較符號與日期儲存格用 & 連接。"], ["範圍列數不同", "所有範圍大小必須一致，否則可能出現 #VALUE!。"]],
-    ctaTitle: "條件很多，不知道公式順序？", ctaText: "描述要加總的欄位與條件，EverySheet 會替你建立 SUMIFS 公式。", ctaButton: "建立 SUMIFS 公式", back: "← 返回 Excel 教學中心",
+    ctaTitle: "條件很多，不知道公式順序？", ctaText: "描述要加總的欄位與條件，EveryFormula 會替你建立 SUMIFS 公式。", ctaButton: "建立 SUMIFS 公式", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Statistical function", title: "Excel SUMIFS Guide",
@@ -41,7 +41,7 @@ export const sumifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "Useful tips", tips: [["Text wildcards", "* matches any number of characters; ? matches one character."], ["Quote comparison operators", "Use \">=100\" or join a cell as \">=\"&F2."], ["Use DATE", "DATE creates reliable date criteria across regional formats."], ["Match range sizes", "Every criteria range should align with the sum range."]],
     errorsTitle: "Common mistakes", errors: [["The result is 0", "Check text, spaces, dates, and number formats."], ["Arguments are reversed", "SUMIFS starts with the sum range, followed by criteria range and criterion pairs."], ["Date entered as plain text", "Use DATE or join the operator to a date cell with &."], ["Ranges have different sizes", "All ranges must match or Excel may return #VALUE!."]],
-    ctaTitle: "Too many criteria to arrange?", ctaText: "Describe the sum column and conditions and EverySheet will build the formula.", ctaButton: "Create a SUMIFS formula", back: "← Back to Excel Guides",
+    ctaTitle: "Too many criteria to arrange?", ctaText: "Describe the sum column and conditions and EveryFormula will build the formula.", ctaButton: "Create a SUMIFS formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "集計関数", title: "Excel SUMIFS 関数ガイド",
@@ -58,7 +58,7 @@ export const sumifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "実用的なヒント", tips: [["ワイルドカード", "* は任意の文字列、? は1文字を表します。"], ["比較演算子は引用符内", "\">=100\"、セル参照なら \">=\"&F2 と書きます。"], ["DATE を使用", "地域ごとの日付形式に左右されにくくなります。"], ["範囲サイズを統一", "合計範囲と条件範囲を同じ大きさにします。"]],
     errorsTitle: "よくある間違い", errors: [["結果が 0", "文字、空白、日付、数値の形式を確認します。"], ["引数の順序が逆", "最初は合計範囲、その後に条件範囲と条件です。"], ["日付を文字で入力", "DATE または日付セルとの & 結合を使います。"], ["範囲サイズが異なる", "すべての範囲を同じサイズにします。"]],
-    ctaTitle: "条件の順序が分かりませんか？", ctaText: "合計列と条件を説明すると EverySheet が数式を作成します。", ctaButton: "SUMIFS 数式を作成", back: "← Excel 学習センターに戻る",
+    ctaTitle: "条件の順序が分かりませんか？", ctaText: "合計列と条件を説明すると EveryFormula が数式を作成します。", ctaButton: "SUMIFS 数式を作成", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "统计函数", title: "Excel SUMIFS 函数教学",
@@ -75,6 +75,6 @@ export const sumifsContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "实用技巧", tips: [["文本通配符", "* 代表任意多个字符，? 代表一个字符。"], ["比较运算符加引号", "写成 \">=100\"；与单元格连接则写 \">=\"&F2。"], ["日期使用 DATE", "避免受到电脑日期格式影响。"], ["范围大小一致", "求和范围与每个条件范围应对齐并且大小相同。"]],
     errorsTitle: "常见错误", errors: [["结果是 0", "确认条件文本、空格、日期与数字格式是否一致。"], ["参数顺序颠倒", "第一个参数是求和范围，之后才是条件范围与条件。"], ["日期条件直接输入文本", "建议使用 DATE，或用 & 连接比较符号与日期单元格。"], ["范围行数不同", "所有范围大小必须一致，否则可能出现 #VALUE!。"]],
-    ctaTitle: "条件很多，不知道公式顺序？", ctaText: "描述求和列与条件，EverySheet 会帮你创建 SUMIFS 公式。", ctaButton: "生成 SUMIFS 公式", back: "← 返回 Excel 教学中心",
+    ctaTitle: "条件很多，不知道公式顺序？", ctaText: "描述求和列与条件，EveryFormula 会帮你创建 SUMIFS 公式。", ctaButton: "生成 SUMIFS 公式", back: "← 返回 Excel 教学中心",
   },
 };

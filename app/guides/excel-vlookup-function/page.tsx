@@ -7,7 +7,7 @@ import GuideExampleTable from "../GuideExampleTable";
 import { vlookupExamples } from "./examples";
 
 export const metadata: Metadata = {
-  title: "Excel VLOOKUP 函數教學｜語法、範例與常見錯誤｜EverySheet",
+  title: "Excel VLOOKUP 函數教學｜語法、範例與常見錯誤｜EveryFormula",
   description: "學習 Excel VLOOKUP 函數，包括精確比對、固定範圍、IFERROR 與常見 #N/A 錯誤。",
 };
 
@@ -20,7 +20,7 @@ export default function VlookupGuidePage({ searchParams }: { searchParams?: { la
     <main style={s.page} className="if-guide-page">
       <header style={s.header}>
         <div style={s.nav} className="if-guide-nav">
-          <Link href={`/?lang=${language}`} style={s.brand}>EverySheet</Link>
+          <Link href={`/?lang=${language}`} style={s.brand}>EveryFormula</Link>
           <GuideLanguageSelect language={language} path="/guides/excel-vlookup-function" />
           <div style={s.navLinks} className="if-guide-nav-links">
             <Link href={`/guides?lang=${language}`} style={s.navLink}>{c.guides}</Link>
@@ -56,7 +56,7 @@ export default function VlookupGuidePage({ searchParams }: { searchParams?: { la
         </section>
 
         <section style={s.cta} className="if-guide-cta">
-          <div><span style={s.ctaEyebrow}>EverySheet</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div>
+          <div><span style={s.ctaEyebrow}>EveryFormula</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div>
           <Link href={`/?lang=${language}`} style={s.ctaButton}>{c.ctaButton}</Link>
         </section>
         <div style={s.backArea}><Link href={`/guides?lang=${language}`} style={s.backLink}>{c.back}</Link></div>

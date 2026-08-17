@@ -4,7 +4,7 @@ import GuideArticleLayout from "../GuideArticleLayout";
 import { countifsContent } from "./content";
 import { guideDemos } from "../guideDemos";
 
-export const metadata: Metadata = { title: "Excel COUNTIFS 函數教學｜多條件計數範例｜EverySheet", description: "學習 Excel COUNTIFS 多條件計數，包括文字、數字、日期區間與常見錯誤。" };
+export const metadata: Metadata = { title: "Excel COUNTIFS 函數教學｜多條件計數範例｜EveryFormula", description: "學習 Excel COUNTIFS 多條件計數，包括文字、數字、日期區間與常見錯誤。" };
 
 export default function CountifsGuidePage({ searchParams }: { searchParams?: { lang?: string } }) {
   const requested = searchParams?.lang as AppLanguage | undefined;

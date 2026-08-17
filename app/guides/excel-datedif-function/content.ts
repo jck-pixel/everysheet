@@ -14,7 +14,7 @@ export const datedifContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "單位怎麼選？", tips: [["Y", "兩日期之間的完整年數。"], ["M", "兩日期之間的完整月數。"], ["D", "兩日期之間的總天數。"], ["YM／MD／YD", "忽略整年或整月後的剩餘差距；MD 在部分日期組合可能不直覺。"]],
     errorsTitle: "常見錯誤", errors: [["出現 #NUM!", "開始日期晚於結束日期時會出錯，請確認日期順序。"], ["日期其實是文字", "看起來像日期不代表 Excel 已辨識，請轉成真正的日期值。"], ["單位沒有雙引號", "Y、M、D、YM 等單位必須寫在雙引號內。"], ["找不到函數提示", "DATEDIF 是相容性函數，輸入時可能不出現在提示清單，但完整公式仍可使用。"]],
-    ctaTitle: "日期條件很複雜，不知道怎麼算？", ctaText: "描述開始日、結束日與想要的結果，EverySheet 會建立日期公式。", ctaButton: "建立日期公式", back: "← 返回 Excel 教學中心",
+    ctaTitle: "日期條件很複雜，不知道怎麼算？", ctaText: "描述開始日、結束日與想要的結果，EveryFormula 會建立日期公式。", ctaButton: "建立日期公式", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Date & time", title: "Excel DATEDIF Guide", subtitle: "Calculate complete years, months, or days between two dates for age, service, contracts, and deadlines.",
@@ -28,7 +28,7 @@ export const datedifContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "Choosing a unit", tips: [["Y", "Complete years between dates."], ["M", "Complete months between dates."], ["D", "Total days between dates."], ["YM / MD / YD", "Remaining difference after ignoring years or months; MD can be unintuitive for some date combinations."]],
     errorsTitle: "Common mistakes", errors: [["#NUM! appears", "The start date must not be later than the end date."], ["The date is text", "A value that looks like a date may not be recognized by Excel."], ["The unit is not quoted", "Y, M, D, and other units require double quotation marks."], ["No function suggestion appears", "DATEDIF is a compatibility function and may not appear in autocomplete, but a complete formula still works."]],
-    ctaTitle: "Is your date calculation complicated?", ctaText: "Describe the start date, end date, and desired result and EverySheet will build the formula.", ctaButton: "Create a date formula", back: "← Back to Excel Guides",
+    ctaTitle: "Is your date calculation complicated?", ctaText: "Describe the start date, end date, and desired result and EveryFormula will build the formula.", ctaButton: "Create a date formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "日付と時刻", title: "Excel DATEDIF 関数ガイド", subtitle: "2つの日付の年数、月数、日数の差を計算し、年齢、勤続年数、期限管理に利用します。",
@@ -42,7 +42,7 @@ export const datedifContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "単位の選び方", tips: [["Y", "2日付間の満年数。"], ["M", "2日付間の満月数。"], ["D", "2日付間の総日数。"], ["YM / MD / YD", "年や月を除いた残り。MD は一部の日付で直感的でない場合があります。"]],
     errorsTitle: "よくある間違い", errors: [["#NUM! が表示", "開始日が終了日より後になっていないか確認します。"], ["日付が文字列", "見た目が日付でも Excel が日付値として認識しているとは限りません。"], ["単位に引用符がない", "Y、M、D などはダブルクォーテーションで囲みます。"], ["候補に表示されない", "互換性関数のため候補に出ない場合がありますが、完全な数式は使用できます。"]],
-    ctaTitle: "日付計算が複雑ですか？", ctaText: "開始日、終了日、希望する結果を説明すると EverySheet が数式を作成します。", ctaButton: "日付数式を作成", back: "← Excel 学習センターに戻る",
+    ctaTitle: "日付計算が複雑ですか？", ctaText: "開始日、終了日、希望する結果を説明すると EveryFormula が数式を作成します。", ctaButton: "日付数式を作成", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "日期与时间", title: "Excel DATEDIF 函数教学", subtitle: "计算两个日期相差几年、几个月或几天，适用于年龄、工龄、合同与期限统计。",
@@ -56,6 +56,6 @@ export const datedifContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "单位怎么选？", tips: [["Y", "两个日期间的完整年数。"], ["M", "两个日期间的完整月数。"], ["D", "两个日期间的总天数。"], ["YM / MD / YD", "忽略整年或整月后的剩余差距；MD 在部分日期组合中可能不直观。"]],
     errorsTitle: "常见错误", errors: [["出现 #NUM!", "开始日期不能晚于结束日期。"], ["日期其实是文本", "看起来像日期不代表 Excel 已识别为日期值。"], ["单位没有双引号", "Y、M、D 等单位必须放在双引号内。"], ["没有函数提示", "DATEDIF 是兼容性函数，可能不显示在提示列表，但完整公式仍可使用。"]],
-    ctaTitle: "日期条件复杂，不知道怎么算？", ctaText: "描述开始日、结束日与目标结果，EverySheet 会创建日期公式。", ctaButton: "生成日期公式", back: "← 返回 Excel 教学中心",
+    ctaTitle: "日期条件复杂，不知道怎么算？", ctaText: "描述开始日、结束日与目标结果，EveryFormula 会创建日期公式。", ctaButton: "生成日期公式", back: "← 返回 Excel 教学中心",
   },
 };

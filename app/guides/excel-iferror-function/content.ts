@@ -14,7 +14,7 @@ export const iferrorContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "實用技巧", tips: [["先確認錯誤原因", "IFERROR 改變顯示，不會修正錯誤的資料或公式。"], ["提示要具體", "使用「查無員工」比只顯示空白更容易排查。"], ["數字與文字要分清", "後續還要計算時，錯誤結果宜使用 0，不要使用文字「0」。"], ["XLOOKUP 可直接處理", "XLOOKUP 第 4 個參數可指定找不到時的結果。"]],
     errorsTitle: "常見錯誤", errors: [["把所有錯誤隱藏成空白", "可能讓真正的公式問題不易被發現，重要報表應保留明確提示。"], ["括號位置錯誤", "IFERROR 必須包住完整公式，再於逗號後寫錯誤結果。"], ["文字沒有雙引號", "「查無資料」等文字必須放在雙引號內。"], ["誤以為只處理 #N/A", "IFERROR 會處理多種錯誤；若只想處理 #N/A，可使用 IFNA。"]],
-    ctaTitle: "公式錯誤，不知道該怎麼處理？", ctaText: "貼上原公式並描述希望顯示的結果，EverySheet 會協助修正。", ctaButton: "修正公式錯誤", back: "← 返回 Excel 教學中心",
+    ctaTitle: "公式錯誤，不知道該怎麼處理？", ctaText: "貼上原公式並描述希望顯示的結果，EveryFormula 會協助修正。", ctaButton: "修正公式錯誤", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Logical function", title: "Excel IFERROR Guide", subtitle: "Replace #N/A, #DIV/0!, #VALUE!, and other errors with a clear message or fallback value.",
@@ -28,7 +28,7 @@ export const iferrorContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "Useful tips", tips: [["Find the cause first", "IFERROR changes the display; it does not repair bad data or logic."], ["Use a clear message", "Not found is easier to diagnose than a blank."], ["Keep data types consistent", "Use numeric 0 when later calculations need a number."], ["XLOOKUP has a fallback", "Its fourth argument can handle a missing match directly."]],
     errorsTitle: "Common mistakes", errors: [["Hiding every error", "Blank results can conceal real formula problems."], ["Parentheses are misplaced", "Wrap the complete original formula inside IFERROR."], ["Text is not quoted", "Text fallbacks require double quotation marks."], ["Assuming it only handles #N/A", "IFERROR catches many errors; use IFNA when only #N/A should be handled."]],
-    ctaTitle: "Not sure how to handle a formula error?", ctaText: "Paste the formula and describe the desired fallback; EverySheet will help fix it.", ctaButton: "Fix a formula", back: "← Back to Excel Guides",
+    ctaTitle: "Not sure how to handle a formula error?", ctaText: "Paste the formula and describe the desired fallback; EveryFormula will help fix it.", ctaButton: "Fix a formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "論理関数", title: "Excel IFERROR 関数ガイド", subtitle: "#N/A、#DIV/0!、#VALUE! などのエラーを分かりやすい表示に置き換えます。",
@@ -42,7 +42,7 @@ export const iferrorContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "実用的なヒント", tips: [["原因を先に確認", "IFERROR は表示を変えるだけで、元の問題は修正しません。"], ["明確なメッセージ", "空白より「該当なし」の方が確認しやすくなります。"], ["データ型を統一", "後で計算する場合は文字列ではなく数値 0 を使います。"], ["XLOOKUP の引数", "第4引数で見つからない場合を直接指定できます。"]],
     errorsTitle: "よくある間違い", errors: [["すべて空白にする", "本当の数式エラーを見落とす可能性があります。"], ["括弧の位置が違う", "元の数式全体を IFERROR で囲みます。"], ["文字列に引用符がない", "文字の結果はダブルクォーテーションで囲みます。"], ["#N/A だけと思う", "IFERROR は複数エラーを処理します。#N/A のみなら IFNA を使います。"]],
-    ctaTitle: "数式エラーの処理方法が分かりませんか？", ctaText: "元の数式と希望する表示を入力すると EverySheet が修正を支援します。", ctaButton: "数式を修正", back: "← Excel 学習センターに戻る",
+    ctaTitle: "数式エラーの処理方法が分かりませんか？", ctaText: "元の数式と希望する表示を入力すると EveryFormula が修正を支援します。", ctaButton: "数式を修正", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "逻辑函数", title: "Excel IFERROR 函数教学", subtitle: "拦截公式错误并显示容易理解的提示，处理 #N/A、#DIV/0!、#VALUE! 等问题。",
@@ -56,6 +56,6 @@ export const iferrorContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle: "实用技巧", tips: [["先确认错误原因", "IFERROR 只改变显示，不会修复错误数据或逻辑。"], ["提示要明确", "显示“未找到”比空白更容易排查。"], ["区分数字与文本", "后续需要计算时应返回数字 0，而不是文本“0”。"], ["XLOOKUP 可直接处理", "第 4 个参数可以指定未找到时的结果。"]],
     errorsTitle: "常见错误", errors: [["把所有错误隐藏成空白", "可能导致真正的公式问题无法被发现。"], ["括号位置错误", "应使用 IFERROR 包住完整的原公式。"], ["文本没有双引号", "文本结果必须放在双引号内。"], ["误以为只处理 #N/A", "IFERROR 会处理多种错误；只处理 #N/A 可使用 IFNA。"]],
-    ctaTitle: "公式错误，不知道如何处理？", ctaText: "粘贴原公式并说明希望显示的结果，EverySheet 会帮助修正。", ctaButton: "修正公式错误", back: "← 返回 Excel 教学中心",
+    ctaTitle: "公式错误，不知道如何处理？", ctaText: "粘贴原公式并说明希望显示的结果，EveryFormula 会帮助修正。", ctaButton: "修正公式错误", back: "← 返回 Excel 教学中心",
   },
 };

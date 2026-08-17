@@ -5,7 +5,7 @@ import { iferrorVlookupContent } from "./content";
 import { iferrorVlookupExamples } from "./examples";
 
 export const metadata: Metadata = {
-  title: "IFERROR＋VLOOKUP 組合公式教學｜EverySheet",
+  title: "IFERROR＋VLOOKUP 組合公式教學｜EveryFormula",
   description: "學習用 IFERROR 搭配 VLOOKUP，查不到資料時顯示清楚提示並避免 #N/A。",
 };
 

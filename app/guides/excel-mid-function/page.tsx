@@ -5,7 +5,7 @@ import { guideDemos } from "../guideDemos";
 import { midContent } from "./content";
 
 export const metadata: Metadata = {
-  title: "Excel MID 函數教學｜擷取文字中段｜EverySheet",
+  title: "Excel MID 函數教學｜擷取文字中段｜EveryFormula",
   description: "學習 Excel MID，從訂單編號、商品代碼與文字中間擷取指定內容。",
 };
 

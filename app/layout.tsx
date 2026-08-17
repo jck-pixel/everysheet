@@ -3,9 +3,9 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "EverySheet｜Excel / Google Sheets Copilot",
+  title: "EveryFormula｜Excel 與 Google Sheets 公式產生器",
   description:
-    "用中文描述需求，快速建立、修正、解釋、優化 Excel 與 Google Sheets 公式。EverySheet 幫你完成 Excel 工作。",
+    "用文字描述需求，快速建立、修正、解釋與優化 Excel 和 Google Sheets 公式。EveryFormula 讓公式更容易完成。",
   keywords: [
     "Excel",
     "Excel公式",
@@ -17,13 +17,14 @@ export const metadata: Metadata = {
     "XLOOKUP",
     "IF公式",
     "SUMIFS",
-    "EverySheet",
+    "EveryFormula",
+    "公式產生器",
   ],
 
   verification: {
     google: "aEZNlmfvaZqCUdw9wbV24asyVdjUbBEh09_GH74dRbs",
   },
-  applicationName: "EverySheet",
+  applicationName: "EveryFormula｜公式產生器",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/app-icon.svg",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "EverySheet",
+    title: "EveryFormula",
   },
 };
 

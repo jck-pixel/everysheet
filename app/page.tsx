@@ -241,7 +241,7 @@ const isUnchangedFix =
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
         </select>
-        <div className="badge">Excel Formula Assistant</div>
+        <div className="badge">Excel Formula Generator</div>
 
         <h1>
           用中文描述需求
@@ -559,7 +559,7 @@ const isUnchangedFix =
       )}
 
       <footer>
-  <div>EverySheet Beta v1.0 © 2026</div>
+  <div>EveryFormula Beta v1.0 © 2026</div>
 
   <div className="feedback-link">
     <a

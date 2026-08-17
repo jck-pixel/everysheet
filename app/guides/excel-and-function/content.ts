@@ -14,7 +14,7 @@ export const andContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"實用技巧", tips:[["AND 只回傳真假","需要顯示自訂文字時，將 AND 放進 IF。"],["條件不限兩個","可加入多個條件，但公式過長時應拆分輔助欄。"],["可搭配 OR","例如必須符合資格，且兩種證件任一有效。"],["空白要注意","比較數字或日期時，空白可能被當成 0。"]],
     errorsTitle:"常見錯誤", errors:[["以為任一成立即可","AND 要求所有條件成立；任一成立應使用 OR。"],["文字沒有雙引號","文字條件如「啟用」必須放在雙引號內。"],["百分比格式錯誤","80% 可寫成 80% 或 0.8，需確認儲存格實際值。"],["直接顯示 TRUE／FALSE","若希望顯示通過／未通過，需搭配 IF。"]],
-    ctaTitle:"多個條件不知道怎麼組合？", ctaText:"描述所有必要條件，EverySheet 會建立 AND 或 IF 公式。", ctaButton:"建立條件公式", back:"← 返回 Excel 教學中心",
+    ctaTitle:"多個條件不知道怎麼組合？", ctaText:"描述所有必要條件，EveryFormula 會建立 AND 或 IF 公式。", ctaButton:"建立條件公式", back:"← 返回 Excel 教學中心",
   },
   en: {
     guides:"Excel Guides", formulaTool:"Formula tool", badge:"Logical function", title:"Excel AND Guide", subtitle:"Check whether every condition is true and combine AND with IF for eligibility, attendance, and approval rules.",
@@ -28,7 +28,7 @@ export const andContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"Useful tips", tips:[["AND returns Boolean values","Wrap it in IF to display custom text."],["More than two tests","You can add many conditions, but helper columns improve long formulas."],["Combine with OR","Require one condition plus either of two alternatives."],["Watch blank cells","Blanks may be treated as zero in numeric or date comparisons."]],
     errorsTitle:"Common mistakes", errors:[["Expecting any condition to pass","AND requires all conditions; use OR when any one may pass."],["Text is not quoted","Text criteria such as Active require double quotation marks."],["Percentage format differs","80% equals 0.8; confirm the stored value."],["TRUE/FALSE is displayed","Use IF when you want Pass/Fail text."]],
-    ctaTitle:"Not sure how to combine requirements?", ctaText:"Describe every required condition and EverySheet will build the AND or IF formula.", ctaButton:"Create a condition formula", back:"← Back to Excel Guides",
+    ctaTitle:"Not sure how to combine requirements?", ctaText:"Describe every required condition and EveryFormula will build the AND or IF formula.", ctaButton:"Create a condition formula", back:"← Back to Excel Guides",
   },
   ja: {
     guides:"Excel 学習センター", formulaTool:"数式ツール", badge:"論理関数", title:"Excel AND 関数ガイド", subtitle:"複数条件がすべて成立するか確認し、IF と組み合わせて資格や出席を判定します。",
@@ -42,7 +42,7 @@ export const andContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"実用的なヒント", tips:[["結果は TRUE／FALSE","文字を表示する場合は IF に入れます。"],["複数条件を追加可能","長すぎる場合は補助列を使います。"],["OR と組み合わせる","必須条件と選択条件を組み合わせられます。"],["空白に注意","数値や日付比較では空白が 0 と扱われる場合があります。"]],
     errorsTitle:"よくある間違い", errors:[["どれか1つでよいと思う","AND はすべて必要です。どれか1つなら OR を使います。"],["文字に引用符がない","文字条件はダブルクォーテーションで囲みます。"],["パーセント形式","80% と 0.8 は同じですが、保存値を確認します。"],["TRUE／FALSE が表示", "合格などを表示するには IF を使います。"]],
-    ctaTitle:"複数条件の組み合わせが分かりませんか？", ctaText:"必要条件を説明すると EverySheet が AND または IF 数式を作成します。", ctaButton:"条件数式を作成", back:"← Excel 学習センターに戻る",
+    ctaTitle:"複数条件の組み合わせが分かりませんか？", ctaText:"必要条件を説明すると EveryFormula が AND または IF 数式を作成します。", ctaButton:"条件数式を作成", back:"← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides:"Excel 教学中心", formulaTool:"公式生成器", badge:"逻辑函数", title:"Excel AND 函数教学", subtitle:"确认多个条件是否全部成立，并搭配 IF 完成资格、考勤与审核判断。",
@@ -56,6 +56,6 @@ export const andContent: Record<AppLanguage, SumifsContent> = {
     ],
     tipsTitle:"实用技巧", tips:[["AND 只返回真假","需要显示自定义文本时，将 AND 放入 IF。"],["条件不限两个","可以加入多个条件，过长时建议使用辅助列。"],["可以搭配 OR","组合必选条件与任选条件。"],["注意空白", "比较数字或日期时，空白可能被当作 0。"]],
     errorsTitle:"常见错误", errors:[["以为任一成立即可","AND 要求所有条件成立；任一成立应使用 OR。"],["文本没有双引号","“启用”等文本条件必须放在双引号内。"],["百分比格式错误","80% 等于 0.8，请确认单元格实际值。"],["直接显示 TRUE／FALSE","如需显示通过／未通过，应搭配 IF。"]],
-    ctaTitle:"多个条件不知道怎么组合？", ctaText:"描述所有必要条件，EverySheet 会创建 AND 或 IF 公式。", ctaButton:"生成条件公式", back:"← 返回 Excel 教学中心",
+    ctaTitle:"多个条件不知道怎么组合？", ctaText:"描述所有必要条件，EveryFormula 会创建 AND 或 IF 公式。", ctaButton:"生成条件公式", back:"← 返回 Excel 教学中心",
   },
 };

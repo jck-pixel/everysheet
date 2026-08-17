@@ -24,7 +24,7 @@ export const xlookupGuideContent: Record<AppLanguage, XlookupGuideContent> = {
     ],
     compareTitle: "XLOOKUP 與 VLOOKUP 的差別", compareItems: [["不必計算欄數", "直接指定要回傳的範圍。"], ["可向左查找", "回傳欄可以在查找欄的左側。"], ["內建找不到提示", "不一定要另外搭配 IFERROR。"], ["適用版本", "主要支援 Microsoft 365 與新版 Excel。"]],
     errorsTitle: "常見錯誤", errors: [["出現 #NAME?", "Excel 版本可能不支援 XLOOKUP；舊版可改用 VLOOKUP 或 INDEX＋MATCH。"], ["查找與回傳範圍大小不同", "兩個範圍必須有相同的列數或欄數。"], ["文字與數字格式不同", "例如文字「001」不一定等於數字 1，請先統一格式。"], ["整欄範圍造成速度變慢", "大型檔案可改用 A2:A5000 等實際資料範圍。"]],
-    ctaTitle: "不知道查找範圍與回傳範圍怎麼選？", ctaText: "描述資料位置，EverySheet 會替你建立 XLOOKUP 公式。", ctaButton: "建立 XLOOKUP 公式", back: "← 返回 Excel 教學中心",
+    ctaTitle: "不知道查找範圍與回傳範圍怎麼選？", ctaText: "描述資料位置，EveryFormula 會替你建立 XLOOKUP 公式。", ctaButton: "建立 XLOOKUP 公式", back: "← 返回 Excel 教學中心",
   },
   en: {
     guides: "Excel Guides", formulaTool: "Formula tool", badge: "Lookup function", title: "Excel XLOOKUP Guide",
@@ -41,7 +41,7 @@ export const xlookupGuideContent: Record<AppLanguage, XlookupGuideContent> = {
     ],
     compareTitle: "XLOOKUP vs VLOOKUP", compareItems: [["No column counting", "Select the return range directly."], ["Looks left or right", "The return column may be left of the lookup column."], ["Built-in not-found result", "IFERROR is often unnecessary."], ["Excel version", "Primarily available in Microsoft 365 and newer Excel versions."]],
     errorsTitle: "Common mistakes", errors: [["#NAME? appears", "Your Excel version may not support XLOOKUP. Use VLOOKUP or INDEX and MATCH instead."], ["Ranges have different sizes", "Lookup and return ranges must contain the same number of rows or columns."], ["Text and number formats differ", "Text \"001\" may not match the number 1; make the formats consistent."], ["Whole-column ranges are slow", "For large workbooks, use practical ranges such as A2:A5000."]],
-    ctaTitle: "Not sure which lookup and return ranges to use?", ctaText: "Describe where your data is and EverySheet will build the XLOOKUP formula.", ctaButton: "Create an XLOOKUP formula", back: "← Back to Excel Guides",
+    ctaTitle: "Not sure which lookup and return ranges to use?", ctaText: "Describe where your data is and EveryFormula will build the XLOOKUP formula.", ctaButton: "Create an XLOOKUP formula", back: "← Back to Excel Guides",
   },
   ja: {
     guides: "Excel 学習センター", formulaTool: "数式ツール", badge: "検索関数", title: "Excel XLOOKUP 関数ガイド",
@@ -58,7 +58,7 @@ export const xlookupGuideContent: Record<AppLanguage, XlookupGuideContent> = {
     ],
     compareTitle: "XLOOKUP と VLOOKUP の違い", compareItems: [["列番号は不要", "戻り範囲を直接指定します。"], ["左右に検索可能", "検索列の左側も返せます。"], ["該当なしを指定可能", "IFERROR が不要な場合があります。"], ["対応バージョン", "主に Microsoft 365 と新しい Excel で利用できます。"]],
     errorsTitle: "よくある間違い", errors: [["#NAME? が表示される", "Excel が XLOOKUP に未対応の可能性があります。VLOOKUP などを使います。"], ["範囲サイズが異なる", "検索範囲と戻り範囲の行数または列数を一致させます。"], ["文字列と数値が違う", "文字列「001」と数値 1 は一致しない場合があります。"], ["列全体の指定が遅い", "大きいファイルでは A2:A5000 のような範囲を使います。"]],
-    ctaTitle: "検索範囲と戻り範囲の選び方が分かりませんか？", ctaText: "データ位置を説明すると EverySheet が XLOOKUP 数式を作成します。", ctaButton: "XLOOKUP 数式を作成", back: "← Excel 学習センターに戻る",
+    ctaTitle: "検索範囲と戻り範囲の選び方が分かりませんか？", ctaText: "データ位置を説明すると EveryFormula が XLOOKUP 数式を作成します。", ctaButton: "XLOOKUP 数式を作成", back: "← Excel 学習センターに戻る",
   },
   "zh-CN": {
     guides: "Excel 教学中心", formulaTool: "公式生成器", badge: "查找函数", title: "Excel XLOOKUP 函数教学",
@@ -75,6 +75,6 @@ export const xlookupGuideContent: Record<AppLanguage, XlookupGuideContent> = {
     ],
     compareTitle: "XLOOKUP 与 VLOOKUP 的区别", compareItems: [["无需计算列数", "直接指定返回范围。"], ["可向左查找", "返回列可以在查找列左侧。"], ["内置未找到提示", "不一定需要搭配 IFERROR。"], ["适用版本", "主要支持 Microsoft 365 与新版 Excel。"]],
     errorsTitle: "常见错误", errors: [["出现 #NAME?", "Excel 版本可能不支持 XLOOKUP，可改用 VLOOKUP 或 INDEX＋MATCH。"], ["查找与返回范围大小不同", "两个范围必须拥有相同的行数或列数。"], ["文本与数字格式不同", "文本“001”不一定等于数字 1，请统一格式。"], ["整列范围导致速度变慢", "大型文件可改用 A2:A5000 等实际范围。"]],
-    ctaTitle: "不知道查找范围与返回范围怎么选？", ctaText: "描述数据位置，EverySheet 会帮你创建 XLOOKUP 公式。", ctaButton: "生成 XLOOKUP 公式", back: "← 返回 Excel 教学中心",
+    ctaTitle: "不知道查找范围与返回范围怎么选？", ctaText: "描述数据位置，EveryFormula 会帮你创建 XLOOKUP 公式。", ctaButton: "生成 XLOOKUP 公式", back: "← 返回 Excel 教学中心",
   },
 };

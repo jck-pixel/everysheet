@@ -5,7 +5,7 @@ import { guideDemos } from "../guideDemos";
 import { rightContent } from "./content";
 
 export const metadata: Metadata = {
-  title: "Excel RIGHT 函數教學｜從右擷取文字｜EverySheet",
+  title: "Excel RIGHT 函數教學｜從右擷取文字｜EveryFormula",
   description: "學習 Excel RIGHT，擷取訂單流水號、電話末碼與文字右側內容。",
 };
 

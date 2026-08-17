@@ -7,7 +7,7 @@ import GuideExampleTable from "../GuideExampleTable";
 import { xlookupExamples } from "./examples";
 
 export const metadata: Metadata = {
-  title: "Excel XLOOKUP 函數教學｜語法、範例與 VLOOKUP 比較｜EverySheet",
+  title: "Excel XLOOKUP 函數教學｜語法、範例與 VLOOKUP 比較｜EveryFormula",
   description: "學習 Excel XLOOKUP，包括左右查找、多欄回傳、找不到時的提示，以及與 VLOOKUP 的差異。",
 };
 
@@ -18,7 +18,7 @@ export default function XlookupGuidePage({ searchParams }: { searchParams?: { la
 
   return <main style={s.page} className="if-guide-page">
     <header style={s.header}><div style={s.nav} className="if-guide-nav">
-      <Link href={`/?lang=${language}`} style={s.brand}>EverySheet</Link>
+      <Link href={`/?lang=${language}`} style={s.brand}>EveryFormula</Link>
       <GuideLanguageSelect language={language} path="/guides/excel-xlookup-function" />
       <div style={s.navLinks} className="if-guide-nav-links">
         <Link href={`/guides?lang=${language}`} style={s.navLink}>{c.guides}</Link>
@@ -48,7 +48,7 @@ export default function XlookupGuidePage({ searchParams }: { searchParams?: { la
         <div style={s.errorList}>{c.errors.map(([title, detail]) => <div key={title} style={s.errorItem}><strong>{title}</strong><p style={s.errorText}>{detail}</p></div>)}</div>
       </section>
 
-      <section style={s.cta} className="if-guide-cta"><div><span style={s.ctaEyebrow}>EverySheet</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div>
+      <section style={s.cta} className="if-guide-cta"><div><span style={s.ctaEyebrow}>EveryFormula</span><h2 style={s.ctaTitle}>{c.ctaTitle}</h2><p style={s.ctaText}>{c.ctaText}</p></div>
         <Link href={`/?lang=${language}`} style={s.ctaButton}>{c.ctaButton}</Link></section>
       <div style={s.backArea}><Link href={`/guides?lang=${language}`} style={s.backLink}>{c.back}</Link></div>
     </article>
