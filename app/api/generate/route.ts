@@ -121,10 +121,14 @@ export async function POST(req: Request) {
       const fallbackUrl =
         process.env.FORMULA_API_FALLBACK_URL ||
         "https://ai-excel-assistant-rose.vercel.app/api/generate";
+      const fallbackRequest =
+        outputMode === "professional" && typeof request === "string"
+          ? `組合函數模式：需求需要多層處理時，請合理組合兩個以上函數，不要只回傳單一函數；若單一函數已足夠則保持簡潔。\n\n${request}`
+          : request;
       const fallbackResponse = await fetch(fallbackUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, request: fallbackRequest }),
         cache: "no-store",
       });
       const fallbackBody = await fallbackResponse.text();
