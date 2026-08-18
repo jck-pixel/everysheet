@@ -86,6 +86,37 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { request, tool, outputMode, mode, language } = body;
 
+    const preflightRepair =
+      mode === "fix" && typeof request === "string"
+        ? repairMissingClosingParentheses(request)
+        : "";
+
+    if (preflightRepair) {
+      const selectedLanguage: AppLanguage =
+        language && language in outputLanguageNames ? language : "zh-TW";
+      const repairCopy = {
+        "zh-TW": ["已補上缺少的右括號。", "請用修正後的公式取代原公式。"],
+        en: ["The missing closing parenthesis was added.", "Replace the original formula with the corrected formula."],
+        ja: ["不足していた閉じ括弧を追加しました。", "元の数式を修正後の数式に置き換えてください。"],
+        "zh-CN": ["已补上缺少的右括号。", "请用修正后的公式替换原公式。"],
+      }[selectedLanguage];
+
+      return NextResponse.json({
+        status: "ready",
+        confidence: "high",
+        missingInfo: [],
+        questions: [],
+        formula: preflightRepair,
+        placementGuide: null,
+        explanation: repairCopy[0],
+        howToUse: repairCopy[1],
+        example: "",
+        warning: "",
+        professionalTips: [],
+        modernFormula: null,
+      });
+    }
+
     if (!process.env.OPENAI_API_KEY) {
       const fallbackUrl =
         process.env.FORMULA_API_FALLBACK_URL ||
