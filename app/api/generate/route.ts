@@ -8,6 +8,34 @@ function cleanFormula(formula: string) {
   return trimmed.startsWith("=") ? trimmed : `=${trimmed}`;
 }
 
+function repairMissingClosingParentheses(input: string) {
+  const formulaStart = input.indexOf("=");
+  if (formulaStart < 0) return "";
+
+  const formula = input.slice(formulaStart).split(/\r?\n/, 1)[0].trim();
+  let balance = 0;
+  let insideString = false;
+
+  for (let index = 0; index < formula.length; index += 1) {
+    const character = formula[index];
+    if (character === '"') {
+      if (insideString && formula[index + 1] === '"') {
+        index += 1;
+      } else {
+        insideString = !insideString;
+      }
+    } else if (!insideString && character === "(") {
+      balance += 1;
+    } else if (!insideString && character === ")") {
+      balance -= 1;
+    }
+
+    if (balance < 0) return "";
+  }
+
+  return balance > 0 ? `${formula}${")".repeat(balance)}` : "";
+}
+
 function getModeInstruction(mode: string) {
   if (mode === "fix") {
   return `目前模式：修正公式。
@@ -423,6 +451,37 @@ ${request}`,
     }
 
     const parsed = JSON.parse(text);
+
+    const deterministicRepair =
+      selectedMode === "fix" && parsed.status === "needs_info"
+        ? repairMissingClosingParentheses(request)
+        : "";
+
+    if (deterministicRepair) {
+      const repairCopy = {
+        "zh-TW": ["已補上缺少的右括號。", "請用修正後的公式取代原公式。"],
+        en: ["The missing closing parenthesis was added.", "Replace the original formula with the corrected formula."],
+        ja: ["不足していた閉じ括弧を追加しました。", "元の数式を修正後の数式に置き換えてください。"],
+        "zh-CN": ["已补上缺少的右括号。", "请用修正后的公式替换原公式。"],
+      }[selectedLanguage];
+
+      return NextResponse.json({
+        status: "ready",
+        confidence: "high",
+        missingInfo: [],
+        questions: [],
+        formula: deterministicRepair,
+        placementGuide: parsed.placementGuide || null,
+        explanation: parsed.explanation || repairCopy[0],
+        howToUse: parsed.howToUse || repairCopy[1],
+        example: parsed.example || "",
+        warning: parsed.warning || "",
+        professionalTips: Array.isArray(parsed.professionalTips)
+          ? parsed.professionalTips
+          : [],
+        modernFormula: parsed.modernFormula || null,
+      });
+    }
 
     const status = parsed.status === "needs_info" ? "needs_info" : "ready";
 
