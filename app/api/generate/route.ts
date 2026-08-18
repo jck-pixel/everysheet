@@ -53,10 +53,28 @@ function getModeInstruction(mode: string) {
 
 export async function POST(req: Request) {
   try {
-    const { request, tool, outputMode, mode, language } = await req.json();
+    const body = await req.json();
+    const { request, tool, outputMode, mode, language } = body;
 
     if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: "尚未設定 OPENAI_API_KEY。" }, { status: 500 });
+      const fallbackUrl =
+        process.env.FORMULA_API_FALLBACK_URL ||
+        "https://ai-excel-assistant-rose.vercel.app/api/generate";
+      const fallbackResponse = await fetch(fallbackUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        cache: "no-store",
+      });
+      const fallbackBody = await fallbackResponse.text();
+
+      return new NextResponse(fallbackBody, {
+        status: fallbackResponse.status,
+        headers: {
+          "Content-Type":
+            fallbackResponse.headers.get("content-type") || "application/json",
+        },
+      });
     }
 
     const client = new OpenAI({
