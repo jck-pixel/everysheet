@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 import { useEffect, useState, useRef } from "react";
 import { AppLanguage, languageOptions, uiText } from "./i18n";
+import AccountMenu from "./components/AccountMenu";
 
 type Result = {
   status?: "ready" | "needs_info";
@@ -30,6 +32,7 @@ type Result = {
 };
 
 export default function Home() {
+  const { user, isLoaded: isUserLoaded } = useUser();
   const [language, setLanguage] = useState<AppLanguage>("zh-TW");
   const [request, setRequest] = useState<string>(uiText["zh-TW"].defaultRequest);
   const [tool, setTool] = useState("Excel");
@@ -46,7 +49,7 @@ export default function Home() {
   const examples = t.examples.map(([label, text]) => ({ label, text }));
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("everysheet-language") as AppLanguage | null;
+    const savedLanguage = (localStorage.getItem("everyformula-language") || localStorage.getItem("everysheet-language")) as AppLanguage | null;
     if (savedLanguage && languageOptions.some((option) => option.value === savedLanguage)) {
       setLanguage(savedLanguage);
       setRequest(uiText[savedLanguage].defaultRequest);
@@ -54,12 +57,31 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isUserLoaded || !user) return;
+    const settings = user.unsafeMetadata.formulaSettings as {
+      language?: AppLanguage;
+      tool?: string;
+      formulaType?: string;
+    } | undefined;
+    if (!settings) return;
+    if (settings.language && languageOptions.some((option) => option.value === settings.language)) {
+      setLanguage(settings.language);
+      setRequest(uiText[settings.language].defaultRequest);
+      document.documentElement.lang = settings.language;
+    }
+    if (settings.tool === "Excel" || settings.tool === "Google Sheets") setTool(settings.tool);
+    if (settings.formulaType === "general" || settings.formulaType === "professional") {
+      setOutputMode(settings.formulaType);
+    }
+  }, [isUserLoaded, user]);
+
   function changeLanguage(nextLanguage: AppLanguage) {
     setLanguage(nextLanguage);
     setRequest(uiText[nextLanguage].defaultRequest);
     setResult(null);
     setError("");
-    localStorage.setItem("everysheet-language", nextLanguage);
+    localStorage.setItem("everyformula-language", nextLanguage);
     document.documentElement.lang = nextLanguage;
   }
 
@@ -230,6 +252,7 @@ const isUnchangedFix =
   return (
     <main>
       <section className="hero">
+        <AccountMenu />
         <div className="mobile-brand">{t.mobileBrand}</div>
         <select
           className="language-select"

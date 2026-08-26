@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://ai-excel-assistant-rose.vercel.app";
+  const baseUrl = "https://everyformula-jck-pixel11.vercel.app";
 
   return [
     {

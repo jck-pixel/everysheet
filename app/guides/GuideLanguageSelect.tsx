@@ -12,7 +12,7 @@ export default function GuideLanguageSelect({ language, path = "/guides" }: { la
       value={language}
       onChange={(event) => {
         const nextLanguage = event.target.value as AppLanguage;
-        localStorage.setItem("everysheet-language", nextLanguage);
+        localStorage.setItem("everyformula-language", nextLanguage);
         document.documentElement.lang = nextLanguage;
         router.push(`${path}?lang=${nextLanguage}`);
       }}

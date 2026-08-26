@@ -1,5 +1,5 @@
 {
-  "name": "ai-excel-assistant",
+  "name": "everyformula",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,9 @@
   "dependencies": {
     "@capacitor/android": "^8.5.0",
     "@capacitor/core": "^8.5.0",
-    "next": "14.2.5",
+    "@clerk/localizations": "^3.37.8",
+    "@clerk/nextjs": "^6.39.6",
+    "next": "^14.2.35",
     "openai": "4.56.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
@@ -26,7 +28,7 @@
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "eslint": "8.57.0",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "^14.2.35",
     "typescript": "5.5.3"
   }
 }

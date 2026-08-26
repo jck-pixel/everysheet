@@ -2,10 +2,10 @@ import type { CapacitorConfig } from "@capacitor/cli";
 
 const serverUrl =
   process.env.CAPACITOR_SERVER_URL ??
-  "https://ai-excel-assistant-rose.vercel.app";
+  "https://everyformula-jck-pixel11.vercel.app";
 
 const config: CapacitorConfig = {
-  appId: "com.orivio.everysheet",
+  appId: "com.everyformula.app",
   appName: "EveryFormula",
   webDir: "public",
   server: {
