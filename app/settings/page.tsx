@@ -8,13 +8,11 @@ import { AppLanguage, languageOptions } from "../i18n";
 type FormulaSettings = {
   language: AppLanguage;
   tool: "Excel" | "Google Sheets";
-  formulaType: "general" | "professional";
 };
 
 const defaultSettings: FormulaSettings = {
   language: "zh-TW",
   tool: "Excel",
-  formulaType: "general",
 };
 
 export default function SettingsPage() {
@@ -41,7 +39,6 @@ export default function SettingsPage() {
     });
     localStorage.setItem("everyformula-language", settings.language);
     localStorage.setItem("everyformula-tool", settings.tool);
-    localStorage.setItem("everyformula-formula-type", settings.formulaType);
     setSaving(false);
     setSaved(true);
   }
@@ -85,26 +82,6 @@ export default function SettingsPage() {
           <option>Excel</option>
           <option>Google Sheets</option>
         </select>
-
-        <fieldset>
-          <legend>預設公式類型</legend>
-          <label className="settings-radio">
-            <input
-              type="radio"
-              checked={settings.formulaType === "general"}
-              onChange={() => setSettings({ ...settings, formulaType: "general" })}
-            />
-            <span><strong>單一函數</strong><small>公式簡單好懂</small></span>
-          </label>
-          <label className="settings-radio">
-            <input
-              type="radio"
-              checked={settings.formulaType === "professional"}
-              onChange={() => setSettings({ ...settings, formulaType: "professional" })}
-            />
-            <span><strong>組合函數</strong><small>適合多層判斷與複雜需求</small></span>
-          </label>
-        </fieldset>
 
         <button className="settings-save" onClick={saveSettings} disabled={saving}>
           {saving ? "正在儲存..." : "儲存設定"}
