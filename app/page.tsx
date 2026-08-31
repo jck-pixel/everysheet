@@ -36,7 +36,6 @@ export default function Home() {
   const [language, setLanguage] = useState<AppLanguage>("zh-TW");
   const [request, setRequest] = useState<string>(uiText["zh-TW"].defaultRequest);
   const [tool, setTool] = useState("Excel");
-  const [outputMode, setOutputMode] = useState("general");
   const [mode, setMode] = useState("generate");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
@@ -62,7 +61,6 @@ export default function Home() {
     const settings = user.unsafeMetadata.formulaSettings as {
       language?: AppLanguage;
       tool?: string;
-      formulaType?: string;
     } | undefined;
     if (!settings) return;
     if (settings.language && languageOptions.some((option) => option.value === settings.language)) {
@@ -71,9 +69,6 @@ export default function Home() {
       document.documentElement.lang = settings.language;
     }
     if (settings.tool === "Excel" || settings.tool === "Google Sheets") setTool(settings.tool);
-    if (settings.formulaType === "general" || settings.formulaType === "professional") {
-      setOutputMode(settings.formulaType);
-    }
   }, [isUserLoaded, user]);
 
   function changeLanguage(nextLanguage: AppLanguage) {
@@ -111,7 +106,6 @@ async function generateFormula(selectedMode?: string) {
       body: JSON.stringify({
         request,
         tool,
-        outputMode,
         mode: runMode,
         language,
       }),
@@ -167,7 +161,7 @@ ${followUp}`;
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ request: combinedRequest, tool, outputMode, mode, language }),
+        body: JSON.stringify({ request: combinedRequest, tool, mode, language }),
       });
 
       const data = await res.json();
@@ -203,7 +197,7 @@ async function runExample(exampleText: string) {
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ request: exampleText, tool, outputMode, mode, language }),
+      body: JSON.stringify({ request: exampleText, tool, mode, language }),
     });
 
     const data = await res.json();
@@ -345,38 +339,6 @@ const isUnchangedFix =
     <option>Google Sheets</option>
   </select>
 </div>
-
-        <div className="mode-box">
-          <div className="mode-title">{t.resultFormat}</div>
-
-          <label className={`mode-option ${outputMode === "general" ? "active" : ""}`}>
-            <input
-              type="radio"
-              name="outputMode"
-              value="general"
-              checked={outputMode === "general"}
-              onChange={(e) => setOutputMode(e.target.value)}
-            />
-            <div>
-              <strong>{t.general}</strong>
-              <span>{t.generalDescription}</span>
-            </div>
-          </label>
-
-          <label className={`mode-option ${outputMode === "professional" ? "active" : ""}`}>
-            <input
-              type="radio"
-              name="outputMode"
-              value="professional"
-              checked={outputMode === "professional"}
-              onChange={(e) => setOutputMode(e.target.value)}
-            />
-            <div>
-              <strong>{t.professional}</strong>
-              <span>{t.professionalDescription}</span>
-            </div>
-          </label>
-        </div>
 
         <div className="example-title">{t.popular}</div>
 
@@ -520,19 +482,6 @@ const isUnchangedFix =
   </div>
 )}
 
-              {outputMode === "professional" &&
-  result.professionalTips &&
-  result.professionalTips.length > 0 && (
-    <div className="professional-tips">
-      <h3>⭐ 專業建議</h3>
-      <ul>
-        {result.professionalTips.map((tip) => (
-          <li key={tip}>{tip}</li>
-        ))}
-      </ul>
-    </div>
-  )}
-              
               <div className="result-grid">
                 <div className="mini-box">
                   <h3>{t.explanation}</h3>
