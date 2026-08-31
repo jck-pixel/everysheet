@@ -6,6 +6,7 @@ on:
     branches:
       - feat/android-app
     paths:
+      - "app/**"
       - "android/**"
       - ".github/workflows/build-android-apk.yml"
 
