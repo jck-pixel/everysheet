@@ -84,7 +84,7 @@ function getModeInstruction(mode: string) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { request, tool, outputMode, mode, language } = body;
+    const { request, tool, mode, language } = body;
 
     const preflightRepair =
       mode === "fix" && typeof request === "string"
@@ -121,14 +121,10 @@ export async function POST(req: Request) {
       const fallbackUrl =
         process.env.FORMULA_API_FALLBACK_URL ||
         "https://ai-excel-assistant-rose.vercel.app/api/generate";
-      const fallbackRequest =
-        outputMode === "professional" && typeof request === "string"
-          ? `組合函數模式：需求需要多層處理時，請合理組合兩個以上函數，不要只回傳單一函數；若單一函數已足夠則保持簡潔。\n\n${request}`
-          : request;
       const fallbackResponse = await fetch(fallbackUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...body, request: fallbackRequest }),
+        body: JSON.stringify({ ...body, outputMode: "general", request }),
         cache: "no-store",
       });
       const fallbackBody = await fallbackResponse.text();
@@ -151,43 +147,14 @@ export async function POST(req: Request) {
     }
 
     const selectedTool = tool || "Excel";
-    const selectedOutputMode = outputMode || "general";
     const selectedMode = mode || "generate";
     const selectedLanguage: AppLanguage =
       language && language in outputLanguageNames ? language : "zh-TW";
     const outputLanguage = outputLanguageNames[selectedLanguage];
 
-    const outputInstruction =
-  selectedOutputMode === "professional"
-    ? `目前使用者選擇「組合函數」公式類型。
-
-此模式的目的，是在需求需要多層邏輯時，組合兩個以上的 Excel 函數完成工作。
-
-組合函數模式要求：
-1. 先拆解需求中的多個步驟，例如「查找後處理錯誤」、「多條件判斷」、「篩選後加總」或「擷取後清理文字」。
-2. 需求確實需要組合時，formula 必須組合兩個以上函數；不要只回傳單一函數。
-3. 常見升級方向：
-- 查找不到時顯示提示：IFERROR 搭配 VLOOKUP 或 XLOOKUP。
-- 多條件判斷：IF 搭配 AND 或 OR。
-- 重複計算：LET 搭配其他函數。
-- 動態資料處理：FILTER 搭配 SORT、UNIQUE 或其他函數。
-4. 如果需求本身只需要一個函數，不要硬湊無意義的組合；請使用最簡潔的公式，並在 explanation 說明單一函數已足夠。
-5. 優先提供可直接貼上使用、容易維護且不重複計算的公式。
-6. explanation 要說明為什麼採用這個公式。
-7. warning 要提醒版本相容性、效能、欄位範圍、資料格式或分隔符號差異。
-8. placementGuide 仍要清楚，讓使用者知道公式貼在哪裡。`
-    : `目前使用者選擇「單一函數」公式類型。
-
-請以一個主要函數完成需求，公式要簡單、直接、容易懂。
-
-單一函數模式要求：
-1. formula 給最容易使用的公式。
-2. explanation 控制在 80 字以內。
-3. 不要講太多函數原理。
-4. howToUse 像教新手一樣，一步一步說明公式貼在哪裡。
-5. warning 只提醒真正重要的事情。
-6. 不要為了顯得進階而加入不必要的第二個函數；只有避免錯誤或完成使用者明確條件時才可組合。
-7. placementGuide 要簡單清楚，重點是資料放哪裡、公式貼哪裡。`;
+    const outputInstruction = `請自行判斷完成需求需要一個或多個函數。
+如果單一函數足夠，就提供最簡潔、容易維護的寫法；如果需求包含多層判斷、查找後錯誤處理或其他多步驟邏輯，就合理組合多個函數。不要要求使用者判斷函數數量，也不要為了顯得進階而增加不必要的函數。
+explanation 請用一般上班族能理解的方式說明；howToUse 要清楚指出公式貼在哪裡；warning 只提醒真正重要的相容性、資料格式或欄位問題；placementGuide 要簡單清楚。`;
 
     const modeInstruction = getModeInstruction(selectedMode);
 
@@ -345,29 +312,14 @@ warning 應提醒：
 
 不要因為缺少欄位位置、查詢值位置而回傳 needs_info。
 
-【回答模式】
+【回答方式】
 
-如果 outputMode = "general"：
-
-- 代表使用者選擇「單一函數」。
 - 用一般上班族看得懂的方式回答。
 - 不要講太多函數原理。
 - 步驟越少越好。
 - howToUse 要一步一步告訴使用者貼在哪裡。
 - explanation 不超過 80 字。
 - warning 只提醒真正重要的事項。
-
-如果 outputMode = "professional"：
-
-- 代表使用者選擇「組合函數」。
-- 當需求含有兩個以上處理步驟時，公式必須合理組合兩個以上函數。
-- 使用較完整的 Excel 專業說明。
-- explanation 要說明公式邏輯。
-- howToUse 要包含適用情境。
-- warning 要提醒版本相容性、效能、可能替代函數。
-- 若有更佳公式，也可以在 explanation 中一起說明。
-- professionalTips 必須提供 2～4 個專業建議。
-- 如果沒有特別替代公式，也要提供至少一項最佳實務。
 若 Microsoft 365 有更現代、更容易維護的公式（例如 LET、XLOOKUP、FILTER、TAKE、DROP、TEXTSPLIT 等），請放在 modernFormula。
 
 如果目前公式已經是最佳寫法，modernFormula.formula 請回傳空字串，不要硬寫 LET。
@@ -472,7 +424,7 @@ ${modeInstruction}`,
         {
           role: "user",
           content: `工具：${selectedTool}
-輸出模式：${selectedOutputMode}
+公式複雜度：由系統依需求自動判斷
 功能模式：${selectedMode}
 使用者需求：
 ${request}`,
