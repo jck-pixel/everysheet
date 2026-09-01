@@ -1,9 +1,19 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 
 export default function AccountOverview() {
   const { user, isLoaded } = useUser();
+  const [usage, setUsage] = useState<{ used: number; remaining: number } | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    fetch("/api/usage")
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => data && setUsage(data))
+      .catch(() => undefined);
+  }, [user]);
 
   if (!isLoaded || !user) {
     return <section className="account-overview-card">正在載入帳戶資訊...</section>;
@@ -33,8 +43,8 @@ export default function AccountOverview() {
       </div>
       <div className="account-overview-item">
         <small>使用紀錄</small>
-        <strong>尚未啟用計次</strong>
-        <span>收費方案啟用後會在這裡顯示</span>
+        <strong>{usage ? `本月已使用 ${usage.used} 次` : "正在讀取本月用量"}</strong>
+        <span>{usage ? `剩餘 ${usage.remaining} 次／每月 10 次` : "建立、修正、解釋與優化共用額度"}</span>
       </div>
     </section>
   );
