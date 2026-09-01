@@ -10,6 +10,36 @@
   --danger: #b42318;
 }
 
+:root[data-theme="dark"] {
+  --bg: #0f172a;
+  --card: #172033;
+  --text: #f8fafc;
+  --muted: #b7c1d1;
+  --border: #344156;
+  --soft: #1e3a8a;
+}
+
+:root[data-theme="dark"] body {
+  background: radial-gradient(circle at top, #172554 0%, #0f172a 42%, #090f1d 100%);
+}
+
+:root[data-theme="dark"] .app-card,
+:root[data-theme="dark"] .result-card,
+:root[data-theme="dark"] .info-card,
+:root[data-theme="dark"] .settings-card,
+:root[data-theme="dark"] .account-overview-card,
+:root[data-theme="dark"] .welcome-card {
+  background: rgba(23, 32, 51, 0.97);
+}
+
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] .account-overview-item,
+:root[data-theme="dark"] .settings-radio {
+  color: var(--text);
+  background: #111827;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -31,6 +61,44 @@ main {
   max-width: 1080px;
   margin: 0 auto;
   padding: calc(56px + env(safe-area-inset-top)) 20px calc(72px + env(safe-area-inset-bottom));
+}
+
+.welcome-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding-top: calc(28px + env(safe-area-inset-top));
+}
+
+.welcome-card {
+  width: min(100%, 560px);
+  padding: 34px 26px;
+  text-align: center;
+  background: rgba(255,255,255,.96);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 22px 60px rgba(24,32,51,.12);
+}
+
+.welcome-mark {
+  color: var(--primary);
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.welcome-card h1 { margin: 22px 0 14px; font-size: clamp(32px, 7vw, 48px); }
+.welcome-card p { color: var(--muted); line-height: 1.7; }
+.welcome-card small { display: block; margin-top: 18px; color: var(--muted); }
+.welcome-actions { display: grid; gap: 12px; margin-top: 26px; }
+.welcome-actions button { width: 100%; }
+.welcome-primary { color: #fff; background: var(--primary); }
+.welcome-secondary { color: var(--primary-dark); background: var(--soft); }
+
+.usage-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
 }
 
 .hero {
