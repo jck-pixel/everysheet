@@ -8,7 +8,7 @@ export default function SignUpPage() {
         path="/sign-up"
         routing="path"
         signInUrl="/sign-in"
-        forceRedirectUrl="/settings"
+        forceRedirectUrl="/"
         appearance={{ elements: { rootBox: "clerk-root", cardBox: "clerk-card-box" } }}
       />
     </AuthPageShell>
