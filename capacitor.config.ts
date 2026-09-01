@@ -2,7 +2,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
 
 const serverUrl =
   process.env.CAPACITOR_SERVER_URL ??
-  "https://everyformula-jck-pixel11.vercel.app";
+  "https://everyformula.vercel.app";
 
 const config: CapacitorConfig = {
   appId: "com.everyformula.app",
