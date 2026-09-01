@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { useEffect, useState, useRef } from "react";
 import { AppLanguage, languageOptions, uiText } from "./i18n";
 import AccountMenu from "./components/AccountMenu";
@@ -29,6 +29,7 @@ type Result = {
   formula?: string;
   reason?: string;
 } | null;
+  usage?: { limit: number; used: number; remaining: number };
 };
 
 export default function Home() {
@@ -54,6 +55,10 @@ export default function Home() {
       setRequest(uiText[savedLanguage].defaultRequest);
       document.documentElement.lang = savedLanguage;
     }
+    const savedTheme = localStorage.getItem("everyformula-theme") || "system";
+    const dark = savedTheme === "dark" ||
+      (savedTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
   }, []);
 
   useEffect(() => {
@@ -70,15 +75,6 @@ export default function Home() {
     }
     if (settings.tool === "Excel" || settings.tool === "Google Sheets") setTool(settings.tool);
   }, [isUserLoaded, user]);
-
-  function changeLanguage(nextLanguage: AppLanguage) {
-    setLanguage(nextLanguage);
-    setRequest(uiText[nextLanguage].defaultRequest);
-    setResult(null);
-    setError("");
-    localStorage.setItem("everyformula-language", nextLanguage);
-    document.documentElement.lang = nextLanguage;
-  }
 
 async function generateFormula(selectedMode?: string) {
   const runMode = selectedMode || mode;
@@ -243,21 +239,36 @@ const isUnchangedFix =
     setTimeout(() => setCopied(false), 1600);
   }
 
+  if (!isUserLoaded) {
+    return <main className="welcome-page"><p>正在載入 EveryFormula...</p></main>;
+  }
+
+  if (!user) {
+    return (
+      <main className="welcome-page">
+        <section className="welcome-card">
+          <span className="welcome-mark">EveryFormula</span>
+          <h1>把需求說出來，公式交給我們</h1>
+          <p>建立、修正、解釋與優化 Excel／Google Sheets 公式。免費方案每月可使用 10 次。</p>
+          <div className="welcome-actions">
+            <SignUpButton mode="redirect">
+              <button className="welcome-primary">免費建立帳戶</button>
+            </SignUpButton>
+            <SignInButton mode="redirect">
+              <button className="welcome-secondary">已有帳戶，登入</button>
+            </SignInButton>
+          </div>
+          <small>可使用 Email 驗證或 Google 帳號登入</small>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main>
       <section className="hero">
         <AccountMenu />
         <div className="mobile-brand">{t.mobileBrand}</div>
-        <select
-          className="language-select"
-          value={language}
-          onChange={(event) => changeLanguage(event.target.value as AppLanguage)}
-          aria-label="Language"
-        >
-          {languageOptions.map((option) => (
-            <option key={option.value} value={option.value}>{option.label}</option>
-          ))}
-        </select>
         <div className="badge">Excel Formula Generator</div>
 
         <h1>
@@ -339,6 +350,11 @@ const isUnchangedFix =
     <option>Google Sheets</option>
   </select>
 </div>
+
+        <p className="usage-note">
+          免費方案：每月 10 次，建立、修正、解釋與優化共用額度
+          {result?.usage ? `（本月剩餘 ${result.usage.remaining} 次）` : ""}
+        </p>
 
         <div className="example-title">{t.popular}</div>
 
