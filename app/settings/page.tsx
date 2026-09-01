@@ -8,11 +8,13 @@ import { AppLanguage, languageOptions } from "../i18n";
 type FormulaSettings = {
   language: AppLanguage;
   tool: "Excel" | "Google Sheets";
+  theme: "light" | "dark" | "system";
 };
 
 const defaultSettings: FormulaSettings = {
   language: "zh-TW",
   tool: "Excel",
+  theme: "system",
 };
 
 export default function SettingsPage() {
@@ -39,6 +41,10 @@ export default function SettingsPage() {
     });
     localStorage.setItem("everyformula-language", settings.language);
     localStorage.setItem("everyformula-tool", settings.tool);
+    localStorage.setItem("everyformula-theme", settings.theme);
+    const dark = settings.theme === "dark" ||
+      (settings.theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
     setSaving(false);
     setSaved(true);
   }
@@ -82,6 +88,26 @@ export default function SettingsPage() {
           <option>Excel</option>
           <option>Google Sheets</option>
         </select>
+
+        <fieldset>
+          <legend>外觀顏色</legend>
+          {([
+            ["system", "跟隨手機"],
+            ["light", "白色模式"],
+            ["dark", "黑色模式"],
+          ] as const).map(([value, label]) => (
+            <label className="settings-radio" key={value}>
+              <input
+                type="radio"
+                name="theme"
+                value={value}
+                checked={settings.theme === value}
+                onChange={() => setSettings({ ...settings, theme: value })}
+              />
+              <span>{label}</span>
+            </label>
+          ))}
+        </fieldset>
 
         <button className="settings-save" onClick={saveSettings} disabled={saving}>
           {saving ? "正在儲存..." : "儲存設定"}
