@@ -1,6 +1,36 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { AppLanguage, outputLanguageNames } from "../../i18n";
+
+const FREE_MONTHLY_LIMIT = 10;
+
+type MonthlyUsage = { month: string; count: number };
+
+function currentMonth() {
+  return new Date().toISOString().slice(0, 7);
+}
+
+async function getMonthlyUsage(userId: string) {
+  const client = await clerkClient();
+  const user = await client.users.getUser(userId);
+  const saved = user.privateMetadata.everyFormulaUsage as MonthlyUsage | undefined;
+  const usage = saved?.month === currentMonth() ? saved : { month: currentMonth(), count: 0 };
+  return { client, user, usage };
+}
+
+async function recordSuccessfulUse(userId: string) {
+  const { client, user, usage } = await getMonthlyUsage(userId);
+  const next = { month: currentMonth(), count: usage.count + 1 };
+  await client.users.updateUserMetadata(userId, {
+    privateMetadata: { ...user.privateMetadata, everyFormulaUsage: next },
+  });
+  return {
+    limit: FREE_MONTHLY_LIMIT,
+    used: next.count,
+    remaining: Math.max(0, FREE_MONTHLY_LIMIT - next.count),
+  };
+}
 
 function cleanFormula(formula: string) {
   const trimmed = String(formula || "").trim();
@@ -83,6 +113,19 @@ function getModeInstruction(mode: string) {
 
 export async function POST(req: Request) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "請先登入或建立帳戶。" }, { status: 401 });
+    }
+
+    const { usage } = await getMonthlyUsage(userId);
+    if (usage.count >= FREE_MONTHLY_LIMIT) {
+      return NextResponse.json({
+        error: "本月免費 10 次已用完，額度將於下個月自動恢復。",
+        usage: { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: 0 },
+      }, { status: 429 });
+    }
+
     const body = await req.json();
     const { request, tool, mode, language } = body;
 
@@ -101,7 +144,7 @@ export async function POST(req: Request) {
         "zh-CN": ["已补上缺少的右括号。", "请用修正后的公式替换原公式。"],
       }[selectedLanguage];
 
-      return NextResponse.json({
+      const response = {
         status: "ready",
         confidence: "high",
         missingInfo: [],
@@ -114,7 +157,8 @@ export async function POST(req: Request) {
         warning: "",
         professionalTips: [],
         modernFormula: null,
-      });
+      };
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId) });
     }
 
     if (!process.env.OPENAI_API_KEY) {
@@ -127,15 +171,14 @@ export async function POST(req: Request) {
         body: JSON.stringify({ ...body, outputMode: "general", request }),
         cache: "no-store",
       });
-      const fallbackBody = await fallbackResponse.text();
-
-      return new NextResponse(fallbackBody, {
-        status: fallbackResponse.status,
-        headers: {
-          "Content-Type":
-            fallbackResponse.headers.get("content-type") || "application/json",
-        },
-      });
+      const fallbackBody = await fallbackResponse.json();
+      if (!fallbackResponse.ok) {
+        return NextResponse.json(fallbackBody, { status: fallbackResponse.status });
+      }
+      const fallbackUsage = fallbackBody.status === "ready"
+        ? await recordSuccessfulUse(userId)
+        : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
+      return NextResponse.json({ ...fallbackBody, usage: fallbackUsage });
     }
 
     const client = new OpenAI({
@@ -454,7 +497,7 @@ ${request}`,
         "zh-CN": ["已补上缺少的右括号。", "请用修正后的公式替换原公式。"],
       }[selectedLanguage];
 
-      return NextResponse.json({
+      const response = {
         status: "ready",
         confidence: "high",
         missingInfo: [],
@@ -469,12 +512,13 @@ ${request}`,
           ? parsed.professionalTips
           : [],
         modernFormula: parsed.modernFormula || null,
-      });
+      };
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId) });
     }
 
     const status = parsed.status === "needs_info" ? "needs_info" : "ready";
 
-    return NextResponse.json({
+    const response = {
   status,
   confidence: parsed.confidence || (status === "ready" ? "medium" : "low"),
   missingInfo: Array.isArray(parsed.missingInfo) ? parsed.missingInfo : [],
@@ -497,7 +541,11 @@ ${request}`,
         reason: parsed.modernFormula.reason || "",
       }
     : null,
-});
+};
+    const responseUsage = status === "ready"
+      ? await recordSuccessfulUse(userId)
+      : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
+    return NextResponse.json({ ...response, usage: responseUsage });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "產生公式時發生錯誤，請稍後再試。" }, { status: 500 });
