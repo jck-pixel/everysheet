@@ -13,7 +13,7 @@ export default function AuthPageShell({
     <main className="account-page auth-page">
       <div className="account-page-header">
         <Link href="/" className="account-brand">EveryFormula</Link>
-        <Link href="/" className="back-home">← 返回公式產生器</Link>
+        <Link href="/" className="back-home">← 返回首頁</Link>
       </div>
       <section className="auth-intro">
         <span>EveryFormula 帳戶</span>
