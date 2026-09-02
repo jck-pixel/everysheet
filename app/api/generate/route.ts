@@ -19,7 +19,11 @@ async function getMonthlyUsage(userId: string) {
   return { client, user, usage };
 }
 
-async function recordSuccessfulUse(userId: string) {
+async function recordSuccessfulUse(userId: string | null, guestCount = 0) {
+  if (!userId) {
+    const used = Math.min(FREE_MONTHLY_LIMIT, guestCount + 1);
+    return { limit: FREE_MONTHLY_LIMIT, used, remaining: Math.max(0, FREE_MONTHLY_LIMIT - used) };
+  }
   const { client, user, usage } = await getMonthlyUsage(userId);
   const next = { month: currentMonth(), count: usage.count + 1 };
   await client.users.updateUserMetadata(userId, {
@@ -114,11 +118,10 @@ function getModeInstruction(mode: string) {
 export async function POST(req: Request) {
   try {
     const { userId } = await auth();
-    if (!userId) {
-      return NextResponse.json({ error: "請先登入或建立帳戶。" }, { status: 401 });
-    }
-
-    const { usage } = await getMonthlyUsage(userId);
+    const guestCount = Math.max(0, Number(req.headers.get("x-everyformula-guest-usage")) || 0);
+    const usage = userId
+      ? (await getMonthlyUsage(userId)).usage
+      : { month: currentMonth(), count: guestCount };
     if (usage.count >= FREE_MONTHLY_LIMIT) {
       return NextResponse.json({
         error: "本月免費 10 次已用完，額度將於下個月自動恢復。",
@@ -158,7 +161,7 @@ export async function POST(req: Request) {
         professionalTips: [],
         modernFormula: null,
       };
-      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId) });
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId, guestCount) });
     }
 
     if (!process.env.OPENAI_API_KEY) {
@@ -176,7 +179,7 @@ export async function POST(req: Request) {
         return NextResponse.json(fallbackBody, { status: fallbackResponse.status });
       }
       const fallbackUsage = fallbackBody.status === "ready"
-        ? await recordSuccessfulUse(userId)
+        ? await recordSuccessfulUse(userId, guestCount)
         : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
       return NextResponse.json({ ...fallbackBody, usage: fallbackUsage });
     }
@@ -513,7 +516,7 @@ ${request}`,
           : [],
         modernFormula: parsed.modernFormula || null,
       };
-      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId) });
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId, guestCount) });
     }
 
     const status = parsed.status === "needs_info" ? "needs_info" : "ready";
@@ -543,7 +546,7 @@ ${request}`,
     : null,
 };
     const responseUsage = status === "ready"
-      ? await recordSuccessfulUse(userId)
+      ? await recordSuccessfulUse(userId, guestCount)
       : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
     return NextResponse.json({ ...response, usage: responseUsage });
   } catch (error) {

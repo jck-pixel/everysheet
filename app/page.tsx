@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { AppLanguage, languageOptions, uiText } from "./i18n";
-import AccountMenu from "./components/AccountMenu";
+import AppNavigation from "./components/AppNavigation";
+import { FormulaMode, saveFormulaHistory } from "./lib/history";
 
 type Result = {
   status?: "ready" | "needs_info";
@@ -33,7 +35,9 @@ type Result = {
 };
 
 export default function Home() {
+  const router = useRouter();
   const { user, isLoaded: isUserLoaded } = useUser();
+  const [entryReady, setEntryReady] = useState(false);
   const [language, setLanguage] = useState<AppLanguage>("zh-TW");
   const [request, setRequest] = useState<string>(uiText["zh-TW"].defaultRequest);
   const [tool, setTool] = useState("Excel");
@@ -47,6 +51,48 @@ export default function Home() {
   const resultRef = useRef<HTMLDivElement>(null);
   const t = uiText[language];
   const examples = t.examples.map(([label, text]) => ({ label, text }));
+  const historyOwner = user?.id || "guest";
+
+  function guestUsageHeaders() {
+    const month = new Date().toISOString().slice(0, 7);
+    const saved = JSON.parse(localStorage.getItem("everyformula-guest-usage") || "null") as { month?: string; count?: number } | null;
+    const count = saved?.month === month ? Math.max(0, Number(saved.count) || 0) : 0;
+    return { "Content-Type": "application/json", "x-everyformula-guest-usage": String(count) };
+  }
+
+  function saveGuestUsage(data: Result) {
+    if (user || !data.usage) return;
+    localStorage.setItem("everyformula-guest-usage", JSON.stringify({ month: new Date().toISOString().slice(0, 7), count: data.usage.used }));
+  }
+
+  function recordHistory(data: Result, requestText: string, selectedMode: string) {
+    if (data.status === "needs_info" || !data.formula) return;
+    saveFormulaHistory(historyOwner, {
+      id: typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}`,
+      mode: selectedMode as FormulaMode,
+      request: requestText,
+      formula: data.formula,
+      explanation: data.explanation || "",
+      tool,
+      createdAt: new Date().toISOString(),
+    });
+  }
+
+  useEffect(() => {
+    if (!isUserLoaded) return;
+    const isNativeApp = Boolean((window as typeof window & { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.());
+    if (isNativeApp) {
+      if (localStorage.getItem("everyformula-onboarding-complete") !== "1") {
+        router.replace("/onboarding");
+        return;
+      }
+      if (!user && !localStorage.getItem("everyformula-access-choice")) {
+        router.replace("/access");
+        return;
+      }
+    }
+    setEntryReady(true);
+  }, [isUserLoaded, router, user]);
 
   useEffect(() => {
     const savedLanguage = (localStorage.getItem("everyformula-language") || localStorage.getItem("everysheet-language")) as AppLanguage | null;
@@ -59,6 +105,18 @@ export default function Home() {
     const dark = savedTheme === "dark" ||
       (savedTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.dataset.theme = dark ? "dark" : "light";
+
+    const reuse = localStorage.getItem("everyformula-reuse-request");
+    if (reuse) {
+      try {
+        const saved = JSON.parse(reuse) as { request?: string; mode?: string; tool?: string };
+        if (saved.request) setRequest(saved.request);
+        if (["generate", "fix", "explain", "optimize"].includes(saved.mode || "")) setMode(saved.mode || "generate");
+        if (saved.tool === "Excel" || saved.tool === "Google Sheets") setTool(saved.tool);
+      } finally {
+        localStorage.removeItem("everyformula-reuse-request");
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -98,7 +156,7 @@ async function generateFormula(selectedMode?: string) {
   try {
     const res = await fetch("/api/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: guestUsageHeaders(),
       body: JSON.stringify({
         request,
         tool,
@@ -117,6 +175,8 @@ async function generateFormula(selectedMode?: string) {
     }
 
     setResult(data);
+    saveGuestUsage(data);
+    recordHistory(data, request, runMode);
 
     setTimeout(() => {
       resultRef.current?.scrollIntoView({
@@ -156,7 +216,7 @@ ${followUp}`;
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: guestUsageHeaders(),
         body: JSON.stringify({ request: combinedRequest, tool, mode, language }),
       });
 
@@ -167,6 +227,8 @@ ${followUp}`;
       }
 
       setResult(data);
+      saveGuestUsage(data);
+      recordHistory(data, combinedRequest, mode);
 
 setTimeout(() => {
   resultRef.current?.scrollIntoView({
@@ -192,7 +254,7 @@ async function runExample(exampleText: string) {
   try {
     const res = await fetch("/api/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: guestUsageHeaders(),
       body: JSON.stringify({ request: exampleText, tool, mode, language }),
     });
 
@@ -203,6 +265,8 @@ async function runExample(exampleText: string) {
     }
 
     setResult(data);
+    saveGuestUsage(data);
+    recordHistory(data, exampleText, mode);
 
 setTimeout(() => {
   resultRef.current?.scrollIntoView({
@@ -239,35 +303,14 @@ const isUnchangedFix =
     setTimeout(() => setCopied(false), 1600);
   }
 
-  if (!isUserLoaded) {
+  if (!isUserLoaded || !entryReady) {
     return <main className="welcome-page"><p>正在載入 EveryFormula...</p></main>;
-  }
-
-  if (!user) {
-    return (
-      <main className="welcome-page">
-        <section className="welcome-card">
-          <span className="welcome-mark">EveryFormula</span>
-          <h1>把需求說出來，公式交給我們</h1>
-          <p>建立、修正、解釋與優化 Excel／Google Sheets 公式。免費方案每月可使用 10 次。</p>
-          <div className="welcome-actions">
-            <SignUpButton mode="redirect">
-              <button className="welcome-primary">免費建立帳戶</button>
-            </SignUpButton>
-            <SignInButton mode="redirect">
-              <button className="welcome-secondary">已有帳戶，登入</button>
-            </SignInButton>
-          </div>
-          <small>可使用 Email 驗證或 Google 帳號登入</small>
-        </section>
-      </main>
-    );
   }
 
   return (
     <main>
       <section className="hero">
-        <AccountMenu />
+        <AppNavigation />
         <div className="mobile-brand">{t.mobileBrand}</div>
         <div className="badge">Excel Formula Generator</div>
 

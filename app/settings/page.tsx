@@ -4,6 +4,7 @@ import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AppLanguage, languageOptions } from "../i18n";
+import AppNavigation from "../components/AppNavigation";
 
 type FormulaSettings = {
   language: AppLanguage;
@@ -24,21 +25,27 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
-    const remote = user.unsafeMetadata.formulaSettings as Partial<FormulaSettings> | undefined;
-    setSettings({ ...defaultSettings, ...remote });
+    if (!isLoaded) return;
+    const local: Partial<FormulaSettings> = {
+      language: (localStorage.getItem("everyformula-language") as AppLanguage) || undefined,
+      tool: (localStorage.getItem("everyformula-tool") as FormulaSettings["tool"]) || undefined,
+      theme: (localStorage.getItem("everyformula-theme") as FormulaSettings["theme"]) || undefined,
+    };
+    const remote = user?.unsafeMetadata.formulaSettings as Partial<FormulaSettings> | undefined;
+    setSettings({ ...defaultSettings, ...local, ...remote });
   }, [isLoaded, user]);
 
   async function saveSettings() {
-    if (!user) return;
     setSaving(true);
     setSaved(false);
-    await user.update({
-      unsafeMetadata: {
-        ...user.unsafeMetadata,
-        formulaSettings: settings,
-      },
-    });
+    if (user) {
+      await user.update({
+        unsafeMetadata: {
+          ...user.unsafeMetadata,
+          formulaSettings: settings,
+        },
+      });
+    }
     localStorage.setItem("everyformula-language", settings.language);
     localStorage.setItem("everyformula-tool", settings.tool);
     localStorage.setItem("everyformula-theme", settings.theme);
@@ -55,6 +62,7 @@ export default function SettingsPage() {
 
   return (
     <main className="account-page">
+      <AppNavigation />
       <div className="account-page-header">
         <Link href="/" className="account-brand">EveryFormula</Link>
         <div className="account-header-links">
@@ -66,7 +74,7 @@ export default function SettingsPage() {
       <section className="settings-card">
         <span className="settings-eyebrow">使用設定</span>
         <h1>設定預設產生方式</h1>
-        <p>儲存後，登入其他裝置也會沿用相同偏好。</p>
+        <p>{user ? "設定會保存在帳戶與此裝置。" : "設定會保存在此裝置。"}</p>
 
         <label htmlFor="settings-language">顯示語言</label>
         <select
@@ -113,6 +121,13 @@ export default function SettingsPage() {
           {saving ? "正在儲存..." : "儲存設定"}
         </button>
         {saved && <p className="settings-saved">✓ 設定已儲存</p>}
+      </section>
+
+      <section className="settings-card help-card">
+        <span className="settings-eyebrow">使用說明</span>
+        <h2>重新查看功能介紹</h2>
+        <p>查看建立、修正、解釋與優化公式的操作方法。</p>
+        <Link className="settings-help-link" href="/onboarding?review=1">開啟使用說明</Link>
       </section>
     </main>
   );
