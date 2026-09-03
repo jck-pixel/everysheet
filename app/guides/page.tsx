@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AppLanguage, guideUiText, languageOptions } from "../i18n";
-import GuideLanguageSelect from "./GuideLanguageSelect";
 
 export const metadata: Metadata = {
   title: "Excel 教學中心｜函數教學與實務公式｜EveryFormula",
@@ -116,8 +115,6 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
           EveryFormula
         </Link>
 
-        <GuideLanguageSelect language={language} />
-
         <div style={styles.badge} className="guides-badge">Excel Formula Guides</div>
 
         <h1 style={styles.title} className="guides-title">Excel 教學中心</h1>
@@ -128,9 +125,6 @@ export default function GuidesPage({ searchParams }: { searchParams?: { lang?: s
           快速找到你需要的 Excel 與 Google Sheets 教學。
         </p>
 
-        <Link href={`/?lang=${language}`} style={styles.primaryButton} className="guides-primary-button">
-          {g.formulaTool}
-        </Link>
       </section>
 
       <section style={styles.content} className="guides-content">

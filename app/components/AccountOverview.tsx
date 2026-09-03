@@ -42,7 +42,7 @@ export default function AccountOverview() {
         <span>付費方案尚未開放</span>
       </div>
       <div className="account-overview-item">
-        <small>使用紀錄</small>
+        <small>使用記錄</small>
         <strong>{usage ? `本月已使用 ${usage.used} 次` : "正在讀取本月用量"}</strong>
         <span>{usage ? `剩餘 ${usage.remaining} 次／每月 10 次` : "建立、修正、解釋與優化共用額度"}</span>
       </div>

@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from "react";
 import { AppLanguage, languageOptions, uiText } from "./i18n";
 import AppNavigation from "./components/AppNavigation";
 import { FormulaMode, saveFormulaHistory } from "./lib/history";
+import { getLocalAccount, isLocalAccountSignedIn } from "./lib/localAccount";
 
 type Result = {
   status?: "ready" | "needs_info";
@@ -50,7 +51,8 @@ export default function Home() {
   const resultRef = useRef<HTMLDivElement>(null);
   const t = uiText[language];
   const examples = t.examples.map(([label, text]) => ({ label, text }));
-  const historyOwner = user?.id || "guest";
+  const localAccount = typeof window !== "undefined" && isLocalAccountSignedIn() ? getLocalAccount() : null;
+  const historyOwner = user?.id || localAccount?.name || "guest";
 
   function guestUsageHeaders() {
     const month = new Date().toISOString().slice(0, 7);

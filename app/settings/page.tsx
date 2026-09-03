@@ -64,11 +64,7 @@ export default function SettingsPage() {
     <main className="account-page">
       <AppNavigation />
       <div className="account-page-header">
-        <Link href="/" className="account-brand">EveryFormula</Link>
-        <div className="account-header-links">
-          <Link href="/account">帳戶資訊</Link>
-          <Link href="/">返回公式產生器</Link>
-        </div>
+        <span className="account-brand">EveryFormula</span>
       </div>
 
       <section className="settings-card">
