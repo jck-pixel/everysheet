@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
@@ -326,13 +325,6 @@ const isUnchangedFix =
           支援 Excel 與 Google Sheets。
         </p>
 
-        <div className="hero-links">
-  <Link href={`/guides?lang=${language}`} className="guides-link">
-    <span className="guides-link-wide">📚 前往 Excel 教學中心</span>
-    <span className="guides-link-mobile">{t.guideLink}</span>
-  </Link>
-</div>
-        
       </section>
 
       <section className="app-card">

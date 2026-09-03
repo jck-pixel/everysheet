@@ -373,8 +373,7 @@ main {
 .settings-save { width: 100%; margin-top: 20px; }
 .settings-saved { color: #067647 !important; font-weight: 800; text-align: center; }
 
-.mobile-brand,
-.guides-link-mobile {
+.mobile-brand {
   display: none;
 }
 
@@ -778,26 +777,6 @@ footer {
     line-height: 1.45;
   }
 
-  .hero-links {
-    margin-top: 0;
-  }
-
-  .guides-link {
-    min-height: 36px;
-    padding: 5px 8px;
-    border-radius: 11px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-
-  .guides-link-wide {
-    display: none;
-  }
-
-  .guides-link-mobile {
-    display: inline;
-  }
-
   .app-card,
   .result-card {
     padding: 18px 14px;
@@ -816,8 +795,7 @@ footer {
   }
 
   button,
-  select,
-  .guides-link {
+  select {
     min-height: 48px;
     touch-action: manipulation;
   }
@@ -1246,30 +1224,6 @@ footer {
 
 .professional-tips li {
   margin-bottom: 6px;
-}
-
-.hero-links {
-  margin-top: 20px;
-}
-
-.guides-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 11px 18px;
-  border: 1px solid #bfd2ff;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: #2457d6;
-  font-weight: 800;
-  text-decoration: none;
-  transition: 0.2s ease;
-}
-
-.guides-link:hover {
-  background: #ffffff;
-  border-color: #2563eb;
-  transform: translateY(-1px);
 }
 
 .guides-tag-link {
