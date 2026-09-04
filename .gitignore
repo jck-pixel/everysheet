@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.env*
+!.env.example
+*.log
+.DS_Store
+
+# Android build output and local machine settings
+android/.gradle/
+android/local.properties
+android/**/build/

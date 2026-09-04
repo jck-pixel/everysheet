@@ -1,14 +1,73 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import { AppLanguage, outputLanguageNames } from "../../i18n";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const FREE_MONTHLY_LIMIT = 10;
+
+type MonthlyUsage = { month: string; count: number };
+
+function currentMonth() {
+  return new Date().toISOString().slice(0, 7);
+}
+
+async function getMonthlyUsage(userId: string) {
+  const client = await clerkClient();
+  const user = await client.users.getUser(userId);
+  const saved = user.privateMetadata.everyFormulaUsage as MonthlyUsage | undefined;
+  const usage = saved?.month === currentMonth() ? saved : { month: currentMonth(), count: 0 };
+  return { client, user, usage };
+}
+
+async function recordSuccessfulUse(userId: string | null, guestCount = 0) {
+  if (!userId) {
+    const used = Math.min(FREE_MONTHLY_LIMIT, guestCount + 1);
+    return { limit: FREE_MONTHLY_LIMIT, used, remaining: Math.max(0, FREE_MONTHLY_LIMIT - used) };
+  }
+  const { client, user, usage } = await getMonthlyUsage(userId);
+  const next = { month: currentMonth(), count: usage.count + 1 };
+  await client.users.updateUserMetadata(userId, {
+    privateMetadata: { ...user.privateMetadata, everyFormulaUsage: next },
+  });
+  return {
+    limit: FREE_MONTHLY_LIMIT,
+    used: next.count,
+    remaining: Math.max(0, FREE_MONTHLY_LIMIT - next.count),
+  };
+}
 
 function cleanFormula(formula: string) {
   const trimmed = String(formula || "").trim();
   if (!trimmed) return "";
   return trimmed.startsWith("=") ? trimmed : `=${trimmed}`;
+}
+
+function repairMissingClosingParentheses(input: string) {
+  const formulaStart = input.indexOf("=");
+  if (formulaStart < 0) return "";
+
+  const formula = input.slice(formulaStart).split(/\r?\n/, 1)[0].trim();
+  let balance = 0;
+  let insideString = false;
+
+  for (let index = 0; index < formula.length; index += 1) {
+    const character = formula[index];
+    if (character === '"') {
+      if (insideString && formula[index + 1] === '"') {
+        index += 1;
+      } else {
+        insideString = !insideString;
+      }
+    } else if (!insideString && character === "(") {
+      balance += 1;
+    } else if (!insideString && character === ")") {
+      balance -= 1;
+    }
+
+    if (balance < 0) return "";
+  }
+
+  return balance > 0 ? `${formula}${")".repeat(balance)}` : "";
 }
 
 function getModeInstruction(mode: string) {
@@ -20,6 +79,8 @@ function getModeInstruction(mode: string) {
 你的任務是修正使用者提供的公式，而不是重新建立新公式。
 
 請先判斷公式本身是否有語法、函數、參數、括號、引用範圍等問題。
+
+若公式已有足夠內容，且問題是可直接判斷的語法錯誤（例如缺少右括號、引號不成對、函數名稱拼錯或參數分隔符號錯誤），必須直接修正並回傳 status = "ready"，不得要求使用者重新提供完整公式。
 
 如果公式本身沒有明顯錯誤：
 - 直接回傳 status = "ready"
@@ -56,52 +117,90 @@ function getModeInstruction(mode: string) {
 
 export async function POST(req: Request) {
   try {
-    const { request, tool, outputMode, mode } = await req.json();
+    const { userId } = await auth();
+    const guestCount = Math.max(0, Number(req.headers.get("x-everyformula-guest-usage")) || 0);
+    const usage = userId
+      ? (await getMonthlyUsage(userId)).usage
+      : { month: currentMonth(), count: guestCount };
+    if (usage.count >= FREE_MONTHLY_LIMIT) {
+      return NextResponse.json({
+        error: "本月免費 10 次已用完，額度將於下個月自動恢復。",
+        usage: { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: 0 },
+      }, { status: 429 });
+    }
+
+    const body = await req.json();
+    const { request, tool, mode, language } = body;
+
+    const preflightRepair =
+      mode === "fix" && typeof request === "string"
+        ? repairMissingClosingParentheses(request)
+        : "";
+
+    if (preflightRepair) {
+      const selectedLanguage: AppLanguage =
+        language && language in outputLanguageNames ? language : "zh-TW";
+      const repairCopy = {
+        "zh-TW": ["已補上缺少的右括號。", "請用修正後的公式取代原公式。"],
+        en: ["The missing closing parenthesis was added.", "Replace the original formula with the corrected formula."],
+        ja: ["不足していた閉じ括弧を追加しました。", "元の数式を修正後の数式に置き換えてください。"],
+        "zh-CN": ["已补上缺少的右括号。", "请用修正后的公式替换原公式。"],
+      }[selectedLanguage];
+
+      const response = {
+        status: "ready",
+        confidence: "high",
+        missingInfo: [],
+        questions: [],
+        formula: preflightRepair,
+        placementGuide: null,
+        explanation: repairCopy[0],
+        howToUse: repairCopy[1],
+        example: "",
+        warning: "",
+        professionalTips: [],
+        modernFormula: null,
+      };
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId, guestCount) });
+    }
 
     if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: "尚未設定 OPENAI_API_KEY。" }, { status: 500 });
+      const fallbackUrl =
+        process.env.FORMULA_API_FALLBACK_URL ||
+        "https://ai-excel-assistant-rose.vercel.app/api/generate";
+      const fallbackResponse = await fetch(fallbackUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...body, outputMode: "general", request }),
+        cache: "no-store",
+      });
+      const fallbackBody = await fallbackResponse.json();
+      if (!fallbackResponse.ok) {
+        return NextResponse.json(fallbackBody, { status: fallbackResponse.status });
+      }
+      const fallbackUsage = fallbackBody.status === "ready"
+        ? await recordSuccessfulUse(userId, guestCount)
+        : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
+      return NextResponse.json({ ...fallbackBody, usage: fallbackUsage });
     }
+
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     if (!request || typeof request !== "string") {
       return NextResponse.json({ error: "請輸入需求。" }, { status: 400 });
     }
 
     const selectedTool = tool || "Excel";
-    const selectedOutputMode = outputMode || "general";
     const selectedMode = mode || "generate";
+    const selectedLanguage: AppLanguage =
+      language && language in outputLanguageNames ? language : "zh-TW";
+    const outputLanguage = outputLanguageNames[selectedLanguage];
 
-    const outputInstruction =
-  selectedOutputMode === "professional"
-    ? `目前使用者選擇「專業 Excel」輸出。
-
-請讓專業模式明顯不同於一般模式，但不要為了不同而硬產不同公式。
-
-專業模式要求：
-1. 第一優先是判斷是否存在更佳、更現代、更易維護或效能更好的公式。
-2. 如果有更好的公式，formula 請直接輸出該最佳公式。
-3. 常見升級方向：
-- VLOOKUP 可優先考慮 XLOOKUP。
-- INDEX+MATCH 可優先考慮 XLOOKUP。
-- 複雜或重複計算可考慮 LET。
-- 多條件篩選可考慮 FILTER。
-- 文字拆分可考慮 TEXTBEFORE、TEXTAFTER、TEXTSPLIT。
-4. 如果目前公式已經是最佳實務，請維持原公式，不要為了區分一般模式而硬改成 LET 或其他進階函數。
-5. 若公式相同，必須在 explanation 或 warning 明確說明：「目前公式已是簡潔且穩定的寫法，不建議刻意改得更複雜。」
-6. explanation 要說明為什麼採用這個公式。
-7. warning 要提醒版本相容性、效能、欄位範圍、資料格式或分隔符號差異。
-8. placementGuide 仍要清楚，讓使用者知道公式貼在哪裡。`
-    : `目前使用者選擇「一般使用」輸出。
-
-請讓一般模式簡單、直接、容易懂。
-
-一般模式要求：
-1. formula 給最容易使用的公式。
-2. explanation 控制在 80 字以內。
-3. 不要講太多函數原理。
-4. howToUse 像教新手一樣，一步一步說明公式貼在哪裡。
-5. warning 只提醒真正重要的事情。
-6. 不提供替代公式、進階函數或最佳實務。
-7. placementGuide 要簡單清楚，重點是資料放哪裡、公式貼哪裡。`;
+    const outputInstruction = `請自行判斷完成需求需要一個或多個函數。
+如果單一函數足夠，就提供最簡潔、容易維護的寫法；如果需求包含多層判斷、查找後錯誤處理或其他多步驟邏輯，就合理組合多個函數。不要要求使用者判斷函數數量，也不要為了顯得進階而增加不必要的函數。
+explanation 請用一般上班族能理解的方式說明；howToUse 要清楚指出公式貼在哪裡；warning 只提醒真正重要的相容性、資料格式或欄位問題；placementGuide 要簡單清楚。`;
 
     const modeInstruction = getModeInstruction(selectedMode);
 
@@ -112,7 +211,9 @@ export async function POST(req: Request) {
       messages: [
         {
           role: "system",
-          content: `你是 EverySheet，專門協助使用者處理 Excel / Google Sheets 工作。請用繁體中文回答。
+          content: `你是 EveryFormula，專門協助使用者處理 Excel / Google Sheets 工作。請使用 ${outputLanguage} 回答所有自然語言欄位；Excel 公式與函數名稱保持原樣。
+
+語言規則是最高優先級：除了 formula 與 modernFormula.formula 之外，JSON 中每一個字串值（包含 placementGuide、headers、sampleRow、steps、missingInfo、questions、professionalTips）都必須完全使用 ${outputLanguage}。不要沿用下方 JSON 範例裡的中文措辭。日文必須使用自然日文與「列」而不是中文的「欄」；簡體中文不得混入繁體字；英文不得混入中文或日文。
 
 你必須只輸出 JSON，不要使用 markdown，不要輸出 JSON 以外的任何文字。
 
@@ -165,6 +266,8 @@ JSON 格式如下：
 1. 使用者沒有提供公式。
 2. 提供的內容不是公式。
 3. 提供內容不足以判斷。
+
+「公式只缺少結尾右括號」屬於可直接修正，不得視為內容不足。
 
 【最高優先規則】
 
@@ -255,9 +358,7 @@ warning 應提醒：
 
 不要因為缺少欄位位置、查詢值位置而回傳 needs_info。
 
-【回答模式】
-
-如果 outputMode = "general"：
+【回答方式】
 
 - 用一般上班族看得懂的方式回答。
 - 不要講太多函數原理。
@@ -265,16 +366,6 @@ warning 應提醒：
 - howToUse 要一步一步告訴使用者貼在哪裡。
 - explanation 不超過 80 字。
 - warning 只提醒真正重要的事項。
-
-如果 outputMode = "professional"：
-
-- 使用較完整的 Excel 專業說明。
-- explanation 要說明公式邏輯。
-- howToUse 要包含適用情境。
-- warning 要提醒版本相容性、效能、可能替代函數。
-- 若有更佳公式，也可以在 explanation 中一起說明。
-- professionalTips 必須提供 2～4 個專業建議。
-- 如果沒有特別替代公式，也要提供至少一項最佳實務。
 若 Microsoft 365 有更現代、更容易維護的公式（例如 LET、XLOOKUP、FILTER、TAKE、DROP、TEXTSPLIT 等），請放在 modernFormula。
 
 如果目前公式已經是最佳寫法，modernFormula.formula 請回傳空字串，不要硬寫 LET。
@@ -373,9 +464,13 @@ ${outputInstruction}
 ${modeInstruction}`,
         },
         {
+          role: "system",
+          content: `FINAL LANGUAGE CHECK: Output valid JSON only. Every human-readable string in the JSON must be written exclusively in ${outputLanguage}. Translate even spreadsheet labels, sample rows, steps, tips, warnings, and modernFormula titles. Ignore the Chinese wording used in earlier schema examples. Do not mix scripts from another language. For Japanese use Japanese spreadsheet terms such as A列 and 数式をここに入力. For Simplified Chinese use simplified characters such as 数值、单元格、公式填在这里. Formula strings and Excel function names are the only exceptions.`,
+        },
+        {
           role: "user",
           content: `工具：${selectedTool}
-輸出模式：${selectedOutputMode}
+公式複雜度：由系統依需求自動判斷
 功能模式：${selectedMode}
 使用者需求：
 ${request}`,
@@ -392,9 +487,41 @@ ${request}`,
 
     const parsed = JSON.parse(text);
 
+    const deterministicRepair =
+      selectedMode === "fix" && parsed.status === "needs_info"
+        ? repairMissingClosingParentheses(request)
+        : "";
+
+    if (deterministicRepair) {
+      const repairCopy = {
+        "zh-TW": ["已補上缺少的右括號。", "請用修正後的公式取代原公式。"],
+        en: ["The missing closing parenthesis was added.", "Replace the original formula with the corrected formula."],
+        ja: ["不足していた閉じ括弧を追加しました。", "元の数式を修正後の数式に置き換えてください。"],
+        "zh-CN": ["已补上缺少的右括号。", "请用修正后的公式替换原公式。"],
+      }[selectedLanguage];
+
+      const response = {
+        status: "ready",
+        confidence: "high",
+        missingInfo: [],
+        questions: [],
+        formula: deterministicRepair,
+        placementGuide: parsed.placementGuide || null,
+        explanation: parsed.explanation || repairCopy[0],
+        howToUse: parsed.howToUse || repairCopy[1],
+        example: parsed.example || "",
+        warning: parsed.warning || "",
+        professionalTips: Array.isArray(parsed.professionalTips)
+          ? parsed.professionalTips
+          : [],
+        modernFormula: parsed.modernFormula || null,
+      };
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId, guestCount) });
+    }
+
     const status = parsed.status === "needs_info" ? "needs_info" : "ready";
 
-    return NextResponse.json({
+    const response = {
   status,
   confidence: parsed.confidence || (status === "ready" ? "medium" : "low"),
   missingInfo: Array.isArray(parsed.missingInfo) ? parsed.missingInfo : [],
@@ -417,7 +544,11 @@ ${request}`,
         reason: parsed.modernFormula.reason || "",
       }
     : null,
-});
+};
+    const responseUsage = status === "ready"
+      ? await recordSuccessfulUse(userId, guestCount)
+      : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
+    return NextResponse.json({ ...response, usage: responseUsage });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "產生公式時發生錯誤，請稍後再試。" }, { status: 500 });
