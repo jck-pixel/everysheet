@@ -4,6 +4,7 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useMemo, useState } from "react";
 import AppNavigation from "../components/AppNavigation";
 import { deleteFormulaHistoryItem, FormulaHistoryItem, FormulaMode, readFormulaHistory } from "../lib/history";
+import { getLocalAccount, isLocalAccountSignedIn } from "../lib/localAccount";
 
 const tabs: Array<["all" | FormulaMode, string]> = [
   ["all", "全部"], ["generate", "建立"], ["fix", "修正"], ["explain", "解釋"], ["optimize", "優化"],
@@ -15,7 +16,8 @@ const modeNames: Record<FormulaMode, string> = {
 
 export default function MySpacePage() {
   const { user, isLoaded } = useUser();
-  const historyOwner = user?.id || "guest";
+  const localAccount = typeof window !== "undefined" && isLocalAccountSignedIn() ? getLocalAccount() : null;
+  const historyOwner = user?.id || localAccount?.name || "guest";
   const [items, setItems] = useState<FormulaHistoryItem[]>([]);
   const [tab, setTab] = useState<"all" | FormulaMode>("all");
   const filtered = useMemo(() => tab === "all" ? items : items.filter((item) => item.mode === tab), [items, tab]);

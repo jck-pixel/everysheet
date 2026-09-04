@@ -377,6 +377,7 @@ main {
 .account-actions-card { display: grid; gap: 12px; }
 .account-actions-card button { width: 100%; }
 .account-signout { background: #eef4ff; color: var(--primary-dark); border: 1px solid #bfd2ff; }
+.account-login-button { width: 100%; min-height: 54px; margin-top: 18px; color: #fff; background: var(--primary); }
 .account-delete-start, .danger-button { background: #fff1f0; color: var(--danger); border: 1px solid #f6b8b3; }
 .delete-confirmation { display: grid; gap: 12px; margin-top: 8px; padding: 18px; border: 1px solid #f6b8b3; border-radius: 18px; background: #fff8f7; }
 .delete-confirmation p { margin: 0; color: var(--muted); line-height: 1.6; }

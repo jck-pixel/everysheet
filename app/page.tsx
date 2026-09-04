@@ -81,7 +81,10 @@ export default function Home() {
 
   useEffect(() => {
     if (!isUserLoaded) return;
-    const isNativeApp = Boolean((window as typeof window & { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.());
+    const isNativeApp = Boolean(
+      (window as typeof window & { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() ||
+      /EveryFormulaApp\//.test(navigator.userAgent),
+    );
     if (isNativeApp) {
       if (localStorage.getItem("everyformula-onboarding-complete") !== "1") {
         router.replace("/onboarding");

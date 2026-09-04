@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AccountOverview from "../../components/AccountOverview";
 import AppNavigation from "../../components/AppNavigation";
-import { deleteLocalAccount, getLocalAccount, signOutLocalAccount, type LocalAccount } from "../../lib/localAccount";
+import { deleteLocalAccount, getLocalAccount, isLocalAccountSignedIn, signOutLocalAccount, type LocalAccount } from "../../lib/localAccount";
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser();
@@ -17,7 +17,9 @@ export default function AccountPage() {
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => setLocalAccount(getLocalAccount()), []);
+  useEffect(() => {
+    setLocalAccount(isLocalAccountSignedIn() ? getLocalAccount() : null);
+  }, []);
 
   async function handleSignOut() {
     localStorage.removeItem("everyformula-access-choice");
@@ -74,7 +76,8 @@ export default function AccountPage() {
         <section className="settings-card">
           <span className="settings-eyebrow">免費方案</span>
           <h2>每月可使用 10 次</h2>
-          <p>建立、修正、解釋與優化共用額度。Google 帳號連結會在訂閱與跨裝置同步功能推出時提供。</p>
+          <p>你目前以訪客模式使用。建立、修正、解釋與優化共用額度。</p>
+          <button className="account-login-button" onClick={() => router.push("/access")}>登入或建立帳戶</button>
         </section>
       )}
 
