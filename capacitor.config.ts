@@ -11,6 +11,7 @@ const config: CapacitorConfig = {
   server: {
     url: serverUrl,
     cleartext: false,
+    allowNavigation: ["everyformula.vercel.app"],
   },
   android: {
     backgroundColor: "#f6f7fb",

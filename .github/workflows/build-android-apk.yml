@@ -19,7 +19,7 @@ permissions:
 jobs:
   build-apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,6 +36,12 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      - name: Restore stable debug signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: everyformula-debug-keystore-v1
+
       - name: Install dependencies
         run: npm ci
 
@@ -48,19 +54,49 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug
 
+      - name: Install and launch APK in Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: |
+            adb logcat -c
+            adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
+            sleep 12
+            adb shell pidof com.everyformula.app | tee android-process-id.txt
+            test -s android-process-id.txt
+            adb shell dumpsys activity activities | grep -q "com.everyformula.app/.MainActivity"
+            adb logcat -d -t 1000 > android-launch-log.txt
+            ! grep -q "FATAL EXCEPTION: main" android-launch-log.txt
+            adb exec-out screencap -p > android-launch.png
+
       - name: Publish APK file
         run: |
           mkdir -p dist
-          cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v1.0-debug.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.0-debug.apk
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f dist/EveryFormula-v1.0-debug.apk
+          git add -f dist/EveryFormula-v2.0-debug.apk
           git commit -m "Publish EveryFormula debug APK"
           git push
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: EveryFormula-v1.0-debug
-          path: dist/EveryFormula-v1.0-debug.apk
+          name: EveryFormula-v2.0-debug
+          path: dist/EveryFormula-v2.0-debug.apk
+          if-no-files-found: error
+
+      - name: Upload Android launch evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: EveryFormula-v2.0-launch-evidence
+          path: |
+            android-launch-result.txt
+            android-process-id.txt
+            android-launch-log.txt
+            android-launch.png
           if-no-files-found: error
