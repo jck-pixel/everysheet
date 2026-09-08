@@ -48,30 +48,17 @@ jobs:
           disable-animations: true
           script: |
             adb wait-for-device
-            for attempt in 1 2 3 4 5 6; do
-              adb shell service check package | grep -q found && break
-              sleep 5
-            done
+            sleep 15
             adb shell service check package | grep -q found
             adb logcat -c
-            installed=false
-            for attempt in 1 2 3 4 5; do
-              if adb install -r android/app/build/outputs/apk/debug/app-debug.apk; then
-                installed=true
-                break
-              fi
-              adb reconnect
-              adb wait-for-device
-              sleep 8
-            done
-            test "$installed" = true
+            adb install -r android/app/build/outputs/apk/debug/app-debug.apk || (adb reconnect && adb wait-for-device && sleep 12 && adb install -r android/app/build/outputs/apk/debug/app-debug.apk)
             adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
             sleep 12
             adb shell pidof com.everyformula.app | tee android-process-id.txt
             test -s android-process-id.txt
             adb shell dumpsys activity activities | grep -q "com.everyformula.app/.MainActivity"
             adb logcat -d -t 1000 > android-launch-log.txt
-            if grep -A12 "FATAL EXCEPTION" android-launch-log.txt | grep -q "Process: com.everyformula.app"; then exit 1; fi
+            ! (grep -A12 "FATAL EXCEPTION" android-launch-log.txt | grep -q "Process: com.everyformula.app")
             adb exec-out screencap -p > android-launch.png
       - name: Prepare APK
         run: mkdir -p dist && cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.0-debug.apk
