@@ -37,7 +37,7 @@ jobs:
           java-version: "21"
 
       - name: Restore stable debug signing key
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/.android/debug.keystore
           key: everyformula-debug-keystore-v1
@@ -54,6 +54,12 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug
 
+      - name: Save stable debug signing key
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: everyformula-debug-keystore-v1
+
       - name: Install and launch APK in Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -62,8 +68,26 @@ jobs:
           profile: pixel_6
           disable-animations: true
           script: |
+            adb wait-for-device
+            for attempt in 1 2 3 4 5 6; do
+              if adb shell service check package | grep -q "found"; then
+                break
+              fi
+              sleep 5
+            done
+            adb shell service check package | grep -q "found"
             adb logcat -c
-            adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+            installed=false
+            for attempt in 1 2 3 4 5; do
+              if adb install -r android/app/build/outputs/apk/debug/app-debug.apk; then
+                installed=true
+                break
+              fi
+              adb reconnect
+              adb wait-for-device
+              sleep 8
+            done
+            test "$installed" = "true"
             adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
             sleep 12
             adb shell pidof com.everyformula.app | tee android-process-id.txt
