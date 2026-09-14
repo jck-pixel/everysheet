@@ -30,6 +30,10 @@ public class MainActivity extends BridgeActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 Log.i(LOG_TAG, "Page loaded inside app: " + url);
+                view.evaluateJavascript(
+                    "(function(){return document.body ? document.body.innerText : '';})()",
+                    value -> Log.i(LOG_TAG, "Visible text inside app: " + value)
+                );
             }
 
             @Override
