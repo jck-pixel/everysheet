@@ -1,0 +1,126 @@
+name: Build EveryFormula APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/android-app
+    paths:
+      - "app/**"
+      - "android/**"
+      - "capacitor.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/build-android-apk.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Restore stable debug signing key
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: everyformula-debug-keystore-v1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync Android project
+        run: npm run android:sync
+        env:
+          CAPACITOR_SERVER_URL: https://everyformula.vercel.app
+
+      - name: Build debug APK
+        working-directory: android
+        run: ./gradlew assembleDebug
+
+      - name: Save stable debug signing key
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: everyformula-debug-keystore-v1
+
+      - name: Install and launch APK in Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: |
+            adb wait-for-device
+            for attempt in 1 2 3 4 5 6; do
+              if adb shell service check package | grep -q "found"; then
+                break
+              fi
+              sleep 5
+            done
+            adb shell service check package | grep -q "found"
+            adb logcat -c
+            installed=false
+            for attempt in 1 2 3 4 5; do
+              if adb install -r android/app/build/outputs/apk/debug/app-debug.apk; then
+                installed=true
+                break
+              fi
+              adb reconnect
+              adb wait-for-device
+              sleep 8
+            done
+            test "$installed" = "true"
+            adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
+            sleep 12
+            adb shell pidof com.everyformula.app | tee android-process-id.txt
+            test -s android-process-id.txt
+            adb shell dumpsys activity activities | grep -q "com.everyformula.app/.MainActivity"
+            adb logcat -d -t 1000 > android-launch-log.txt
+            ! grep -q "FATAL EXCEPTION: main" android-launch-log.txt
+            adb exec-out screencap -p > android-launch.png
+
+      - name: Publish APK file
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.0-debug.apk
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f dist/EveryFormula-v2.0-debug.apk
+          git commit -m "Publish EveryFormula debug APK"
+          git push
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EveryFormula-v2.0-debug
+          path: dist/EveryFormula-v2.0-debug.apk
+          if-no-files-found: error
+
+      - name: Upload Android launch evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: EveryFormula-v2.0-launch-evidence
+          path: |
+            android-launch-result.txt
+            android-process-id.txt
+            android-launch-log.txt
+            android-launch.png
+          if-no-files-found: error

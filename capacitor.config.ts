@@ -1,0 +1,21 @@
+import type { CapacitorConfig } from "@capacitor/cli";
+
+const serverUrl =
+  process.env.CAPACITOR_SERVER_URL ??
+  "https://everyformula.vercel.app";
+
+const config: CapacitorConfig = {
+  appId: "com.everyformula.app",
+  appName: "EveryFormula",
+  webDir: "public",
+  server: {
+    url: serverUrl,
+    cleartext: false,
+    allowNavigation: ["everyformula.vercel.app"],
+  },
+  android: {
+    backgroundColor: "#f6f7fb",
+  },
+};
+
+export default config;

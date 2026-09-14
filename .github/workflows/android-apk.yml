@@ -1,0 +1,92 @@
+name: Verify EveryFormula Android APK
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "app/**"
+      - "android/**"
+      - "capacitor.config.ts"
+      - ".github/workflows/android-apk.yml"
+jobs:
+  verify-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - name: Restore signing key
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: everyformula-debug-keystore-v1
+      - run: npm ci
+      - name: Sync Android
+        run: npm run android:sync
+        env:
+          CAPACITOR_SERVER_URL: https://everyformula.vercel.app
+      - name: Build APK
+        working-directory: android
+        run: ./gradlew assembleDebug
+      - name: Save signing key
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: everyformula-debug-keystore-v1
+      - name: Verify install and launch
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: |
+            adb wait-for-device
+            sleep 15
+            adb shell service check package | grep -q found
+            adb logcat -c
+            adb install -r android/app/build/outputs/apk/debug/app-debug.apk || (adb reconnect && adb wait-for-device && sleep 12 && adb install -r android/app/build/outputs/apk/debug/app-debug.apk)
+            adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
+            sleep 45
+            adb shell pidof com.everyformula.app | tee android-process-id.txt
+            adb shell dumpsys activity activities > android-activity-state.txt
+            adb shell dumpsys window > android-window-state.txt
+            adb logcat -d -t 2500 > android-launch-log.txt
+            adb exec-out screencap -p > android-launch.png
+            adb shell uiautomator dump /sdcard/everyformula-window.xml
+            adb exec-out cat /sdcard/everyformula-window.xml > android-window.xml
+            test -s android-process-id.txt
+            grep -Eiq "(mResumedActivity|topResumedActivity).*com.everyformula.app/.MainActivity" android-activity-state.txt
+            ! grep -Eiq "(mResumedActivity|topResumedActivity).*(com.android.chrome|org.chromium.chrome)" android-activity-state.txt
+            grep -q "EveryFormulaApp.*Page loaded inside app: https://everyformula.vercel.app" android-launch-log.txt
+            grep -q "EveryFormula" android-window.xml
+            ! (grep -A12 "FATAL EXCEPTION" android-launch-log.txt | grep -q "Process: com.everyformula.app")
+      - name: Prepare APK
+        run: mkdir -p dist && cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.1-debug.apk
+      - name: Upload verified APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: EveryFormula-v2.1-verified
+          path: dist/EveryFormula-v2.1-debug.apk
+          if-no-files-found: warn
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EveryFormula-v2.1-launch-evidence
+          path: |
+            android-launch-result.txt
+            android-process-id.txt
+            android-launch-log.txt
+            android-activity-state.txt
+            android-window-state.txt
+            android-window.xml
+            android-launch.png
+          if-no-files-found: error
