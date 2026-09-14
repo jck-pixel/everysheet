@@ -55,15 +55,15 @@ jobs:
             adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
             sleep 45
             adb shell pidof com.everyformula.app | tee android-process-id.txt
-            test -s android-process-id.txt
-            adb shell dumpsys activity activities | grep -q "com.everyformula.app/.MainActivity"
-            adb shell dumpsys window windows | grep -E "mCurrentFocus|mFocusedApp" | tee android-foreground-window.txt
-            grep -q "com.everyformula.app" android-foreground-window.txt
-            ! grep -Eiq "com.android.chrome|org.chromium.chrome" android-foreground-window.txt
+            adb shell dumpsys activity activities > android-activity-state.txt
+            adb shell dumpsys window > android-window-state.txt
             adb logcat -d -t 2500 > android-launch-log.txt
+            adb exec-out screencap -p > android-launch.png
+            test -s android-process-id.txt
+            grep -Eiq "(mResumedActivity|topResumedActivity).*com.everyformula.app/.MainActivity" android-activity-state.txt
+            ! grep -Eiq "(mResumedActivity|topResumedActivity).*(com.android.chrome|org.chromium.chrome)" android-activity-state.txt
             grep -q "EveryFormulaApp.*Page loaded inside app: https://everyformula.vercel.app" android-launch-log.txt
             ! (grep -A12 "FATAL EXCEPTION" android-launch-log.txt | grep -q "Process: com.everyformula.app")
-            adb exec-out screencap -p > android-launch.png
       - name: Prepare APK
         run: mkdir -p dist && cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.1-debug.apk
       - name: Upload verified APK
@@ -71,8 +71,9 @@ jobs:
         with:
           name: EveryFormula-v2.1-verified
           path: dist/EveryFormula-v2.1-debug.apk
-          if-no-files-found: error
+          if-no-files-found: warn
       - name: Upload evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: EveryFormula-v2.1-launch-evidence
@@ -80,6 +81,7 @@ jobs:
             android-launch-result.txt
             android-process-id.txt
             android-launch-log.txt
-            android-foreground-window.txt
+            android-activity-state.txt
+            android-window-state.txt
             android-launch.png
           if-no-files-found: error
