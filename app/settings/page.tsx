@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AppLanguage, languageOptions } from "../i18n";
@@ -19,33 +18,22 @@ const defaultSettings: FormulaSettings = {
 };
 
 export default function SettingsPage() {
-  const { user, isLoaded } = useUser();
   const [settings, setSettings] = useState(defaultSettings);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!isLoaded) return;
     const local: Partial<FormulaSettings> = {
       language: (localStorage.getItem("everyformula-language") as AppLanguage) || undefined,
       tool: (localStorage.getItem("everyformula-tool") as FormulaSettings["tool"]) || undefined,
       theme: (localStorage.getItem("everyformula-theme") as FormulaSettings["theme"]) || undefined,
     };
-    const remote = user?.unsafeMetadata.formulaSettings as Partial<FormulaSettings> | undefined;
-    setSettings({ ...defaultSettings, ...local, ...remote });
-  }, [isLoaded, user]);
+    setSettings({ ...defaultSettings, ...local });
+  }, []);
 
   async function saveSettings() {
     setSaving(true);
     setSaved(false);
-    if (user) {
-      await user.update({
-        unsafeMetadata: {
-          ...user.unsafeMetadata,
-          formulaSettings: settings,
-        },
-      });
-    }
     localStorage.setItem("everyformula-language", settings.language);
     localStorage.setItem("everyformula-tool", settings.tool);
     localStorage.setItem("everyformula-theme", settings.theme);
@@ -54,10 +42,6 @@ export default function SettingsPage() {
     document.documentElement.dataset.theme = dark ? "dark" : "light";
     setSaving(false);
     setSaved(true);
-  }
-
-  if (!isLoaded) {
-    return <main className="account-page"><p>正在載入設定...</p></main>;
   }
 
   return (
@@ -70,7 +54,7 @@ export default function SettingsPage() {
       <section className="settings-card">
         <span className="settings-eyebrow">使用設定</span>
         <h1>設定預設產生方式</h1>
-        <p>{user ? "設定會保存在帳戶與此裝置。" : "設定會保存在此裝置。"}</p>
+        <p>設定會保存在此裝置。</p>
 
         <label htmlFor="settings-language">顯示語言</label>
         <select
