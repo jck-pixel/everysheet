@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
-import { auth, clerkClient } from "@clerk/nextjs/server";
 import { AppLanguage, outputLanguageNames } from "../../i18n";
 
 const FREE_MONTHLY_LIMIT = 10;
@@ -11,29 +10,9 @@ function currentMonth() {
   return new Date().toISOString().slice(0, 7);
 }
 
-async function getMonthlyUsage(userId: string) {
-  const client = await clerkClient();
-  const user = await client.users.getUser(userId);
-  const saved = user.privateMetadata.everyFormulaUsage as MonthlyUsage | undefined;
-  const usage = saved?.month === currentMonth() ? saved : { month: currentMonth(), count: 0 };
-  return { client, user, usage };
-}
-
-async function recordSuccessfulUse(userId: string | null, guestCount = 0) {
-  if (!userId) {
-    const used = Math.min(FREE_MONTHLY_LIMIT, guestCount + 1);
-    return { limit: FREE_MONTHLY_LIMIT, used, remaining: Math.max(0, FREE_MONTHLY_LIMIT - used) };
-  }
-  const { client, user, usage } = await getMonthlyUsage(userId);
-  const next = { month: currentMonth(), count: usage.count + 1 };
-  await client.users.updateUserMetadata(userId, {
-    privateMetadata: { ...user.privateMetadata, everyFormulaUsage: next },
-  });
-  return {
-    limit: FREE_MONTHLY_LIMIT,
-    used: next.count,
-    remaining: Math.max(0, FREE_MONTHLY_LIMIT - next.count),
-  };
+async function recordSuccessfulUse(guestCount = 0) {
+  const used = Math.min(FREE_MONTHLY_LIMIT, guestCount + 1);
+  return { limit: FREE_MONTHLY_LIMIT, used, remaining: Math.max(0, FREE_MONTHLY_LIMIT - used) };
 }
 
 function cleanFormula(formula: string) {
@@ -117,11 +96,8 @@ function getModeInstruction(mode: string) {
 
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth();
     const guestCount = Math.max(0, Number(req.headers.get("x-everyformula-guest-usage")) || 0);
-    const usage = userId
-      ? (await getMonthlyUsage(userId)).usage
-      : { month: currentMonth(), count: guestCount };
+    const usage: MonthlyUsage = { month: currentMonth(), count: guestCount };
     if (usage.count >= FREE_MONTHLY_LIMIT) {
       return NextResponse.json({
         error: "本月免費 10 次已用完，額度將於下個月自動恢復。",
@@ -161,27 +137,14 @@ export async function POST(req: Request) {
         professionalTips: [],
         modernFormula: null,
       };
-      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId, guestCount) });
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(guestCount) });
     }
 
     if (!process.env.OPENAI_API_KEY) {
-      const fallbackUrl =
-        process.env.FORMULA_API_FALLBACK_URL ||
-        "https://ai-excel-assistant-rose.vercel.app/api/generate";
-      const fallbackResponse = await fetch(fallbackUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...body, outputMode: "general", request }),
-        cache: "no-store",
-      });
-      const fallbackBody = await fallbackResponse.json();
-      if (!fallbackResponse.ok) {
-        return NextResponse.json(fallbackBody, { status: fallbackResponse.status });
-      }
-      const fallbackUsage = fallbackBody.status === "ready"
-        ? await recordSuccessfulUse(userId, guestCount)
-        : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
-      return NextResponse.json({ ...fallbackBody, usage: fallbackUsage });
+      return NextResponse.json(
+        { error: "公式服務尚未完成設定，請稍後再試。" },
+        { status: 503 },
+      );
     }
 
     const client = new OpenAI({
@@ -516,7 +479,7 @@ ${request}`,
           : [],
         modernFormula: parsed.modernFormula || null,
       };
-      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(userId, guestCount) });
+      return NextResponse.json({ ...response, usage: await recordSuccessfulUse(guestCount) });
     }
 
     const status = parsed.status === "needs_info" ? "needs_info" : "ready";
@@ -546,7 +509,7 @@ ${request}`,
     : null,
 };
     const responseUsage = status === "ready"
-      ? await recordSuccessfulUse(userId, guestCount)
+      ? await recordSuccessfulUse(guestCount)
       : { limit: FREE_MONTHLY_LIMIT, used: usage.count, remaining: FREE_MONTHLY_LIMIT - usage.count };
     return NextResponse.json({ ...response, usage: responseUsage });
   } catch (error) {
