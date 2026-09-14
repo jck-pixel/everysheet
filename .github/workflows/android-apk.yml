@@ -61,7 +61,7 @@ jobs:
             adb logcat -d -t 2500 > android-launch-log.txt
             adb exec-out screencap -p > android-launch.png
             adb shell uiautomator dump /sdcard/everyformula-window.xml
-            adb pull /sdcard/everyformula-window.xml android-window.xml
+            adb exec-out cat /sdcard/everyformula-window.xml > android-window.xml
             test -s android-process-id.txt
             grep -Eiq "(mResumedActivity|topResumedActivity).*com.everyformula.app/.MainActivity" android-activity-state.txt
             ! grep -Eiq "(mResumedActivity|topResumedActivity).*(com.android.chrome|org.chromium.chrome)" android-activity-state.txt
