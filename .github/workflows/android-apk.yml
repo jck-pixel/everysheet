@@ -53,28 +53,33 @@ jobs:
             adb logcat -c
             adb install -r android/app/build/outputs/apk/debug/app-debug.apk || (adb reconnect && adb wait-for-device && sleep 12 && adb install -r android/app/build/outputs/apk/debug/app-debug.apk)
             adb shell am start -W -n com.everyformula.app/.MainActivity | tee android-launch-result.txt
-            sleep 12
+            sleep 45
             adb shell pidof com.everyformula.app | tee android-process-id.txt
             test -s android-process-id.txt
             adb shell dumpsys activity activities | grep -q "com.everyformula.app/.MainActivity"
-            adb logcat -d -t 1000 > android-launch-log.txt
+            adb shell dumpsys window windows | grep -E "mCurrentFocus|mFocusedApp" | tee android-foreground-window.txt
+            grep -q "com.everyformula.app" android-foreground-window.txt
+            ! grep -Eiq "com.android.chrome|org.chromium.chrome" android-foreground-window.txt
+            adb logcat -d -t 2500 > android-launch-log.txt
+            grep -q "EveryFormulaApp.*Page loaded inside app: https://everyformula.vercel.app" android-launch-log.txt
             ! (grep -A12 "FATAL EXCEPTION" android-launch-log.txt | grep -q "Process: com.everyformula.app")
             adb exec-out screencap -p > android-launch.png
       - name: Prepare APK
-        run: mkdir -p dist && cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.0-debug.apk
+        run: mkdir -p dist && cp android/app/build/outputs/apk/debug/app-debug.apk dist/EveryFormula-v2.1-debug.apk
       - name: Upload verified APK
         uses: actions/upload-artifact@v4
         with:
-          name: EveryFormula-v2.0-verified
-          path: dist/EveryFormula-v2.0-debug.apk
+          name: EveryFormula-v2.1-verified
+          path: dist/EveryFormula-v2.1-debug.apk
           if-no-files-found: error
       - name: Upload evidence
         uses: actions/upload-artifact@v4
         with:
-          name: EveryFormula-v2.0-launch-evidence
+          name: EveryFormula-v2.1-launch-evidence
           path: |
             android-launch-result.txt
             android-process-id.txt
             android-launch-log.txt
+            android-foreground-window.txt
             android-launch.png
           if-no-files-found: error
