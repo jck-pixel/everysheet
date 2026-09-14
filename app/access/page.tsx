@@ -1,25 +1,16 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createLocalAccount, getLocalAccount, signInLocalAccount } from "../lib/localAccount";
 
 export default function AccessPage() {
   const router = useRouter();
-  const { user, isLoaded: userLoaded } = useUser();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [hasLocalAccount, setHasLocalAccount] = useState(false);
   const [working, setWorking] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (userLoaded && user) {
-      localStorage.setItem("everyformula-access-choice", "account");
-      router.replace("/");
-    }
-  }, [router, user, userLoaded]);
 
   useEffect(() => {
     const account = getLocalAccount();
