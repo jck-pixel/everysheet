@@ -1,15 +1,11 @@
 "use client";
 
-import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import AccountOverview from "../../components/AccountOverview";
 import AppNavigation from "../../components/AppNavigation";
 import { deleteLocalAccount, getLocalAccount, isLocalAccountSignedIn, signOutLocalAccount, type LocalAccount } from "../../lib/localAccount";
 
 export default function AccountPage() {
-  const { user, isLoaded } = useUser();
-  const { signOut } = useClerk();
   const router = useRouter();
   const [localAccount, setLocalAccount] = useState<LocalAccount | null>(null);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -21,10 +17,8 @@ export default function AccountPage() {
     setLocalAccount(isLocalAccountSignedIn() ? getLocalAccount() : null);
   }, []);
 
-  async function handleSignOut() {
-    localStorage.removeItem("everyformula-access-choice");
-    if (user) await signOut();
-    else signOutLocalAccount();
+  function handleSignOut() {
+    signOutLocalAccount();
     router.replace("/access");
   }
 
@@ -33,21 +27,13 @@ export default function AccountPage() {
     setDeleting(true);
     setError("");
     try {
-      if (user) {
-        const response = await fetch("/api/account/delete", { method: "DELETE" });
-        if (!response.ok) throw new Error("帳戶刪除失敗，請稍後再試。");
-        await signOut();
-      } else {
-        deleteLocalAccount();
-      }
+      deleteLocalAccount();
       router.replace("/access");
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "帳戶刪除失敗，請稍後再試。");
       setDeleting(false);
     }
   }
-
-  if (!isLoaded) return <main className="account-page"><p>正在載入帳號資訊...</p></main>;
 
   return (
     <main className="account-page">
@@ -59,14 +45,12 @@ export default function AccountPage() {
       <section className="account-summary">
         <div>
           <span>帳戶資訊</span>
-          <h1>{user || localAccount ? "管理你的 EveryFormula 帳戶" : "目前使用訪客模式"}</h1>
-          <p>{user ? "查看帳戶狀態與安全設定。" : "帳戶、歷史與設定目前保存在這台裝置。"}</p>
+          <h1>{localAccount ? "管理你的 EveryFormula 帳戶" : "目前使用訪客模式"}</h1>
+          <p>帳戶、歷史與設定目前保存在這台裝置。</p>
         </div>
       </section>
 
-      {user ? (
-        <AccountOverview />
-      ) : localAccount ? (
+      {localAccount ? (
         <section className="account-overview-card" aria-label="本機帳戶摘要">
           <div className="account-overview-item"><small>帳戶名稱</small><strong>{localAccount.name}</strong></div>
           <div className="account-overview-item"><small>帳戶類型</small><strong>本機帳戶</strong><span>資料只保存在此裝置</span></div>
@@ -81,7 +65,7 @@ export default function AccountPage() {
         </section>
       )}
 
-      {user || localAccount ? <section className="settings-card account-actions-card">
+      {localAccount ? <section className="settings-card account-actions-card">
         <h2>帳戶操作</h2>
         <button className="account-signout" onClick={handleSignOut}>登出</button>
         <button className="account-delete-start" onClick={() => setConfirmingDelete(true)}>刪除帳戶</button>
