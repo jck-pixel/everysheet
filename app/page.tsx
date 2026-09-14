@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { AppLanguage, languageOptions, uiText } from "./i18n";
@@ -36,7 +35,6 @@ type Result = {
 
 export default function Home() {
   const router = useRouter();
-  const { user, isLoaded: isUserLoaded } = useUser();
   const [entryReady, setEntryReady] = useState(false);
   const [language, setLanguage] = useState<AppLanguage>("zh-TW");
   const [request, setRequest] = useState<string>(uiText["zh-TW"].defaultRequest);
@@ -52,7 +50,7 @@ export default function Home() {
   const t = uiText[language];
   const examples = t.examples.map(([label, text]) => ({ label, text }));
   const localAccount = typeof window !== "undefined" && isLocalAccountSignedIn() ? getLocalAccount() : null;
-  const historyOwner = user?.id || localAccount?.name || "guest";
+  const historyOwner = localAccount?.name || "guest";
 
   function guestUsageHeaders() {
     const month = new Date().toISOString().slice(0, 7);
@@ -62,7 +60,7 @@ export default function Home() {
   }
 
   function saveGuestUsage(data: Result) {
-    if (user || !data.usage) return;
+    if (!data.usage) return;
     localStorage.setItem("everyformula-guest-usage", JSON.stringify({ month: new Date().toISOString().slice(0, 7), count: data.usage.used }));
   }
 
@@ -80,7 +78,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (!isUserLoaded) return;
     const isNativeApp = Boolean(
       (window as typeof window & { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() ||
       /EveryFormulaApp\//.test(navigator.userAgent),
@@ -90,13 +87,13 @@ export default function Home() {
         router.replace("/onboarding");
         return;
       }
-      if (!user && !localStorage.getItem("everyformula-access-choice")) {
+      if (!localStorage.getItem("everyformula-access-choice")) {
         router.replace("/access");
         return;
       }
     }
     setEntryReady(true);
-  }, [isUserLoaded, router, user]);
+  }, [router]);
 
   useEffect(() => {
     const savedLanguage = (localStorage.getItem("everyformula-language") || localStorage.getItem("everysheet-language")) as AppLanguage | null;
@@ -122,21 +119,6 @@ export default function Home() {
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (!isUserLoaded || !user) return;
-    const settings = user.unsafeMetadata.formulaSettings as {
-      language?: AppLanguage;
-      tool?: string;
-    } | undefined;
-    if (!settings) return;
-    if (settings.language && languageOptions.some((option) => option.value === settings.language)) {
-      setLanguage(settings.language);
-      setRequest(uiText[settings.language].defaultRequest);
-      document.documentElement.lang = settings.language;
-    }
-    if (settings.tool === "Excel" || settings.tool === "Google Sheets") setTool(settings.tool);
-  }, [isUserLoaded, user]);
 
 async function generateFormula(selectedMode?: string) {
   const runMode = selectedMode || mode;
@@ -307,7 +289,7 @@ const isUnchangedFix =
     setTimeout(() => setCopied(false), 1600);
   }
 
-  if (!isUserLoaded || !entryReady) {
+  if (!entryReady) {
     return <main className="welcome-page"><p>正在載入 EveryFormula...</p></main>;
   }
 
