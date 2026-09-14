@@ -1,5 +1,5 @@
-import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default function SsoCallbackPage() {
-  return <AuthenticateWithRedirectCallback />;
+  redirect("/access");
 }
