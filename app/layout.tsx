@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
-import { zhTW } from "@clerk/localizations";
 import Script from "next/script";
 import "./globals.css";
 
@@ -53,7 +51,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider localization={zhTW}>
       <html lang="zh-Hant">
         <body>{children}</body>
 
@@ -72,6 +69,5 @@ export default function RootLayout({
         `}
       </Script>
       </html>
-    </ClerkProvider>
   );
 }
