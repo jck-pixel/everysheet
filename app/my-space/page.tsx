@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { useEffect, useMemo, useState } from "react";
 import AppNavigation from "../components/AppNavigation";
 import { deleteFormulaHistoryItem, FormulaHistoryItem, FormulaMode, readFormulaHistory } from "../lib/history";
@@ -15,18 +14,15 @@ const modeNames: Record<FormulaMode, string> = {
 };
 
 export default function MySpacePage() {
-  const { user, isLoaded } = useUser();
   const localAccount = typeof window !== "undefined" && isLocalAccountSignedIn() ? getLocalAccount() : null;
-  const historyOwner = user?.id || localAccount?.name || "guest";
+  const historyOwner = localAccount?.name || "guest";
   const [items, setItems] = useState<FormulaHistoryItem[]>([]);
   const [tab, setTab] = useState<"all" | FormulaMode>("all");
   const filtered = useMemo(() => tab === "all" ? items : items.filter((item) => item.mode === tab), [items, tab]);
 
   useEffect(() => {
-    if (isLoaded) setItems(readFormulaHistory(historyOwner));
-  }, [isLoaded, historyOwner]);
-
-  if (!isLoaded) return <main className="account-page"><p>正在載入歷史記錄...</p></main>;
+    setItems(readFormulaHistory(historyOwner));
+  }, [historyOwner]);
 
   return (
     <main className="workspace-page">
