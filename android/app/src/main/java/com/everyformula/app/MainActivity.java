@@ -2,6 +2,7 @@ package com.everyformula.app;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -10,6 +11,7 @@ import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.BridgeWebViewClient;
 
 public class MainActivity extends BridgeActivity {
+    private static final String LOG_TAG = "EveryFormulaApp";
     private static final String APP_USER_AGENT = " EveryFormulaApp/2.1";
 
     @Override
@@ -25,6 +27,12 @@ public class MainActivity extends BridgeActivity {
 
         bridge.setWebViewClient(new BridgeWebViewClient(bridge) {
             @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.i(LOG_TAG, "Page loaded inside app: " + url);
+            }
+
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return keepWebPagesInsideApp(view, request.getUrl());
             }
@@ -38,6 +46,7 @@ public class MainActivity extends BridgeActivity {
             private boolean keepWebPagesInsideApp(WebView view, Uri uri) {
                 String scheme = uri.getScheme();
                 if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
+                    Log.i(LOG_TAG, "Keeping navigation inside app: " + uri);
                     return false;
                 }
                 return super.shouldOverrideUrlLoading(view, uri.toString());
